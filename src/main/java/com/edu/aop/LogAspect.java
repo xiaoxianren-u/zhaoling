@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 public class LogAspect {
 
     public LogAspect() {
-        System.out.println("===========================");
+        System.out.println("==========================f=");
     }
 
     @Before("execution(* com.edu.controller.IndexController.indexAction())")
