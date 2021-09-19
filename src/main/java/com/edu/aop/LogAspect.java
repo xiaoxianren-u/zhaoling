@@ -29,6 +29,7 @@ public class LogAspect {
 
     @After("execution(* com.edu.controller.IndexController.indexAction())")
     public void myAfter(){
+        System.out.println("nihao");
         System.out.println("后");
     }
 
