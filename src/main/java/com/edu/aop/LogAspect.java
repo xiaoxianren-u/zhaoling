@@ -21,13 +21,13 @@ public class LogAspect {
         System.out.println("==========================f=");
     }
 
-    @Before("execution(* com.edu.controller.IndexController.indexAction())")
+    @Before("execution(* com.edu.controller.*.*.*(..))")
     public void myBefore(JoinPoint joinPoint){
         System.out.println("前");
     }
 
 
-    @After("execution(* com.edu.controller.IndexController.indexAction())")
+    @After("execution(* com.edu.controller.*.*.*(..))")
     public void myAfter(){
         System.out.println("nihao");
         System.out.println("后");
