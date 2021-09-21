@@ -6,7 +6,7 @@ package com.edu.pojo;
  * @file : ConTents.java
  */
 
-import lombok.Data;
+import lombok.*;
 
 /**
  *
@@ -14,7 +14,10 @@ import lombok.Data;
  * @author yangzhan
  */
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConTents {
 
     /**

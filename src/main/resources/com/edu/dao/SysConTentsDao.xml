@@ -18,7 +18,7 @@
 
         </resultMap>
         <select id="selectContents" resultMap="mulist">
-            select con_id, con_name, con_url, con_number, con_icon, m_id, m_name, m_number, m_icon from zhaoling.con_tents c ,zhaoling.mulu m
+            select con_id, con_name, con_url, con_number, con_icon, m_id, m_name, m_number, m_icon from zhaoling.con_tents_db c ,zhaoling.mulu_db m
             where c.con_number = m.m_number
         </select>
 
