@@ -6,11 +6,14 @@ package com.edu.pojo;
  * @file : ConTents.java
  */
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
+ * 后台导航栏目录
  *
- *后台导航栏目录
  * @author yangzhan
  */
 
@@ -36,9 +39,24 @@ public class ConTents {
      * 目录序号
      */
     private Integer con_number;
+
+    /**
+     * 目录类型
+     */
+    private String con_type;
+    /**
+     * 目录可见（0显示，1隐藏）
+     */
+    private Integer con_vital;
+    /**
+     * 目录权限
+     */
+    private String con_competence;
+
     /**
      * 目录图标
      */
     private String con_icon;
+
 
 }
