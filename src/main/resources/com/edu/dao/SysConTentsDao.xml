@@ -8,17 +8,24 @@
                 <result column="m_name" property="m_name"/>
                 <result column="m_number" property="m_number"/>
                 <result column="m_icon" property="m_icon"/>
+                <result column="m_url" property="m_url"/>
+                <result property="m_type" column="m_type"/>
+                <result property="m_vital" column="m_vital"/>
+                <result property="m_competence" column="m_competence"/>
                 <collection property="list" ofType="com.edu.pojo.ConTents">
                     <id column="con_id" property="con_id"/>
                     <result property="con_icon" column="con_icon"/>
                     <result column="con_name" property="con_name"/>
                     <result column="con_number" property="con_number"/>
                     <result column="con_url" property="con_url"/>
+                    <result property="con_competence" column="con_competence"/>
+                    <result column="con_type" property="con_type"/>
+                    <result column="con_vital" property="con_vital"/>
                 </collection>
 
         </resultMap>
         <select id="selectContents" resultMap="mulist">
-            select con_id, con_name, con_url, con_number, con_icon, m_id, m_name, m_number, m_icon from zhaoling.con_tents_db c ,zhaoling.mulu_db m
+            select con_id, con_name, con_url, con_number, con_type, con_vital, con_competence, con_icon, m_id, m_name, m_number, m_url, m_type, m_vital, m_competence, m_icon from zhaoling.con_tents_db c ,zhaoling.mulu_db m
             where c.con_number = m.m_number
         </select>
 
