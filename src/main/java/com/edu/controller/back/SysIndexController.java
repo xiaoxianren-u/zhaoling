@@ -34,7 +34,7 @@ public class SysIndexController {
      */
     @RequestMapping("/index.action")
     public String SysIndex(ModelMap modelMap) {
-        List<ConTents> list = sysConTentService.selectContents();
+        List<ConTents> list = sysConTentService.selectContents_sys();
         modelMap.put("list", list);
         return "/back/sys_index";
     }

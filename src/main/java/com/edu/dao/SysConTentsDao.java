@@ -1,7 +1,7 @@
 package com.edu.dao;
 
 import com.edu.pojo.ConTents;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -11,15 +11,23 @@ import java.util.List;
  * @file : SysController.java
  */
 
-
+@Component
 public interface SysConTentsDao {
 
 
     /**
-     * 后台目录
+     * 菜单管理列表
+     *
      * @return
      */
     List<ConTents> selectContents();
+
+    /**
+     * 后台导航栏
+     *
+     * @return
+     */
+    List<ConTents> selectContents_sys();
 
 
 }

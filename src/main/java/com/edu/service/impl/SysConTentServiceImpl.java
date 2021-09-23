@@ -20,8 +20,25 @@ public class SysConTentServiceImpl implements SysConTentService {
     @Autowired
     public SysConTentsDao sysConTentsDao;
 
+    /**
+     * 菜单管理列表
+     *
+     * @return
+     */
     @Override
     public List<ConTents> selectContents() {
         return sysConTentsDao.selectContents();
+    }
+
+
+    /**
+     * 后台导航栏
+     *
+     * @return
+     */
+
+    @Override
+    public List<ConTents> selectContents_sys() {
+        return sysConTentsDao.selectContents_sys();
     }
 }

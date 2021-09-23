@@ -15,8 +15,17 @@ public interface SysConTentService {
 
 
     /**
-     * 后台目录
+     * 菜单管理列表
+     *
      * @return
      */
     List<ConTents> selectContents();
+
+    /**
+     * 后台导航栏
+     *
+     * @return
+     */
+    List<ConTents> selectContents_sys();
+
 }
