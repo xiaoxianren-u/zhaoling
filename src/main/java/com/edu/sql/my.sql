@@ -2,15 +2,21 @@ create DATABASE zhaoling;
 
 use zhaoling;
 
+
 CREATE TABLE mulu_db
 (
-    m_id     INT(11)        NOT NULL AUTO_INCREMENT COMMENT '父目录id',
-    m_name   VARCHAR(50)    NOT NULL DEFAULT '' COMMENT '父目录名称',
-    m_number INT(11) UNIQUE NOT NULL DEFAULT -1 COMMENT '父目录编号',
-    m_icon   VARCHAR(50)    NOT NULL DEFAULT '' COMMENT '父目录图标',
+    m_id         INT(11)        NOT NULL AUTO_INCREMENT COMMENT '父目录id',
+    m_name       VARCHAR(50)    NOT NULL DEFAULT '' COMMENT '父目录名称',
+    m_number     INT(11) unique NOT NULL DEFAULT -1 COMMENT '父目录编号',
+    m_url        VARCHAR(50)    NOT NULL DEFAULT '#' COMMENT '父目录链接',
+    m_type       VARCHAR(50)    NOT NULL DEFAULT '目录' COMMENT '父目录类型',
+    m_vital      INT(11)        NOT NULL DEFAULT 0 COMMENT '父目录可见（0显示，1隐藏）',
+    m_competence VARCHAR(50)    NOT NULL DEFAULT 'null' COMMENT '父目录权限',
+    m_icon       VARCHAR(50)    NOT NULL DEFAULT '' COMMENT '父目录图标',
     PRIMARY KEY (m_id, m_number)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'mulu';
+  DEFAULT CHARSET = utf8mb4 COMMENT '目录父表';
+
 
 
 INSERT INTO zhaoling.mulu_db (m_name, m_number, m_icon)
@@ -21,19 +27,24 @@ VALUES ('主页', 1, 'layui-icon layui-icon-home'),
        ('日志管理', 5, 'layui-icon layui-icon-form'),
        ('我的设置', 6, 'layui-icon layui-icon-username');
 
+# --------------------------------------------------------------------
 
 CREATE TABLE con_tents_db
 (
-    con_id     INT(11)     NOT NULL AUTO_INCREMENT COMMENT '目录id',
-    con_name   VARCHAR(11) NOT NULL DEFAULT '' COMMENT '目录名字',
-    con_url    VARCHAR(50) NOT NULL DEFAULT '' COMMENT '目录链接',
-    con_number INT(11)     NOT NULL DEFAULT -1 COMMENT '目录序号',
-    con_icon   VARCHAR(50) NOT NULL DEFAULT '' COMMENT '目录图标',
+    con_id         INT(11)     NOT NULL AUTO_INCREMENT COMMENT '目录id',
+    con_name       VARCHAR(50) NOT NULL DEFAULT '' COMMENT '目录名字',
+    con_url        VARCHAR(50) NOT NULL DEFAULT '#' COMMENT '目录链接',
+    con_number     INT(11)     NOT NULL DEFAULT -1 COMMENT '目录序号',
+    con_type       VARCHAR(50) NOT NULL DEFAULT '菜单' COMMENT '目录类型',
+    con_vital      INT(11)     NOT NULL DEFAULT 0 COMMENT '目录可见（0显示，1隐藏）',
+    con_competence VARCHAR(50) NOT NULL DEFAULT 'null' COMMENT '目录权限',
+    con_icon       VARCHAR(50) NOT NULL DEFAULT '' COMMENT '目录图标',
     PRIMARY KEY (con_id),
     constraint fk_con_mulu foreign key (con_number) references mulu_db (m_number)
-
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'con_tents';
+  DEFAULT CHARSET = utf8mb4 COMMENT '菜单表';
+
+
 
 INSERT INTO zhaoling.con_tents_db (con_name, con_url, con_number, con_icon)
 VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),

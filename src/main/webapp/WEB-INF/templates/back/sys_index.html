@@ -47,7 +47,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree">
                 <li class="layui-nav-item " th:each="s : ${list}">
-                    <a href="javascript:;" lay-direction="2" th:title="${s.m_name}"><i th:class="${s.m_icon}"></i>&nbsp;<span><cite
+                    <a lay-direction="2" th:href="${s.m_url}" th:title="${s.m_name}"><i th:class="${s.m_icon}"></i>&nbsp;<span><cite
                             th:text="${s.m_name}"></cite></span></a>
                     <dl class="layui-nav-child" th:each="t:${s.list}">
                         <!--                        <dd><a href="https://www.nowcoder.com/index"><i class="fa fa-list fa-lg " ><span th:text="${t.con_name}">sdfd</span></i></a></dd>-->

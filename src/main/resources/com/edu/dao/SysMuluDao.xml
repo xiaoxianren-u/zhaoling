@@ -1,0 +1,63 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.SysMuluDao">
+    <!--获取目录编号做大-->
+    <select id="selectM_number" resultType="int">
+        select max(mulu_db.m_number)
+        from zhaoling.mulu_db
+    </select>
+
+<!--    新增目录-->
+    <insert id="insert">
+        insert into zhaoling.mulu_db(
+            <trim suffixOverrides=",">
+                <if test="m_name != null and m_name != ''">m_name,</if>
+                <if test="m_number != null"> m_number, </if>
+                <if test="m_url != null and m_url != ''">m_url,</if>
+                <if test="m_vital != null">m_vital,</if>
+                <if test="m_competence != null and m_competence != ''">m_competence,</if>
+            </trim>
+        )values (
+            <trim suffixOverrides=",">
+                <if test="m_name != null and m_name != ''">#{m_name}, </if>
+                <if test="m_number != null">#{m_number},</if>
+                <if test="m_url != null and m_url != ''">#{m_url},</if>
+                <if test="m_vital != null">#{m_vital},</if>
+                <if test="m_competence != null and m_competence != ''">#{m_competence},</if>
+            </trim>
+        )
+    </insert>
+<!--   添加目录时同时添加该目录的第一个菜单 -->
+    <insert id="insetM_Con">
+            insert into zhaoling.con_tents_db(
+                 <trim suffixOverrides=",">
+                    <if test="m_name != null and m_name != ''">con_name,</if>
+                    <if test="m_number != null">con_number, </if>
+                </trim>
+            )values (
+                <trim suffixOverrides=",">
+                    <if test="m_name != null and m_name != ''">#{m_name},</if>
+                    <if test="m_number != null">#{m_number},</if>
+                </trim>
+            )
+    </insert>
+<!--    新增菜单-->
+    <insert id="inset_Con">
+        insert into zhaoling.con_tents_db(
+            <trim suffixOverrides=",">
+                <if test="con_name != null and con_name != ''">con_name,</if>
+                <if test="con_number != null">con_number,</if>
+                <if test="con_url != null and con_url != ''">con_url,</if>
+                <if test="con_vital != null">con_vital,</if>
+                <if test="con_competence != null and con_competence != ''">con_competence,</if>
+            </trim>
+        )values (
+            <trim suffixOverrides=",">
+                <if test="con_name != null and con_name != ''">#{con_name}, </if>
+                <if test="con_number != null">#{con_number},</if>
+                <if test="con_url != null and con_url != ''">#{con_url},</if>
+                <if test="con_vital != null">#{con_vital},</if>
+                <if test="con_competence != null and con_competence != ''">#{con_competence},</if>
+            </trim>
+        )
+    </insert>
+</mapper>

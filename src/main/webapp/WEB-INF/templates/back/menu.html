@@ -72,9 +72,9 @@
                                 <button class="layui-btn layui-btn" id="add" style="border-radius: 10px" type="button">
                                     <i class="iconfont icon-zengjia"></i>&nbsp;新增
                                 </button>
-                                <button class="layui-btn layui-btn-normal" style="border-radius: 10px" type="button"><i
-                                        class="iconfont icon-web-icon-"></i>&nbsp;编辑
-                                </button>
+                                <!--                                <button class="layui-btn layui-btn-normal" style="border-radius: 10px" type="button"><i-->
+                                <!--                                        class="iconfont icon-web-icon-"></i>&nbsp;编辑-->
+                                <!--                                </button>-->
                                 <button class="layui-btn layui-btn-danger" style="border-radius: 10px" type="button"><i
                                         class="iconfont icon-shanchu"></i>&nbsp;删除
                                 </button>
@@ -278,16 +278,16 @@
 
 
 </body>
-
+<!--新增弹出层-->
 <div class="site-text" id="window" style="margin: 5%; display: none" target="test123">
     <form class="layui-form" id="book" lay-filter="example" method="post">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">上级菜单：</label>
+            <label class="layui-form-label"><span style="color:red;">*</span>上级菜单：</label>
             <div class="layui-input-block">
                 <select id="x_name" lay-filter="aihao" name="x_name">
                     <option value="0">新建目录</option>
-                    <option th:each="n:${list}" th:text="${n.m_name}" th:value="${n.m_name}"></option>
+                    <option th:each="n:${list}" th:text="${n.m_name}" th:value="${n.m_number}"></option>
                 </select>
             </div>
         </div>
@@ -299,7 +299,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">目录(菜单) 名称：</label>
+            <label class="layui-form-label"><span style="color:red;">*</span>目录(菜单) 名称：</label>
             <div class="layui-input-block">
                 <input class="layui-input" id="name" name="name" type="text">
             </div>
@@ -329,51 +329,6 @@
 
 
 <!--</script>-->
-
-
-<!--各个按钮的点击事件-->
-<script>
-
-    $(document).on('click', '#con_delete', function () {
-
-        console.log("1111111111111111");
-        let con_id = $(this).attr("value");
-        console.log(con_id);
-
-    })
-
-    $(document).on('click', '#con_edit', function () {
-
-        console.log("222222222222222222222222222222222");
-        let con_id = $(this).attr("value");
-        console.log(con_id);
-
-    })
-
-    $(document).on('click', '#m_delete', function () {
-
-        console.log("3333333333");
-        let con_id = $(this).attr("value");
-        console.log(con_id);
-
-    })
-    $(document).on('click', '#m_inset', function () {
-
-        console.log("1444444444444");
-        let con_id = $(this).attr("value");
-        console.log(con_id);
-
-    })
-    $(document).on('click', '#m_edit', function () {
-
-        console.log("5555555555555555");
-        let con_id = $(this).attr("value");
-        console.log(con_id);
-
-    })
-
-
-</script>
 
 
 <!--下拉列表-->
@@ -429,11 +384,10 @@
                     let url = $("#url").val();                  //链接
                     let competence = $("#competence").val();    //权限
                     console.log(competence);
+                    console.log(x_name);
                     let vital = $('input[name="vital"]:checked').val();              //可见
-
                     console.log(type);
                     console.log(vital);
-
                     $.ajax({
                         type: "GET",
                         url: "/data/insert?x_name=" + x_name + "&type=" + type + "&name=" + name + "&url=" + url + "&competence=" + competence + "&vital=" + vital,
@@ -443,18 +397,70 @@
                         success: function (sre) {
                             console.log(sre);
                             layer.msg(sre.msg);
+                            if (sre.bool === true) {
+                                setTimeout(function () {
+                                    window.location.reload();  //刷新页面
+                                }, 800);
+                            }
                         }
-
-
                     })
-
-
                 },
             });
 
         });
-        layer.msg('Hello World');
+
+
     });
+</script>
+
+<script>
+
+    layui.use(function () {
+        var layer = layui.layer
+            , form = layui.form
+            , $ = layui.jquery;
+
+
+        $(document).on('click', '#con_delete', function () {
+
+            console.log("1111111111111111");
+            let con_id = $(this).attr("value");
+            console.log(con_id);
+
+        })
+
+        $(document).on('click', '#con_edit', function () {
+
+            console.log("222222222222222222222222222222222");
+            let con_id = $(this).attr("value");
+            console.log(con_id);
+
+        })
+
+        $(document).on('click', '#m_delete', function () {
+
+            console.log("3333333333");
+            let con_id = $(this).attr("value");
+            console.log(con_id);
+
+        })
+        $(document).on('click', '#m_inset', function () {
+
+            console.log("1444444444444");
+            let con_id = $(this).attr("value");
+            console.log(con_id);
+
+        })
+        $(document).on('click', '#m_edit', function () {
+
+            console.log("5555555555555555");
+            let con_id = $(this).attr("value");
+            console.log(con_id);
+
+        })
+    })
+
+
 </script>
 </html>
 

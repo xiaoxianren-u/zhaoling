@@ -26,7 +26,15 @@
         </resultMap>
         <select id="selectContents" resultMap="mulist">
             select con_id, con_name, con_url, con_number, con_type, con_vital, con_competence, con_icon, m_id, m_name, m_number, m_url, m_type, m_vital, m_competence, m_icon from zhaoling.con_tents_db c ,zhaoling.mulu_db m
-            where c.con_number = m.m_number
+            where c.con_number = m.m_number;
         </select>
+
+
+        <select id="selectContents_sys" resultMap="mulist">
+            select con_id, con_name, con_url, con_number, con_type, con_vital, con_competence, con_icon, m_id, m_name, m_number, m_url, m_type, m_vital, m_competence, m_icon from zhaoling.con_tents_db c ,zhaoling.mulu_db m
+            where c.con_number = m.m_number and m.m_vital = 0 and c.con_vital = 0;
+        </select>
+
+
 
 </mapper>
