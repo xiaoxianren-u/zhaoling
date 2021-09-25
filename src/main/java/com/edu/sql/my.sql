@@ -11,7 +11,7 @@ CREATE TABLE mulu_db
     m_url        VARCHAR(50)    NOT NULL DEFAULT '#' COMMENT '父目录链接',
     m_type       VARCHAR(50)    NOT NULL DEFAULT '目录' COMMENT '父目录类型',
     m_vital      INT(11)        NOT NULL DEFAULT 0 COMMENT '父目录可见（0显示，1隐藏）',
-    m_competence VARCHAR(50)    NOT NULL DEFAULT 'null' COMMENT '父目录权限',
+    m_competence VARCHAR(50)    NOT NULL DEFAULT '#' COMMENT '父目录权限',
     m_icon       VARCHAR(50)    NOT NULL DEFAULT '' COMMENT '父目录图标',
     PRIMARY KEY (m_id, m_number)
 ) ENGINE = InnoDB
@@ -37,7 +37,7 @@ CREATE TABLE con_tents_db
     con_number     INT(11)     NOT NULL DEFAULT -1 COMMENT '目录序号',
     con_type       VARCHAR(50) NOT NULL DEFAULT '菜单' COMMENT '目录类型',
     con_vital      INT(11)     NOT NULL DEFAULT 0 COMMENT '目录可见（0显示，1隐藏）',
-    con_competence VARCHAR(50) NOT NULL DEFAULT 'null' COMMENT '目录权限',
+    con_competence VARCHAR(50) NOT NULL DEFAULT '#' COMMENT '目录权限',
     con_icon       VARCHAR(50) NOT NULL DEFAULT '' COMMENT '目录图标',
     PRIMARY KEY (con_id),
     constraint fk_con_mulu foreign key (con_number) references mulu_db (m_number)

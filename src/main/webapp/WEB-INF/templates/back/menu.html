@@ -168,9 +168,9 @@
                                                     <span class="layui-badge layui-bg-blue" id="m_edit"
                                                           th:value="${s.m_id}"><i class="iconfont icon-web-icon-"
                                                                                   style="color: white"></i>&nbsp;编辑</span>&nbsp;&nbsp;
-                                                    <span class="layui-badge layui-bg-green" id="m_inset"
-                                                          th:value="${s.m_id}"><i class="iconfont icon-zengjia"
-                                                                                  style="color: white"></i>&nbsp;新增</span>&nbsp;&nbsp;
+                                                    <!--                                                    <span class="layui-badge layui-bg-green" id="m_inset"-->
+                                                    <!--                                                          th:value="${s.m_id}"><i class="iconfont icon-zengjia"-->
+                                                    <!--                                                                                  style="color: white"></i>&nbsp;新增</span>&nbsp;&nbsp;-->
                                                     <span class="layui-badge" id="m_delete" th:value="${s.m_id}"><i
                                                             class="iconfont icon-shanchu" style="color: white"></i>&nbsp;删除</span>&nbsp;&nbsp;
                                                 </div>
@@ -244,7 +244,7 @@
                                                                                             class="iconfont icon-web-icon-"
                                                                                             style="color: white"></i>&nbsp;编辑</span>
                                                                                     <!--                                                                                    <span class="layui-badge layui-bg-green"><i></i>新增</span>-->
-                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                    &nbsp;
                                                                                     <span class="layui-badge"
                                                                                           id="m_delete"
                                                                                           th:value="${t.con_id}"><i
@@ -326,8 +326,24 @@
         </div>
     </form>
 </div>
-
-
+<!--目录修改-->
+<div class="site-text" id="m_update" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>目录名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="m_name" name="m_name" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>显示状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="m_vital" title="显示" type="radio" value="0">
+                <input name="m_vital" title="隐藏" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
 <!--</script>-->
 
 
@@ -357,6 +373,7 @@
 
 </script>
 
+<!--新增-->
 <script>
 
     layui.use(function () {
@@ -368,7 +385,7 @@
             console.log("000000000000000")
             layer.open({
                 type: 1,
-                title: "页面",
+                title: "页面新增",
                 area: ["700px", "600px"],
                 btn: ['提交', '取消'], //可以无限个按钮
                 Number: 9000000,   //自动关闭的时间
@@ -395,7 +412,7 @@
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function (sre) {
-                            console.log(sre);
+                            console.log(sre.msg);
                             layer.msg(sre.msg);
                             if (sre.bool === true) {
                                 setTimeout(function () {
@@ -417,7 +434,6 @@
 
     layui.use(function () {
         var layer = layui.layer
-            , form = layui.form
             , $ = layui.jquery;
 
 
@@ -437,23 +453,70 @@
 
         })
 
-        $(document).on('click', '#m_delete', function () {
+        //对目录进行操作
 
-            console.log("3333333333");
-            let con_id = $(this).attr("value");
-            console.log(con_id);
 
-        })
-        $(document).on('click', '#m_inset', function () {
-
-            console.log("1444444444444");
-            let con_id = $(this).attr("value");
-            console.log(con_id);
-
-        })
+        //修改
         $(document).on('click', '#m_edit', function () {
 
-            console.log("5555555555555555");
+            console.log("5555555555555555-");
+            let con_id = $(this).attr("value");
+            console.log(con_id);
+            $.ajax({
+                type: "GET",
+                url: "/data/m_update?m_number=" + con_id,
+                async: true,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (sre) {
+
+                    $("#m_name").attr("value", sre.date.m_name);
+                    console.log(sre.date);
+                    if (sre.bool === true) {
+                        layer.open({
+                            type: 1,
+                            title: "目录修改",
+                            area: ["450px", "270px"],
+                            btn: ['提交', '取消'], //可以无限个按钮
+                            Number: 900000,   //自动关闭的时间
+                            anim: 2,
+                            maxmin: true, // 最大最小化。
+                            resize: true, // 是否允许拉伸
+                            content: $('#m_update'), //添加表单到弹出层
+                            yes: function (index) {
+                                let m_name = $("#m_name").val();
+                                let m_vital = $('input[name="m_vital"]:checked').val();
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/data/m_update/data?m_name=" + m_name + "&m_vital=" + m_vital + "&m_number=" + sre.date.m_number,
+                                    async: true,
+                                    dataType: "json",
+                                    contentType: "application/json;charset=UTF-8",
+                                    success: function (sre) {
+
+                                        console.log(sre);
+                                    }
+
+
+                                })
+
+
+                            }
+                        })
+
+
+                    } else {
+                        layer.msg(sre.msg, {icon: 0})
+                    }
+                    // layer.msg(sre.msg);
+                }
+            })
+        })
+
+        // 删除
+        $(document).on('click', '#m_delete', function () {
+
+            console.log("3333333333-=");
             let con_id = $(this).attr("value");
             console.log(con_id);
 

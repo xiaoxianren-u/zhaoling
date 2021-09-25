@@ -2,6 +2,7 @@ package com.edu.service;
 
 import com.edu.pojo.ConTents;
 import com.edu.pojo.mulu;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,6 +28,15 @@ public interface SysMuluService {
      * @return
      */
     int inset_Con(ConTents conTents);
+
+
+    /**
+     * 获取要修改指定目录的字段
+     *
+     * @param mNumber
+     * @return
+     */
+    mulu selectMone(@Param("mNumber") Integer mNumber);
 
 
 }

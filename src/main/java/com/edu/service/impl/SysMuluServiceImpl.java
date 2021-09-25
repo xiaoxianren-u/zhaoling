@@ -44,10 +44,8 @@ public class SysMuluServiceImpl implements SysMuluService {
             /**
              * 第一个菜单添加
              */
-            System.out.println("======");
             return sysMuluDao.insetM_Con(m);
         } else {
-            System.out.println("++++++");
             return nn;
         }
     }
@@ -61,5 +59,16 @@ public class SysMuluServiceImpl implements SysMuluService {
     @Override
     public int inset_Con(ConTents conTents) {
         return sysMuluDao.inset_Con(conTents);
+    }
+
+    /**
+     * 获取要修改指定目录的字段
+     *
+     * @param mNumber
+     * @return
+     */
+    @Override
+    public mulu selectMone(Integer mNumber) {
+        return sysMuluDao.selectMone(mNumber);
     }
 }

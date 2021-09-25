@@ -12,17 +12,13 @@
             <trim suffixOverrides=",">
                 <if test="m_name != null and m_name != ''">m_name,</if>
                 <if test="m_number != null"> m_number, </if>
-                <if test="m_url != null and m_url != ''">m_url,</if>
                 <if test="m_vital != null">m_vital,</if>
-                <if test="m_competence != null and m_competence != ''">m_competence,</if>
             </trim>
         )values (
             <trim suffixOverrides=",">
                 <if test="m_name != null and m_name != ''">#{m_name}, </if>
                 <if test="m_number != null">#{m_number},</if>
-                <if test="m_url != null and m_url != ''">#{m_url},</if>
                 <if test="m_vital != null">#{m_vital},</if>
-                <if test="m_competence != null and m_competence != ''">#{m_competence},</if>
             </trim>
         )
     </insert>
@@ -60,4 +56,10 @@
             </trim>
         )
     </insert>
+
+<!--    获取要修改指定目录的字段-->
+    <select id="selectMone" resultType="com.edu.pojo.mulu">
+
+        select m_number,m_name,m_vital from zhaoling.mulu_db where m_number = #{mNumber}
+    </select>
 </mapper>

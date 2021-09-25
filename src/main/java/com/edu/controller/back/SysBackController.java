@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.edu.pojo.ConTents;
 import com.edu.pojo.mulu;
 import com.edu.service.SysMuluService;
+import com.edu.util.PageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +30,17 @@ public class SysBackController {
     @Autowired
     private SysMuluService sysMuluService;
 
-
+    /**
+     * 目录以及菜单的添加
+     *
+     * @param xName      //上级目录
+     * @param type       //类型
+     * @param name       //名字
+     * @param competence //权限
+     * @param url        //链接
+     * @param vital      //可见
+     * @return
+     */
     @RequestMapping("/insert")
     public String insetController(@RequestParam("x_name") Integer xName,                     //上级目录
                                   @RequestParam("type") String type,                      //类型
@@ -62,14 +74,13 @@ public class SysBackController {
                 m.setM_vital(vital);
                 m.setM_name(name);
                 int n = sysMuluService.insert(m);
-                System.out.println("\"ok\" = " + "ok");
-                map.put("msg", n > 0 ? "目录添加成功" : "目录添加失败");
-                map.put("bool", n > 0);
+                map.put("msg", n > 0 ? PageCodeEnum.ADD_SUCCESS.getMsg() : PageCodeEnum.ADD_FAIL.getMsg());
+                map.put("bool", n > 0 ? PageCodeEnum.ADD_SUCCESS.getBool() : PageCodeEnum.ADD_FAIL.getBool());
                 return JSON.toJSONString(map);
 
             } else {
                 map.put("bool", false);
-                map.put("msg", "类型与上级菜单不符");
+                map.put("msg", PageCodeEnum.SUB_MENU_EXISTS_M.getMsg());
                 return JSON.toJSONString(map);
             }
         }
@@ -77,7 +88,7 @@ public class SysBackController {
         if ("菜单".equals(type)) {
             if (0 == xName) {
                 map.put("bool", false);
-                map.put("msg", "类型与上级菜单不符");
+                map.put("msg", PageCodeEnum.SUB_MENU_EXISTS_M.getMsg());
                 return JSON.toJSONString(map);
             }
         }
@@ -91,8 +102,56 @@ public class SysBackController {
         conTents.setCon_url(url);
         conTents.setCon_vital(vital);
         int n = sysMuluService.inset_Con(conTents);
-        map.put("msg", n > 0 ? "菜单添加成功" : "目录添加失败");
-        map.put("bool", n > 0);
+        map.put("msg", n > 0 ? PageCodeEnum.ADD_SUCCESS.getMsg() : PageCodeEnum.ADD_FAIL.getMsg());
+        map.put("bool", n > 0 ? PageCodeEnum.ADD_SUCCESS.getBool() : PageCodeEnum.ADD_FAIL.getBool());
         return JSON.toJSONString(map);
     }
+
+
+    /**
+     * 获取要修改指定目录的字段
+     *
+     * @param mNumber
+     * @return
+     */
+    @RequestMapping(value = "/m_update", method = RequestMethod.GET)
+    public String mUpdate(@RequestParam("m_number") Integer mNumber) {
+        HashMap<String, Object> map = new HashMap<>(2);
+        System.out.println(mNumber);
+        mulu m = sysMuluService.selectMone(mNumber);
+        if (m != null) {
+            map.put("bool", true);
+//            modelMap.put("date",m);
+            map.put("date", m);
+        } else {
+            map.put("bool", false);
+            map.put("msg", "服务器出错500！！！");
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    /**
+     * 目录修改
+     *
+     * @param mName
+     * @param mVital
+     * @param mNumber
+     * @return
+     */
+    @RequestMapping(value = "/m_update/data", method = RequestMethod.GET)
+    public String mUpdateData(@RequestParam("m_name") String mName,
+                              @RequestParam("m_vital") String mVital,
+                              @RequestParam("m_number") Integer mNumber) {
+
+
+        System.out.println("mName = " + mName);
+        System.out.println("mNumber = " + mNumber);
+        System.out.println("mVital = " + mVital);
+
+
+        return JSON.toJSONString("ok");
+    }
+
+
 }

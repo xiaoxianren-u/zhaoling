@@ -2,6 +2,7 @@ package com.edu.dao;
 
 import com.edu.pojo.ConTents;
 import com.edu.pojo.mulu;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,6 +42,14 @@ public interface SysMuluDao {
      * @return
      */
     int inset_Con(ConTents conTents);
+
+    /**
+     * 获取要修改指定目录的字段
+     *
+     * @param mNumber
+     * @return
+     */
+    mulu selectMone(@Param("mNumber") Integer mNumber);
 
 
 }
