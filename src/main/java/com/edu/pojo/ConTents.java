@@ -6,10 +6,7 @@ package com.edu.pojo;
  * @file : ConTents.java
  */
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * 后台导航栏目录
@@ -21,6 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ConTents {
 
     /**

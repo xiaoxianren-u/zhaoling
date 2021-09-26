@@ -19,7 +19,7 @@ public enum PageCodeEnum {
     MODIFY_SUCCESS(1100, "修改成功！", true),
     MODIFY_FAIL(1101, "修改失败！", false),
     REMOVE_SUCCESS(1200, "删除成功！", true),
-    REMOVE_FAIL(1201, "删除失败！", true),
+    REMOVE_FAIL(1201, "删除失败！", false),
     LOGIN_FAIL(1301, "登录失败！用户名密码错误！", false),
     SESSION_TIMEOUT(1302, "session超时，请重新登录！", false),
     NO_AUTH(1303, "没有权限访问请求资源，请切换账户后重试！", false),

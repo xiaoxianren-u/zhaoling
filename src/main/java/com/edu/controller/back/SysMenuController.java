@@ -3,7 +3,7 @@ package com.edu.controller.back;
 import com.alibaba.fastjson.JSON;
 import com.edu.pojo.ConTents;
 import com.edu.pojo.mulu;
-import com.edu.service.SysMuluService;
+import com.edu.service.SysMenuService;
 import com.edu.util.PageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +21,14 @@ import java.util.HashMap;
 
 
 @RestController
-@RequestMapping("/data")
-public class SysBackController {
+@RequestMapping("/menu")
+public class SysMenuController {
 
     /**
      * 父目录
      */
     @Autowired
-    private SysMuluService sysMuluService;
+    private SysMenuService sysMenuService;
 
     /**
      * 目录以及菜单的添加
@@ -73,7 +73,7 @@ public class SysBackController {
                 m.setM_url(url);
                 m.setM_vital(vital);
                 m.setM_name(name);
-                int n = sysMuluService.insert(m);
+                int n = sysMenuService.insert(m);
                 map.put("msg", n > 0 ? PageCodeEnum.ADD_SUCCESS.getMsg() : PageCodeEnum.ADD_FAIL.getMsg());
                 map.put("bool", n > 0 ? PageCodeEnum.ADD_SUCCESS.getBool() : PageCodeEnum.ADD_FAIL.getBool());
                 return JSON.toJSONString(map);
@@ -101,7 +101,7 @@ public class SysBackController {
         conTents.setCon_name(name);
         conTents.setCon_url(url);
         conTents.setCon_vital(vital);
-        int n = sysMuluService.inset_Con(conTents);
+        int n = sysMenuService.inset_Con(conTents);
         map.put("msg", n > 0 ? PageCodeEnum.ADD_SUCCESS.getMsg() : PageCodeEnum.ADD_FAIL.getMsg());
         map.put("bool", n > 0 ? PageCodeEnum.ADD_SUCCESS.getBool() : PageCodeEnum.ADD_FAIL.getBool());
         return JSON.toJSONString(map);
@@ -118,7 +118,7 @@ public class SysBackController {
     public String mUpdate(@RequestParam("m_number") Integer mNumber) {
         HashMap<String, Object> map = new HashMap<>(2);
         System.out.println(mNumber);
-        mulu m = sysMuluService.selectMone(mNumber);
+        mulu m = sysMenuService.selectMone(mNumber);
         if (m != null) {
             map.put("bool", true);
 //            modelMap.put("date",m);
@@ -141,17 +141,110 @@ public class SysBackController {
      */
     @RequestMapping(value = "/m_update/data", method = RequestMethod.GET)
     public String mUpdateData(@RequestParam("m_name") String mName,
-                              @RequestParam("m_vital") String mVital,
+                              @RequestParam("m_vital") Integer mVital,
                               @RequestParam("m_number") Integer mNumber) {
-
-
         System.out.println("mName = " + mName);
         System.out.println("mNumber = " + mNumber);
         System.out.println("mVital = " + mVital);
-
-
-        return JSON.toJSONString("ok");
+        HashMap<String, Object> map = new HashMap<>(4);
+        mulu m = new mulu(null, mName, mNumber, null, null, mVital, null, null, null);
+        System.out.println(m.toString());
+        int n = sysMenuService.updateM_nu(m);
+        if (n > 0) {
+            map.put("msg", PageCodeEnum.MODIFY_SUCCESS.getMsg());
+            map.put("bool", PageCodeEnum.MODIFY_SUCCESS.getBool());
+        } else {
+            map.put("msg", PageCodeEnum.MODIFY_FAIL.getMsg());
+            map.put("bool", PageCodeEnum.MODIFY_FAIL.getBool());
+        }
+        return JSON.toJSONString(map);
     }
 
 
+    /**
+     * 获取要修改指定菜单的字段
+     *
+     * @param conNumber
+     * @return
+     */
+    @RequestMapping(value = "/con_update", method = RequestMethod.GET)
+    public String conUpdate(@RequestParam("con_number") Integer conNumber) {
+        HashMap<String, Object> map = new HashMap<>(2);
+        ConTents conTents = sysMenuService.selectConone(conNumber);
+        if (conTents != null) {
+            map.put("bool", true);
+            map.put("date", conTents);
+        } else {
+            map.put("bool", false);
+            map.put("msg", "服务器出错500！！！");
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    /**
+     * 修改菜单
+     *
+     * @param conName
+     * @param conVital
+     * @param conCompetence
+     * @param conUrl
+     * @param conId
+     * @return
+     */
+
+    @RequestMapping(value = "/con_update/data", method = RequestMethod.GET)
+    public String conUpdateData(@RequestParam("con_name") String conName,
+                                @RequestParam("con_vital") Integer conVital,
+                                @RequestParam("con_competence") String conCompetence,
+                                @RequestParam("con_url") String conUrl,
+                                @RequestParam("con_id") Integer conId) {
+
+        HashMap<String, Object> map = new HashMap<>(4);
+        ConTents conTents = new ConTents(conId, conName, conUrl, null, null, conVital, conCompetence, null);
+        System.out.println(conTents.toString());
+        int n = sysMenuService.updateCon_nu(conTents);
+        if (n > 0) {
+            map.put("msg", PageCodeEnum.MODIFY_SUCCESS.getMsg());
+            map.put("bool", PageCodeEnum.MODIFY_SUCCESS.getBool());
+        } else {
+            map.put("msg", PageCodeEnum.MODIFY_FAIL.getMsg());
+            map.put("bool", PageCodeEnum.MODIFY_FAIL.getBool());
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    /**
+     * 删除菜单
+     *
+     * @param conId
+     * @return
+     */
+    @RequestMapping(value = "/con_delete", method = RequestMethod.GET)
+    public String conDelete(@RequestParam("con_id") Integer conId) {
+        HashMap<String, Object> map = sysMenuService.conDeleTe(conId);
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 删除目录
+     *
+     * @param mNumber
+     * @return
+     */
+    @RequestMapping(value = "/m_delete", method = RequestMethod.GET)
+    public String mDelete(@RequestParam("m_number") Integer mNumber) {
+        HashMap<String, Object> map = new HashMap<>(2);
+        int n = sysMenuService.mDeleTe(mNumber);
+        if (n > 0) {
+            map.put("msg", PageCodeEnum.REMOVE_SUCCESS.getMsg());
+            map.put("bool", PageCodeEnum.REMOVE_SUCCESS.getBool());
+        } else {
+            map.put("msg", PageCodeEnum.REMOVE_FAIL.getMsg());
+            map.put("bool", PageCodeEnum.REMOVE_FAIL.getBool());
+        }
+
+        return JSON.toJSONString(map);
+    }
 }

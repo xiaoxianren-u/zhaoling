@@ -6,10 +6,7 @@ package com.edu.pojo;
  * @file : Picture.java
  */
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * 图片集
@@ -18,6 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Picture {
 
     /**

@@ -1,6 +1,6 @@
 package com.edu.pojo;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
@@ -10,7 +10,11 @@ import java.util.List;
  * @file : mulu.java
  */
 //父目录
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class mulu {
 
     /**

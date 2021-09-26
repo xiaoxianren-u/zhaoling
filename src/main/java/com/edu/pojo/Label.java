@@ -1,9 +1,6 @@
 package com.edu.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author yz
@@ -15,7 +12,7 @@ import lombok.Setter;
  * 标签表
  */
 
-
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
