@@ -12,6 +12,8 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+
+
 </head>
 
 <style>
@@ -28,40 +30,40 @@
 
 <body style="background-color: #f3f3f4 ">
 <!--输入框-->
-<div class="layui-bg-gray" style="padding: 10px; ">
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-md12">
-            <div class="layui-panel" style="border-radius:15px;">
-                <div style="padding: 10px;">
+<!--<div class="layui-bg-gray" style="padding: 10px; ">-->
+<!--    <div class="layui-row layui-col-space15">-->
+<!--        <div class="layui-col-md12">-->
+<!--            <div class="layui-panel" style="border-radius:15px;">-->
+<!--                <div style="padding: 10px;">-->
 
-                    <form οnsubmit="return false">
-                        <div class="demoTable" style="padding-left: 30px">
-                            菜单名称：
-                            <div class="layui-inline" style="padding-right: 30px;">
-                                <input autocomplete="off" class="layui-input" id="text_id" name="id"
-                                       placeholder="输入内容id">
-                            </div>
-                            菜单状态：
-                            <div class="layui-inline" style="width: 200px;padding-right: 20px;">
-                                <input class="layui-input" id="text_label" name="" placeholder="选择内容类型">
-                            </div>
-                            <button class="layui-btn" data-type="reload" style="border-radius: 20px"
-                                    type="submit">搜索
-                            </button>
-                            <button class="layui-btn layui-btn-warm" style="border-radius: 20px" type="reset">重置
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--                    <form οnsubmit="return false">-->
+<!--                        <div class="demoTable" style="padding-left: 30px">-->
+<!--                            菜单名称：-->
+<!--                            <div class="layui-inline" style="padding-right: 30px;">-->
+<!--                                <input autocomplete="off" class="layui-input" id="text_id" name="id"-->
+<!--                                       placeholder="输入内容id">-->
+<!--                            </div>-->
+<!--                            菜单状态：-->
+<!--                            <div class="layui-inline" style="width: 200px;padding-right: 20px;">-->
+<!--                                <input class="layui-input" id="text_label" name="" placeholder="选择内容类型">-->
+<!--                            </div>-->
+<!--                            <button class="layui-btn" data-type="reload" style="border-radius: 20px"-->
+<!--                                    type="submit">搜索-->
+<!--                            </button>-->
+<!--                            <button class="layui-btn layui-btn-warm" style="border-radius: 20px" type="reset">重置-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 <!--菜单-->
 <div class="layui-bg-gray" style="padding: 10px;">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
-            <div class="layui-panel">
+            <div class="layui-panel" style="border-radius: 10px">
                 <div>
                     <div>
 
@@ -75,9 +77,9 @@
                                 <!--                                <button class="layui-btn layui-btn-normal" style="border-radius: 10px" type="button"><i-->
                                 <!--                                        class="iconfont icon-web-icon-"></i>&nbsp;编辑-->
                                 <!--                                </button>-->
-                                <button class="layui-btn layui-btn-danger" style="border-radius: 10px" type="button"><i
-                                        class="iconfont icon-shanchu"></i>&nbsp;删除
-                                </button>
+                                <!--                                <button class="layui-btn layui-btn-danger" style="border-radius: 10px" type="button"><i-->
+                                <!--                                        class="iconfont icon-shanchu"></i>&nbsp;删除-->
+                                <!--                                </button>-->
                             </form>
                         </div>
 
@@ -168,10 +170,10 @@
                                                     <span class="layui-badge layui-bg-blue" id="m_edit"
                                                           th:value="${s.m_id}"><i class="iconfont icon-web-icon-"
                                                                                   style="color: white"></i>&nbsp;编辑</span>&nbsp;&nbsp;
-                                                    <span class="layui-badge layui-bg-green" id="m_inset"
-                                                          th:value="${s.m_id}"><i class="iconfont icon-zengjia"
-                                                                                  style="color: white"></i>&nbsp;新增</span>&nbsp;&nbsp;
-                                                    <span class="layui-badge" id="m_delete" th:value="${s.m_id}"><i
+                                                    <!--                                                    <span class="layui-badge layui-bg-green" id="m_inset"-->
+                                                    <!--                                                          th:value="${s.m_id}"><i class="iconfont icon-zengjia"-->
+                                                    <!--                                                                                  style="color: white"></i>&nbsp;新增</span>&nbsp;&nbsp;-->
+                                                    <span class="layui-badge" id="m_delete" th:value="${s.m_number}"><i
                                                             class="iconfont icon-shanchu" style="color: white"></i>&nbsp;删除</span>&nbsp;&nbsp;
                                                 </div>
                                             </div>
@@ -244,9 +246,9 @@
                                                                                             class="iconfont icon-web-icon-"
                                                                                             style="color: white"></i>&nbsp;编辑</span>
                                                                                     <!--                                                                                    <span class="layui-badge layui-bg-green"><i></i>新增</span>-->
-                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                    &nbsp;
                                                                                     <span class="layui-badge"
-                                                                                          id="m_delete"
+                                                                                          id="con_delete"
                                                                                           th:value="${t.con_id}"><i
                                                                                             class="iconfont icon-shanchu"
                                                                                             style="color: white"></i>&nbsp;删除</span>
@@ -326,7 +328,54 @@
         </div>
     </form>
 </div>
-
+<!--目录修改-->
+<div class="site-text" id="m_update" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>目录名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="m_name" name="m_name" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>显示状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="m_vital" title="显示" type="radio" value="0">
+                <input name="m_vital" title="隐藏" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
+<!--菜单修改-->
+<div class="site-text" id="con_update" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>目录名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="con_name" name="con_name" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>权限识别：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="con_competence" name="con_competence" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>请求地址：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="con_url" name="con_url" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>显示状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="con_vital" title="显示" type="radio" value="0">
+                <input name="con_vital" title="隐藏" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
 
 <!--</script>-->
 
@@ -357,6 +406,7 @@
 
 </script>
 
+<!--新增-->
 <script>
 
     layui.use(function () {
@@ -368,7 +418,7 @@
             console.log("000000000000000")
             layer.open({
                 type: 1,
-                title: "页面",
+                title: "页面新增",
                 area: ["700px", "600px"],
                 btn: ['提交', '取消'], //可以无限个按钮
                 Number: 9000000,   //自动关闭的时间
@@ -390,12 +440,12 @@
                     console.log(vital);
                     $.ajax({
                         type: "GET",
-                        url: "/data/insert?x_name=" + x_name + "&type=" + type + "&name=" + name + "&url=" + url + "&competence=" + competence + "&vital=" + vital,
+                        url: "/menu/insert?x_name=" + x_name + "&type=" + type + "&name=" + name + "&url=" + url + "&competence=" + competence + "&vital=" + vital,
                         async: true,
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function (sre) {
-                            console.log(sre);
+                            console.log(sre.msg);
                             layer.msg(sre.msg);
                             if (sre.bool === true) {
                                 setTimeout(function () {
@@ -417,50 +467,203 @@
 
     layui.use(function () {
         var layer = layui.layer
-            , form = layui.form
             , $ = layui.jquery;
 
 
+        //菜单修改
+        $(document).on('click', '#con_edit', function () {
+
+            console.log("222222222222222222222222222222222");
+            let con_number = $(this).attr("value");
+            console.log(con_number);
+            $.ajax({
+                type: "GET",
+                url: "/menu/con_update?con_number=" + con_number,
+                async: true,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (sre) {
+                    $("#con_name").attr("value", sre.date.con_name);
+                    $("#con_url").attr("value", sre.date.con_url);
+                    $("#con_competence").attr("value", sre.date.con_competence);
+                    console.log(sre);
+                    if (sre.bool === true) {
+                        layer.open({
+                            type: 1,
+                            title: "菜单修改",
+                            area: ["450px", "400px"],
+                            btn: ['提交', '取消'], //可以无限个按钮
+                            Number: 900000,   //自动关闭的时间
+                            anim: 2,
+                            maxmin: true, // 最大最小化。
+                            resize: true, // 是否允许拉伸
+                            content: $('#con_update'), //添加表单到弹出层
+                            yes: function (index) {
+                                let con_name = $("#con_name").val();
+                                let con_url = $("#con_url").val();
+                                let con_competence = $("#con_competence").val();
+                                if (con_url === "#") {
+                                    con_url = "";
+                                }
+                                if (con_competence === "#") {
+                                    con_competence = "";
+                                }
+                                let con_vital = $('input[name="con_vital"]:checked').val();
+                                console.log({
+                                    con_name: con_name,
+                                    con_url: con_url,
+                                    con_competence: con_competence,
+                                    con_vital: con_vital
+                                });
+
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/menu/con_update/data?con_name=" + con_name + "&con_url=" + con_url + "&con_competence=" + con_competence + "&con_vital=" + con_vital + "&con_id=" + sre.date.con_id,
+                                    async: true,
+                                    dataType: "json",
+                                    contentType: "application/json;charset=UTF-8",
+                                    success: function (sre) {
+                                        if (sre.bool === true) {
+                                            layer.msg(sre.msg, {icon: 1})
+                                            setTimeout(function () {
+                                                window.location.reload();  //刷新页面
+                                            }, 800);
+                                        } else {
+                                            layer.msg(sre.msg, {icon: 2})
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    } else {
+                        layer.msg(sre.msg, {icon: 0})
+                    }
+                }
+            })
+
+        })
+        //菜单删除
         $(document).on('click', '#con_delete', function () {
 
             console.log("1111111111111111");
             let con_id = $(this).attr("value");
             console.log(con_id);
+            layer.confirm('你确定要删除该菜单吗', {
+                icon: 5,
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/menu/con_delete?con_id=" + con_id,
+                    async: true,
+                    dataType: "json",
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (sre) {
+                        if (sre.bool === true) {
+                            layer.msg(sre.msg, {icon: 6});
+                            setTimeout(function () {
+                                window.location.reload();  //刷新页面
+                            }, 800);
+                        } else {
+                            layer.msg(sre.msg);
+                        }
+                    }
+                })
+            }, function () {
+                layer.msg("感谢手下留情");
+            });
 
         })
-
-        $(document).on('click', '#con_edit', function () {
-
-            console.log("222222222222222222222222222222222");
-            let con_id = $(this).attr("value");
-            console.log(con_id);
-
-        })
-
-        $(document).on('click', '#m_delete', function () {
-
-            console.log("3333333333");
-            let con_id = $(this).attr("value");
-            console.log(con_id);
-
-        })
-        $(document).on('click', '#m_inset', function () {
-
-            console.log("1444444444444");
-            let con_id = $(this).attr("value");
-            console.log(con_id);
-
-        })
+        //对目录进行操作
+        //修改
         $(document).on('click', '#m_edit', function () {
 
-            console.log("5555555555555555");
-            let con_id = $(this).attr("value");
-            console.log(con_id);
+            console.log("5555555555555555-");
+            let m_number = $(this).attr("value");
+            console.log(m_number);
+            $.ajax({
+                type: "GET",
+                url: "/menu/m_update?m_number=" + m_number,
+                async: true,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (sre) {
+                    $("#m_name").attr("value", sre.date.m_name);
+                    console.log(sre.date);
+                    if (sre.bool === true) {
+                        layer.open({
+                            type: 1,
+                            title: "目录修改",
+                            area: ["450px", "270px"],
+                            btn: ['提交', '取消'], //可以无限个按钮
+                            Number: 900000,   //自动关闭的时间
+                            anim: 2,
+                            maxmin: true, // 最大最小化。
+                            resize: true, // 是否允许拉伸
+                            content: $('#m_update'), //添加表单到弹出层
+                            yes: function (index) {
+                                let m_name = $("#m_name").val();
+                                let m_vital = $('input[name="m_vital"]:checked').val();
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/menu/m_update/data?m_name=" + m_name + "&m_vital=" + m_vital + "&m_number=" + sre.date.m_number,
+                                    async: true,
+                                    dataType: "json",
+                                    contentType: "application/json;charset=UTF-8",
+                                    success: function (sre) {
+                                        if (sre.bool === true) {
+                                            layer.msg(sre.msg, {icon: 1})
+                                            setTimeout(function () {
+                                                window.location.reload();  //刷新页面
+                                            }, 800);
+                                        } else {
+                                            layer.msg(sre.msg, {icon: 2})
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    } else {
+                        layer.msg(sre.msg, {icon: 0})
+                    }
+                    // layer.msg(sre.msg);
+                }
+            })
+        })
+        // 目录删除
+        $(document).on('click', '#m_delete', function () {
+
+            console.log("3333333333-=");
+            let m_number = $(this).attr("value");
+            console.log(m_number);
+
+            layer.confirm('你确定要删除该目录吗<br/>下级菜单也会被删除哦', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/menu/m_delete?m_number=" + m_number,
+                    async: true,
+                    dataType: "json",
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (sre) {
+                        if (sre.bool === true) {
+                            layer.msg(sre.msg, {icon: 6});
+                            setTimeout(function () {
+                                window.location.reload();  //刷新页面
+                            }, 800);
+                        } else {
+                            layer.msg(sre.msg);
+                        }
+                    }
+                })
+            }, function () {
+                layer.msg("感谢手下留情");
+            });
+
 
         })
     })
-
-
 </script>
 </html>
 

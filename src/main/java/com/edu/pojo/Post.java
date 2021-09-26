@@ -1,9 +1,6 @@
 package com.edu.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -21,6 +18,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Post {
 
     /**
@@ -34,7 +32,7 @@ public class Post {
     /**
      * 帖子标题
      */
-    private String  post_title;
+    private String post_title;
     /**
      * 帖子状态(0审核中,1通过，2，已领取，3为审核同)
      */

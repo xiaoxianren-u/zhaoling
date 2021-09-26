@@ -1,9 +1,6 @@
 package com.edu.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -17,7 +14,7 @@ import java.util.Date;
  * 感谢类
  */
 
-
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
