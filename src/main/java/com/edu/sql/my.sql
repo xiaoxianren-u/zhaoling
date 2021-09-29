@@ -68,6 +68,21 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('基本资料', DEFAULT, 6, 'iconfont icon-jibenziliao'),
        ('修改密码', DEFAULT, 6, 'iconfont icon-xiugaimima');
 
+
+# -----------------------------------------------------------------------------------------------------------------
+# 角色表
+CREATE TABLE `role_db`
+(
+    ro_id       INT(11)            NOT NULL AUTO_INCREMENT COMMENT '角色id',
+    `status`    VARCHAR(50) UNIQUE NOT NULL DEFAULT '' COMMENT '角色类型',
+    ro_have     VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '拥有权限',
+    ro_describe VARCHAR(100)       NOT NULL DEFAULT '' COMMENT '具体描述',
+    ro_status   INT(11)            NOT NULL DEFAULT 0 COMMENT '角色状态 0,启用，1禁止',
+    PRIMARY KEY (ro_id, status)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '角色表';
+
+
 # 用户列表
 CREATE TABLE user_db
 (
@@ -78,11 +93,12 @@ CREATE TABLE user_db
     user_iphone   VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户电话',
     `name`        VARCHAR(20) NOT NULL DEFAULT '' COMMENT '用户姓名',
     user_sex      VARCHAR(4)  NOT NULL DEFAULT '' COMMENT '用户性别',
-    `status`      INT(1)      NOT NULL DEFAULT 0 COMMENT '用户状态（0 普通，1管理员，2超级管理员，3黑名单）',
+    `status`      VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户状态',
     user_image    VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户头像',
     register_time DATETIME    NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户注册时间',
     finally_time  DATETIME    NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户最后一次登录时间',
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id),
+    constraint fk_ro_user foreign key (status) references role_db (status)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT 'user_db';
 
