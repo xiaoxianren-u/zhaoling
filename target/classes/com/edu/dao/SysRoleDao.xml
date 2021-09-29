@@ -1,0 +1,46 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.SysRoleDao">
+
+
+<!--角色管理列表-->
+    <select id="listRole" resultType="com.edu.pojo.Role">
+        select * from zhaoling.role_db;
+    </select>
+
+    <!--角色管理修改-->
+    <update id="edit">
+        update zhaoling.role_db
+            <set>
+                <if test="ro_describe != null and ro_describe != ''">ro_describe = #{ro_describe},</if>
+                <if test="ro_have != null and ro_have != ''">ro_have = #{ro_have},</if>
+                <if test="ro_status != null">ro_status = #{ro_status},</if>
+            </set>
+        where ro_id = #{ro_id}
+    </update>
+    <!--删除角色-->
+    <delete id="dle">
+        delete from zhaoling.role_db
+        where ro_id = #{roId}
+
+    </delete>
+<!--新增角色-->
+    <insert id="add">
+        insert into zhaoling.role_db(
+            <trim suffixOverrides=",">
+                <if test="ro_status != null">ro_status,</if>
+                <if test="ro_have != null and ro_have != ''">ro_have,</if>
+                <if test="ro_describe != null and ro_describe != ''">ro_describe,</if>
+                <if test="status != null and status != ''">status,</if>
+            </trim>
+        ) values (
+             <trim suffixOverrides=",">
+                <if test="ro_status != null">#{ro_status},</if>
+                <if test="ro_have != null and ro_have != ''">#{ro_have},</if>
+                <if test="ro_describe != null and ro_describe != ''">#{ro_describe},</if>
+                <if test="status != null and status != ''">#{status},</if>
+            </trim>
+        )
+    </insert>
+
+
+</mapper>
