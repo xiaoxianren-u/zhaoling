@@ -1,0 +1,102 @@
+package com.edu.controller.back;
+
+import com.alibaba.fastjson.JSON;
+import com.edu.pojo.Role;
+import com.edu.service.SysRoleService;
+import com.edu.util.PageCodeEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * @author yz
+ * @data: 2021/9/29 15:36 星期三
+ * @file : SysRoleController.java
+ */
+
+@RestController
+@RequestMapping("/role")
+public class SysRoleController {
+
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String roleList() {
+        List<Role> roleList = sysRoleService.listRole();
+        System.out.println("roleList = " + roleList);
+        String s = "{\"code\":0,\"msg\":\"\",\"count\":" + 0 + ",\"data\":" + JSON.toJSONString(roleList) + "}";
+        return s;
+    }
+
+
+    @RequestMapping("/edit")
+    public String roleEdit(@RequestParam("ro_id") Integer roleId,
+                           @RequestParam("ro_have") String roHave,
+                           @RequestParam("ro_describe") String roDescribe,
+                           @RequestParam("ro_status") Integer roStatus) {
+
+        HashMap<String, Object> map = new HashMap<>(2);
+        Role role = new Role(roleId, null, roStatus, roHave, roDescribe);
+        System.out.println("role = " + role);
+        int n = sysRoleService.edit(role);
+        if (n > 0) {
+            map.put("bool", PageCodeEnum.MODIFY_SUCCESS.getBool());
+            map.put("msg", PageCodeEnum.MODIFY_SUCCESS.getMsg());
+        } else {
+            map.put("bool", PageCodeEnum.MODIFY_FAIL.getBool());
+            map.put("msg", PageCodeEnum.MODIFY_FAIL.getMsg());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 删除
+     *
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/del")
+    public String roleDle(@RequestParam("ro_id") Integer roleId) {
+        HashMap<String, Object> map = new HashMap<>(2);
+        int n = sysRoleService.dle(roleId);
+        if (n > 0) {
+            map.put("bool", PageCodeEnum.REMOVE_SUCCESS.getBool());
+            map.put("msg", PageCodeEnum.REMOVE_SUCCESS.getMsg());
+        } else {
+            map.put("bool", PageCodeEnum.REMOVE_FAIL.getBool());
+            map.put("msg", PageCodeEnum.REMOVE_FAIL.getMsg());
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    @RequestMapping("/add")
+    public String roleAdd(@RequestParam("status") String status,
+                          @RequestParam("ro_have") String roHave,
+                          @RequestParam("ro_describe") String roDescribe,
+                          @RequestParam("ro_status") Integer roStatus) {
+
+        HashMap<String, Object> map = new HashMap<>(2);
+        Role role = new Role(null, status, roStatus, roHave, roDescribe);
+        System.out.println("role = " + role);
+
+        int n = sysRoleService.add(role);
+        if (n > 0) {
+            map.put("bool", PageCodeEnum.ADD_SUCCESS.getBool());
+            map.put("msg", PageCodeEnum.ADD_SUCCESS.getMsg());
+        } else {
+            map.put("bool", PageCodeEnum.ADD_FAIL.getBool());
+            map.put("msg", PageCodeEnum.ADD_FAIL.getMsg());
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+}

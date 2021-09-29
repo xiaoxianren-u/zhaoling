@@ -26,7 +26,6 @@ public class SysIndexController {
     @Autowired
     private SysConTentService sysConTentService;
 
-
     /**
      * 后台页面目录
      *
@@ -52,4 +51,12 @@ public class SysIndexController {
         modelMap.put("list", list);
         return "/back/menu";
     }
+
+    @RequestMapping("/role.action")
+    public String roleAction(ModelMap modelMap) {
+
+        return "/back/role";
+    }
+
+
 }

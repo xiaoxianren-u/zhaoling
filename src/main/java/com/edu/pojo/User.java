@@ -46,9 +46,9 @@ public class User {
      */
     private String user_sex;
     /**
-     * 用户状态（0 普通，1管理员，2超级管理员，3黑名单）
+     * 用户状态
      */
-    private Integer status;
+    private String status;
     /**
      * 用户头像
      */
