@@ -52,10 +52,28 @@ public class SysIndexController {
         return "/back/menu";
     }
 
+    /**
+     * 角色管理
+     *
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/role.action")
     public String roleAction(ModelMap modelMap) {
 
         return "/back/role";
+    }
+
+    /**
+     * 后台管理员
+     *
+     * @return
+     */
+    @RequestMapping("/administrator.action")
+    public String administratorAction() {
+
+
+        return "/back/administrator";
     }
 
 

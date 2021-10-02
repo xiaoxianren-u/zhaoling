@@ -36,6 +36,15 @@ public class SysRoleController {
     }
 
 
+    /**
+     * 角色管理内容的修改修改
+     *
+     * @param roleId
+     * @param roHave
+     * @param roDescribe
+     * @param roStatus
+     * @return
+     */
     @RequestMapping("/edit")
     public String roleEdit(@RequestParam("ro_id") Integer roleId,
                            @RequestParam("ro_have") String roHave,
@@ -43,7 +52,7 @@ public class SysRoleController {
                            @RequestParam("ro_status") Integer roStatus) {
 
         HashMap<String, Object> map = new HashMap<>(2);
-        Role role = new Role(roleId, null, roStatus, roHave, roDescribe);
+        Role role = new Role(roleId, null, null, roStatus, roHave, roDescribe);
         System.out.println("role = " + role);
         int n = sysRoleService.edit(role);
         if (n > 0) {
@@ -57,7 +66,7 @@ public class SysRoleController {
     }
 
     /**
-     * 删除
+     * 角色管理内容的修改删除
      *
      * @param roleId
      * @return
@@ -77,17 +86,32 @@ public class SysRoleController {
     }
 
 
+    /**
+     * 添加添加新的角色
+     *
+     * @param status
+     * @param roHave
+     * @param roDescribe
+     * @param roStatus
+     * @return
+     */
     @RequestMapping("/add")
     public String roleAdd(@RequestParam("status") String status,
                           @RequestParam("ro_have") String roHave,
                           @RequestParam("ro_describe") String roDescribe,
                           @RequestParam("ro_status") Integer roStatus) {
 
+
+        System.out.println("status = " + status);
+        System.out.println("roHave = " + roHave);
+        System.out.println("roDescribe = " + roDescribe);
+        System.out.println("roStatus = " + roStatus);
         HashMap<String, Object> map = new HashMap<>(2);
-        Role role = new Role(null, status, roStatus, roHave, roDescribe);
+        Role role = new Role(null, null, status, roStatus, roHave, roDescribe);
         System.out.println("role = " + role);
 
         int n = sysRoleService.add(role);
+//        System.out.println("n = " + n);
         if (n > 0) {
             map.put("bool", PageCodeEnum.ADD_SUCCESS.getBool());
             map.put("msg", PageCodeEnum.ADD_SUCCESS.getMsg());

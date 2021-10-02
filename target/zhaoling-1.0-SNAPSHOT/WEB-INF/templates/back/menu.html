@@ -77,9 +77,9 @@
                                 <!--                                <button class="layui-btn layui-btn-normal" style="border-radius: 10px" type="button"><i-->
                                 <!--                                        class="iconfont icon-web-icon-"></i>&nbsp;编辑-->
                                 <!--                                </button>-->
-<!--                                <button class="layui-btn layui-btn-danger" style="border-radius: 10px" type="button"><i-->
-<!--                                        class="iconfont icon-shanchu"></i>&nbsp;删除-->
-<!--                                </button>-->
+                                <!--                                <button class="layui-btn layui-btn-danger" style="border-radius: 10px" type="button"><i-->
+                                <!--                                        class="iconfont icon-shanchu"></i>&nbsp;删除-->
+                                <!--                                </button>-->
                             </form>
                         </div>
 
@@ -472,12 +472,11 @@
             , $ = layui.jquery;
 
 
-
         //菜单修改
         $(document).on('click', '#con_edit', function () {
 
             console.log("222222222222222222222222222222222");
-            let con_number= $(this).attr("value");
+            let con_number = $(this).attr("value");
             console.log(con_number);
             $.ajax({
                 type: "GET",
@@ -505,29 +504,34 @@
                                 let con_name = $("#con_name").val();
                                 let con_url = $("#con_url").val();
                                 let con_competence = $("#con_competence").val();
-                                if (con_url === "#"){
+                                if (con_url === "#") {
                                     con_url = "";
                                 }
-                                if (con_competence === "#"){
+                                if (con_competence === "#") {
                                     con_competence = "";
                                 }
                                 let con_vital = $('input[name="con_vital"]:checked').val();
-                                console.log({con_name:con_name,con_url:con_url,con_competence:con_competence,con_vital:con_vital});
+                                console.log({
+                                    con_name: con_name,
+                                    con_url: con_url,
+                                    con_competence: con_competence,
+                                    con_vital: con_vital
+                                });
 
                                 $.ajax({
                                     type: "GET",
-                                    url: "/menu/con_update/data?con_name="+con_name+"&con_url=" + con_url + "&con_competence=" +con_competence +"&con_vital="+con_vital+"&con_id="+sre.date.con_id,
+                                    url: "/menu/con_update/data?con_name=" + con_name + "&con_url=" + con_url + "&con_competence=" + con_competence + "&con_vital=" + con_vital + "&con_id=" + sre.date.con_id,
                                     async: true,
                                     dataType: "json",
                                     contentType: "application/json;charset=UTF-8",
                                     success: function (sre) {
-                                        if (sre.bool === true){
-                                            layer.msg(sre.msg,{icon: 1})
+                                        if (sre.bool === true) {
+                                            layer.msg(sre.msg, {icon: 1})
                                             setTimeout(function () {
                                                 window.location.reload();  //刷新页面
                                             }, 800);
-                                        }else {
-                                            layer.msg(sre.msg,{icon: 2})
+                                        } else {
+                                            layer.msg(sre.msg, {icon: 2})
                                         }
                                     }
                                 })
@@ -546,9 +550,10 @@
             console.log("1111111111111111");
             let con_id = $(this).attr("value");
             console.log(con_id);
-            layer.confirm('你确定要删除该菜单吗', {icon:5,
-                btn: ['确定','取消'] //按钮
-            }, function(){
+            layer.confirm('你确定要删除该菜单吗', {
+                icon: 5,
+                btn: ['确定', '取消'] //按钮
+            }, function () {
                 $.ajax({
                     type: "GET",
                     url: "/menu/con_delete?con_id=" + con_id,
@@ -556,17 +561,17 @@
                     dataType: "json",
                     contentType: "application/json;charset=UTF-8",
                     success: function (sre) {
-                        if (sre.bool === true ){
-                            layer.msg(sre.msg,{icon:6});
+                        if (sre.bool === true) {
+                            layer.msg(sre.msg, {icon: 6});
                             setTimeout(function () {
                                 window.location.reload();  //刷新页面
                             }, 800);
-                        }else {
+                        } else {
                             layer.msg(sre.msg);
                         }
                     }
                 })
-            }, function(){
+            }, function () {
                 layer.msg("感谢手下留情");
             });
 
@@ -608,13 +613,13 @@
                                     dataType: "json",
                                     contentType: "application/json;charset=UTF-8",
                                     success: function (sre) {
-                                        if (sre.bool === true){
-                                            layer.msg(sre.msg,{icon: 1})
+                                        if (sre.bool === true) {
+                                            layer.msg(sre.msg, {icon: 1})
                                             setTimeout(function () {
                                                 window.location.reload();  //刷新页面
                                             }, 800);
-                                        }else {
-                                            layer.msg(sre.msg,{icon: 2})
+                                        } else {
+                                            layer.msg(sre.msg, {icon: 2})
                                         }
                                     }
                                 })
@@ -634,9 +639,9 @@
             let m_number = $(this).attr("value");
             console.log(m_number);
 
-            layer.confirm('你确定要删除该目录吗<br/>下级菜单也会被删除哦',{
-            btn: ['确定','取消'] //按钮
-            }, function(){
+            layer.confirm('你确定要删除该目录吗<br/>下级菜单也会被删除哦', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
                 $.ajax({
                     type: "GET",
                     url: "/menu/m_delete?m_number=" + m_number,
@@ -644,22 +649,19 @@
                     dataType: "json",
                     contentType: "application/json;charset=UTF-8",
                     success: function (sre) {
-                        if (sre.bool === true ){
-                            layer.msg(sre.msg,{icon:6});
+                        if (sre.bool === true) {
+                            layer.msg(sre.msg, {icon: 6});
                             setTimeout(function () {
                                 window.location.reload();  //刷新页面
                             }, 800);
-                        }else {
+                        } else {
                             layer.msg(sre.msg);
                         }
                     }
                 })
-            }, function(){
+            }, function () {
                 layer.msg("感谢手下留情");
             });
-
-
-
 
 
         })

@@ -63,4 +63,9 @@ public class User {
     private Date finally_time;
 
 
+    /**
+     * 将时间转换成yy:dd/MM 。。。。。
+     */
+    private String date;
+
 }

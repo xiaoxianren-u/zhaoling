@@ -1383,108 +1383,113 @@ m_number</ColNames>
       <DataType>int|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="364" parent="295" name="status">
+    <column id="364" parent="295" name="ro_number">
+      <Position>6</Position>
+      <Comment>编号</Comment>
+      <DataType>int|0s</DataType>
+    </column>
+    <index id="365" parent="295" name="status">
       <ColNames>status</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="365" parent="295" name="PRIMARY">
+    <key id="366" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ro_id
 status</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="366" parent="295" name="status">
+    <key id="367" parent="295" name="status">
       <ColNames>status</ColNames>
       <UnderlyingIndexName>status</UnderlyingIndexName>
     </key>
-    <column id="367" parent="296" name="user_id">
+    <column id="368" parent="296" name="user_id">
       <Position>1</Position>
       <Comment>用户id</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="368" parent="296" name="user_name">
+    <column id="369" parent="296" name="user_name">
       <Position>2</Position>
       <Comment>用户名</Comment>
       <DataType>varchar(35)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="369" parent="296" name="pass_word">
+    <column id="370" parent="296" name="pass_word">
       <Position>3</Position>
       <Comment>用户密码</Comment>
       <DataType>varchar(61)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="370" parent="296" name="user_email">
+    <column id="371" parent="296" name="user_email">
       <Position>4</Position>
       <Comment>用户邮箱</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="371" parent="296" name="user_iphone">
+    <column id="372" parent="296" name="user_iphone">
       <Position>5</Position>
       <Comment>用户电话</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="372" parent="296" name="name">
+    <column id="373" parent="296" name="name">
       <Position>6</Position>
       <Comment>用户姓名</Comment>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="373" parent="296" name="user_sex">
+    <column id="374" parent="296" name="user_sex">
       <Position>7</Position>
       <Comment>用户性别</Comment>
       <DataType>varchar(4)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="374" parent="296" name="status">
+    <column id="375" parent="296" name="status">
       <Position>8</Position>
       <Comment>用户状态</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="375" parent="296" name="user_image">
+    <column id="376" parent="296" name="user_image">
       <Position>9</Position>
       <Comment>用户头像</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="376" parent="296" name="register_time">
+    <column id="377" parent="296" name="register_time">
       <Position>10</Position>
       <Comment>用户注册时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1000-01-01 00:00:00&apos;</DefaultExpression>
     </column>
-    <column id="377" parent="296" name="finally_time">
+    <column id="378" parent="296" name="finally_time">
       <Position>11</Position>
       <Comment>用户最后一次登录时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1000-01-01 00:00:00&apos;</DefaultExpression>
     </column>
-    <index id="378" parent="296" name="fk_ro_user">
+    <index id="379" parent="296" name="fk_ro_user">
       <ColNames>status</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="379" parent="296" name="PRIMARY">
+    <key id="380" parent="296" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="380" parent="296" name="fk_ro_user">
+    <foreign-key id="381" parent="296" name="fk_ro_user">
       <ColNames>status</ColNames>
       <RefTableName>role_db</RefTableName>
       <RefColNames>status</RefColNames>

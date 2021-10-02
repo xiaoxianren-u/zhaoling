@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <link rel="stylesheet" th:href="@{/static/css/layui.css}">
     <script th:src="@{/static/js/layui.js}"></script>
     <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
@@ -19,18 +19,26 @@
             <div class="layui-panel">
                 <div>
                     <div style="padding: 10px;">
-                        <button class="layui-btn layuiadmin-btn-role" id="add">添加</button>
-<!--                        <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">删除</button>-->
+                        <button class="layui-btn layuiadmin-btn-role  " id="add"><i class="iconfont icon-zengjia"></i>&nbsp;添加</button>
+                        <!--                        <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">删除</button>-->
                     </div>
-                    <table class="layui-hide" id="test"  lay-filter="test"></table>
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+<script id="barDemo" type="text/html">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    {{#  if(d.status == '超级管理员'){ }}
+    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } }}
+<!--    -->
+<!--    -->
+<!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+<!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
 </script>
 <!--修改-->
 <div class="site-text" id="update" style="margin: 5%; display: none" target="test123">
@@ -38,14 +46,16 @@
         <div class="layui-form-item">
             <label class="layui-form-label">拥有权限：</label>
             <div class="layui-input-block">
-                <textarea name="" required lay-verify="required" placeholder="请输入" id="ro_have" class="layui-textarea"></textarea>
+                <textarea class="layui-textarea" id="ro_have" lay-verify="required" name="" placeholder="请输入"
+                          required></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">具体描述：</label>
             <div class="layui-input-block">
-                <textarea name="" required lay-verify="required" placeholder="请输入" id="ro_describe" class="layui-textarea"></textarea>
+                <textarea class="layui-textarea" id="ro_describe" lay-verify="required" name="" placeholder="请输入"
+                          required></textarea>
             </div>
         </div>
 
@@ -67,21 +77,23 @@
             <div class="layui-input-block">
                 <input class="layui-input" id="a_status" name="a_status" type="text">
 
-<!--                <textarea name="" required lay-verify="required" placeholder="请输入" id="a_status" class="layui-textarea"></textarea>-->
+                <!--                <textarea name="" required lay-verify="required" placeholder="请输入" id="a_status" class="layui-textarea"></textarea>-->
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">拥有权限：</label>
             <div class="layui-input-block">
-                <textarea name="" required lay-verify="required" placeholder="请输入" id="a_have" class="layui-textarea"></textarea>
+                <textarea class="layui-textarea" id="a_have" lay-verify="required" name="" placeholder="请输入"
+                          required></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">具体描述：</label>
             <div class="layui-input-block">
-                <textarea name="" required lay-verify="required" placeholder="请输入" id="a_describe" class="layui-textarea"></textarea>
+                <textarea class="layui-textarea" id="a_describe" lay-verify="required" name="" placeholder="请输入"
+                          required></textarea>
             </div>
         </div>
 
@@ -96,69 +108,70 @@
 </div>
 
 
-<script type="text/javascript" th:inline="none">
-    layui.use('table', function(){
+<script th:inline="none" type="text/javascript">
+    layui.use('table', function () {
 
 
         var table = layui.table,
             $ = layui.jquery;
         table.render({
             elem: '#test'
-            ,url:'/role/list'
-            ,toolbar: '#toolbarDemo'
-            ,title: '用户数据表'
-            ,cols: [[
+            , url: '/role/list'
+            , toolbar: '#toolbarDemo'
+            , title: '用户数据表'
+            , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'ro_id', title:'ID', width:80, fixed: 'left'}
-                ,{field:'status', title:'角色', width:210}
-                ,{field:'ro_have', title:'拥有权限', width:500}
-                ,{field:'ro_describe', title:'具体描述', width:500}
-                ,{field: 'ro_status',title: '角色状态',width: 150 ,templet: function (d) {
-                        if(d.ro_status === 0){
+                , {field: 'ro_number', title: 'ID', width: 80, fixed: 'left'}
+                , {field: 'status', title: '角色', width: 210}
+                , {field: 'ro_have', title: '拥有权限', width: 480}
+                , {field: 'ro_describe', title: '具体描述', width: 480}
+                , {
+                    field: 'ro_status', title: '角色状态', width: 150, templet: function (d) {
+                        if (d.ro_status === 0) {
                             return '<span style="color: #1E9FFF">启用</span>';
-                        }else {
+                        } else {
                             return '<span style="color: red">禁止</span>';
                         }
                     }
                 }
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:140}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
             ]]
         });
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)', function (obj) {
             var data = obj.data;
             //console.log(obj)
 
             //删除操作
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么，请先删除该角色下的所有用户', function(index){
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么，请先删除该角色下的所有用户', function (index) {
                     let ro_id = data.ro_id;
-                    console.log(index+"sdfdsf"+"   "+ro_id);
+                    console.log(index + "sdfdsf" + "   " + ro_id);
                     $.ajax({
                         type: "GET",
-                        url: "/role/del?ro_id="+ro_id,
+                        url: "/role/del?ro_id=" + ro_id,
                         async: true,
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function (sre) {
 
-                            if (sre.bool === true){
+                            if (sre.bool === true) {
                                 layer.msg(sre.msg);
                                 obj.del();
                                 layer.close(index);
-                            }else {
+                            } else {
                                 layer.msg(sre.msg);
                             }
                         }
                     })
                 });
-            } else if(obj.event === 'edit'){
+            } else if (obj.event === 'edit') {
 
                 let ro_id = data.ro_id;
                 // let status = data.status;
                 let ro_have = data.ro_have;
                 let ro_describe = data.ro_describe;
-                document.getElementById("ro_describe").value=ro_describe;
-                document.getElementById("ro_have").value=ro_have;
+                document.getElementById("ro_describe").value = ro_describe;
+                document.getElementById("ro_have").value = ro_have;
                 layer.open({
                     type: 1,
                     title: "信息修改",
@@ -173,26 +186,25 @@
                         ro_have = $("#ro_have").val();
                         ro_describe = $("#ro_describe").val();
                         let ro_status = $('input[name="ro_status"]:checked').val();
-                        console.log({ro_status:ro_status,ro_have:ro_have,ro_describe:ro_describe});
+                        console.log({ro_status: ro_status, ro_have: ro_have, ro_describe: ro_describe});
                         $.ajax({
                             type: "GET",
-                            url: "/role/edit?ro_id="+ro_id+"&ro_have="+ro_have+"&ro_describe="+ro_describe+"&ro_status="+ro_status,
+                            url: "/role/edit?ro_id=" + ro_id + "&ro_have=" + ro_have + "&ro_describe=" + ro_describe + "&ro_status=" + ro_status,
                             async: true,
                             dataType: "json",
                             contentType: "application/json;charset=UTF-8",
                             success: function (sre) {
-                                if (sre.bool === true){
+                                if (sre.bool === true) {
                                     layer.msg(sre.msg);
                                     setTimeout(function () {
                                         window.location.reload();  //刷新页面
                                     }, 800);
-                                }else {
+                                } else {
                                     layer.msg(sre.msg);
                                 }
 
                             }
                         })
-
 
 
                     }
@@ -201,7 +213,7 @@
         });
 
         //添加
-        $(document).on('click','#add',function () {
+        $(document).on('click', '#add', function () {
             console.log("sdddddddddddd");
 
             layer.open({
@@ -220,19 +232,28 @@
                     let a_describe = $("#a_describe").val();
                     let a_have = $("#a_have").val();
                     let a_status = $('input[name="a_status"]:checked').val();
+                    console.log({ro_have:a_have,SDF:a_describe});
+                    if (a_have === ''){
+                        a_have = null;
+                    }
+                    if (a_describe === ''){
+                        a_describe = null;
+                    }
+
                     $.ajax({
                         type: "GET",
-                        url: "/role/add?status="+status+"&ro_have="+a_have+"&ro_describe="+a_describe+"&ro_status="+a_status,
+                        url: "/role/add?status=" + status + "&ro_have=" + a_have + "&ro_describe=" + a_describe + "&ro_status=" + a_status,
                         async: true,
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function (sre) {
-                            if (sre.bool === true){
+                            console.log(sre);
+                            if (sre.bool === true) {
                                 layer.msg(sre.msg);
                                 setTimeout(function () {
                                     window.location.reload();  //刷新页面
                                 }, 800);
-                            }else {
+                            } else {
                                 layer.msg(sre.msg);
                             }
                         }
@@ -242,10 +263,6 @@
                 }
 
             })
-
-
-
-            
 
 
         })
