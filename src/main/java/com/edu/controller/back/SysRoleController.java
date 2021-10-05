@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.edu.pojo.Role;
 import com.edu.service.SysRoleService;
 import com.edu.util.PageCodeEnum;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,13 +23,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/role")
+@Api(tags = "SysRoleController", description = "角色管理")
 public class SysRoleController {
 
 
     @Autowired
     private SysRoleService sysRoleService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ApiOperation(value = "角色管理列表")
+//    @ApiModel()
     public String roleList() {
         List<Role> roleList = sysRoleService.listRole();
         System.out.println("roleList = " + roleList);

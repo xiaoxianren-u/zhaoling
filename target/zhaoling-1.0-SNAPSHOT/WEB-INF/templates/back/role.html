@@ -19,7 +19,8 @@
             <div class="layui-panel">
                 <div>
                     <div style="padding: 10px;">
-                        <button class="layui-btn layuiadmin-btn-role  " id="add"><i class="iconfont icon-zengjia"></i>&nbsp;添加</button>
+                        <button class="layui-btn layuiadmin-btn-role  " id="add"><i class="iconfont icon-zengjia"></i>&nbsp;添加
+                        </button>
                         <!--                        <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">删除</button>-->
                     </div>
                     <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -33,12 +34,13 @@
     {{#  if(d.status == '超级管理员'){ }}
     <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
     {{#  } }}
-<!--    -->
-<!--    -->
-<!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
-<!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+    <!--    -->
+    <!--    -->
+    <!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
 </script>
 <!--修改-->
 <div class="site-text" id="update" style="margin: 5%; display: none" target="test123">
@@ -232,11 +234,11 @@
                     let a_describe = $("#a_describe").val();
                     let a_have = $("#a_have").val();
                     let a_status = $('input[name="a_status"]:checked').val();
-                    console.log({ro_have:a_have,SDF:a_describe});
-                    if (a_have === ''){
+                    console.log({ro_have: a_have, SDF: a_describe});
+                    if (a_have === '') {
                         a_have = null;
                     }
-                    if (a_describe === ''){
+                    if (a_describe === '') {
                         a_describe = null;
                     }
 

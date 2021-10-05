@@ -5,6 +5,10 @@ import com.edu.pojo.ConTents;
 import com.edu.pojo.mulu;
 import com.edu.service.SysMenuService;
 import com.edu.util.PageCodeEnum;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +26,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/menu")
+@Api(tags = "SysMenuController", description = "菜单管理")
 public class SysMenuController {
 
     /**
@@ -41,7 +46,16 @@ public class SysMenuController {
      * @param vital      //可见
      * @return
      */
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ApiOperation(value = "目录以及菜单的添加")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "x_name", value = "上级目录", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "类型", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "目录或菜单名字", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "competence", value = "权限", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "url", value = "菜单连接", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "vital", value = "(1、隐藏，0、显示)", required = true, dataType = "Integer", paramType = "query")
+    })
     public String insetController(@RequestParam("x_name") Integer xName,                     //上级目录
                                   @RequestParam("type") String type,                      //类型
                                   @RequestParam("name") String name,                   //名字
