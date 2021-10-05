@@ -41,6 +41,14 @@ public interface SysRoleDao {
 
 
     /**
+     * 获取角色编号最大值
+     *
+     * @return
+     */
+
+    int selectNumber();
+
+    /**
      * 新增角色
      *
      * @param role

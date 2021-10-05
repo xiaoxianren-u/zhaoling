@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.edu.pojo.Role;
 import com.edu.service.SysRoleService;
 import com.edu.util.PageCodeEnum;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,13 +23,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/role")
+@Api(tags = "SysRoleController", description = "角色管理")
 public class SysRoleController {
 
 
     @Autowired
     private SysRoleService sysRoleService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ApiOperation(value = "角色管理列表")
+//    @ApiModel()
     public String roleList() {
         List<Role> roleList = sysRoleService.listRole();
         System.out.println("roleList = " + roleList);
@@ -36,6 +42,15 @@ public class SysRoleController {
     }
 
 
+    /**
+     * 角色管理内容的修改修改
+     *
+     * @param roleId
+     * @param roHave
+     * @param roDescribe
+     * @param roStatus
+     * @return
+     */
     @RequestMapping("/edit")
     public String roleEdit(@RequestParam("ro_id") Integer roleId,
                            @RequestParam("ro_have") String roHave,
@@ -43,7 +58,7 @@ public class SysRoleController {
                            @RequestParam("ro_status") Integer roStatus) {
 
         HashMap<String, Object> map = new HashMap<>(2);
-        Role role = new Role(roleId, null, roStatus, roHave, roDescribe);
+        Role role = new Role(roleId, null, null, roStatus, roHave, roDescribe);
         System.out.println("role = " + role);
         int n = sysRoleService.edit(role);
         if (n > 0) {
@@ -57,7 +72,7 @@ public class SysRoleController {
     }
 
     /**
-     * 删除
+     * 角色管理内容的修改删除
      *
      * @param roleId
      * @return
@@ -77,17 +92,32 @@ public class SysRoleController {
     }
 
 
+    /**
+     * 添加添加新的角色
+     *
+     * @param status
+     * @param roHave
+     * @param roDescribe
+     * @param roStatus
+     * @return
+     */
     @RequestMapping("/add")
     public String roleAdd(@RequestParam("status") String status,
                           @RequestParam("ro_have") String roHave,
                           @RequestParam("ro_describe") String roDescribe,
                           @RequestParam("ro_status") Integer roStatus) {
 
+
+        System.out.println("status = " + status);
+        System.out.println("roHave = " + roHave);
+        System.out.println("roDescribe = " + roDescribe);
+        System.out.println("roStatus = " + roStatus);
         HashMap<String, Object> map = new HashMap<>(2);
-        Role role = new Role(null, status, roStatus, roHave, roDescribe);
+        Role role = new Role(null, null, status, roStatus, roHave, roDescribe);
         System.out.println("role = " + role);
 
         int n = sysRoleService.add(role);
+//        System.out.println("n = " + n);
         if (n > 0) {
             map.put("bool", PageCodeEnum.ADD_SUCCESS.getBool());
             map.put("msg", PageCodeEnum.ADD_SUCCESS.getMsg());

@@ -13,10 +13,14 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--    扫描Controller-->
-    <context:component-scan base-package="com.edu.controller.*"/>
+    <!-- 自动扫描  @Controller 与 swagger.java -->
+    <context:component-scan base-package="com.edu.controller.*,com.edu.config"/>
 <!--    <context:component-scan base-package="com.edu.controller.front"/>-->
 
+
+
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
     <!--    配置springMVC注解驱动，自动注册合适的组件handlerMapping和handlerAdapter-->
     <mvc:annotation-driven/>
 <!--    <mvc:annotation-driven />-->

@@ -52,8 +52,16 @@ public class SysRoleServiceImpl implements SysRoleService {
         return sysRoleDao.dle(roleId);
     }
 
+    /**
+     * 添加角色
+     *
+     * @param role
+     * @return
+     */
     @Override
     public int add(Role role) {
+        role.setRo_number(sysRoleDao.selectNumber() + 1);
+//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
         return sysRoleDao.add(role);
     }
 }

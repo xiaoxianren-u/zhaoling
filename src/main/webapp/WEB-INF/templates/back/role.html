@@ -19,7 +19,8 @@
             <div class="layui-panel">
                 <div>
                     <div style="padding: 10px;">
-                        <button class="layui-btn layuiadmin-btn-role" id="add">添加</button>
+                        <button class="layui-btn layuiadmin-btn-role  " id="add"><i class="iconfont icon-zengjia"></i>&nbsp;添加
+                        </button>
                         <!--                        <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">删除</button>-->
                     </div>
                     <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -29,8 +30,17 @@
     </div>
 </div>
 <script id="barDemo" type="text/html">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    {{#  if(d.status == '超级管理员'){ }}
+    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } }}
+    <!--    -->
+    <!--    -->
+    <!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
 </script>
 <!--修改-->
 <div class="site-text" id="update" style="margin: 5%; display: none" target="test123">
@@ -113,10 +123,10 @@
             , title: '用户数据表'
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'ro_id', title: 'ID', width: 80, fixed: 'left'}
+                , {field: 'ro_number', title: 'ID', width: 80, fixed: 'left'}
                 , {field: 'status', title: '角色', width: 210}
-                , {field: 'ro_have', title: '拥有权限', width: 500}
-                , {field: 'ro_describe', title: '具体描述', width: 500}
+                , {field: 'ro_have', title: '拥有权限', width: 480}
+                , {field: 'ro_describe', title: '具体描述', width: 480}
                 , {
                     field: 'ro_status', title: '角色状态', width: 150, templet: function (d) {
                         if (d.ro_status === 0) {
@@ -126,7 +136,7 @@
                         }
                     }
                 }
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 140}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
             ]]
         });
         table.on('tool(test)', function (obj) {
@@ -224,6 +234,14 @@
                     let a_describe = $("#a_describe").val();
                     let a_have = $("#a_have").val();
                     let a_status = $('input[name="a_status"]:checked').val();
+                    console.log({ro_have: a_have, SDF: a_describe});
+                    if (a_have === '') {
+                        a_have = null;
+                    }
+                    if (a_describe === '') {
+                        a_describe = null;
+                    }
+
                     $.ajax({
                         type: "GET",
                         url: "/role/add?status=" + status + "&ro_have=" + a_have + "&ro_describe=" + a_describe + "&ro_status=" + a_status,
@@ -231,6 +249,7 @@
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function (sre) {
+                            console.log(sre);
                             if (sre.bool === true) {
                                 layer.msg(sre.msg);
                                 setTimeout(function () {

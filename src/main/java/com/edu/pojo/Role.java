@@ -23,6 +23,10 @@ public class Role {
      */
     private Integer ro_id;
     /**
+     * 编号
+     */
+    private Integer ro_number;
+    /**
      * 角色类型
      */
     private String status;
