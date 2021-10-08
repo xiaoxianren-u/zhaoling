@@ -2,6 +2,7 @@ package com.edu.controller.front;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author yz
@@ -18,9 +19,9 @@ public class IndexController {
 
         return "/index.html";
     }
-
+//如：修改下面的内容
     //    这里的url不能跟上面的一样
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String loginAction(){
         return "/login.html";
     }
