@@ -8,7 +8,4 @@
             where status like '%管理员'
     </select>
 
-
-
-
 </mapper>
