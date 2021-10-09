@@ -5,6 +5,8 @@ import com.edu.pojo.Role;
 import com.edu.service.SysRoleService;
 import com.edu.util.PageCodeEnum;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,6 @@ public class SysRoleController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "角色管理列表")
-//    @ApiModel()
     public String roleList() {
         List<Role> roleList = sysRoleService.listRole();
         System.out.println("roleList = " + roleList);
@@ -43,7 +44,7 @@ public class SysRoleController {
 
 
     /**
-     * 角色管理内容的修改修改
+     * 角色管理内容的修改
      *
      * @param roleId
      * @param roHave
@@ -51,7 +52,14 @@ public class SysRoleController {
      * @param roStatus
      * @return
      */
-    @RequestMapping("/edit")
+    @RequestMapping(value = "/edit", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ro_id", value = "角色id", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "ro_have", value = "拥有的权限", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "ro_describe", value = "具体描述", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "ro_status", value = "角色状态", required = false, dataType = "Integer", paramType = "query"),
+    })
+    @ApiOperation(value = "角色管理内容的修改")
     public String roleEdit(@RequestParam("ro_id") Integer roleId,
                            @RequestParam("ro_have") String roHave,
                            @RequestParam("ro_describe") String roDescribe,
@@ -72,12 +80,14 @@ public class SysRoleController {
     }
 
     /**
-     * 角色管理内容的修改删除
+     * 角色管理内容的删除
      *
      * @param roleId
      * @return
      */
-    @RequestMapping("/del")
+    @RequestMapping(value = "/del", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ApiOperation(value = "角色管理内容的删除")
+    @ApiImplicitParam(name = "ro_id", value = "角色id", required = true, dataType = "Integer", paramType = "query")
     public String roleDle(@RequestParam("ro_id") Integer roleId) {
         HashMap<String, Object> map = new HashMap<>(2);
         int n = sysRoleService.dle(roleId);

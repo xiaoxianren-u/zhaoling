@@ -62,13 +62,6 @@ public class SysMenuController {
                                   @RequestParam("competence") String competence,     //权限
                                   @RequestParam("url") String url,                //链接
                                   @RequestParam("vital") Integer vital) {           //可见
-
-        System.out.println("xName = " + xName);
-        System.out.println("type = " + type);
-        System.out.println("name = " + name);
-        System.out.println("url = " + url);
-        System.out.println("competence = " + competence);
-        System.out.println("vital = " + vital);
         HashMap<String, Object> map = new HashMap<>(4);
 
         //判断目录(菜单) 名称是否为空
@@ -77,11 +70,9 @@ public class SysMenuController {
             map.put("msg", "目录(菜单) 名称不能为空");
             return JSON.toJSONString(map);
         }
-
         //当选择目录且新建0时，创建父目录表
         if ("目录".equals(type)) {
             if (0 == xName) {
-
                 mulu m = new mulu();
                 m.setM_competence(competence);
                 m.setM_url(url);
