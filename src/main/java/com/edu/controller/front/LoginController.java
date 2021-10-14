@@ -26,7 +26,7 @@ public class LoginController {
     private SysUserService sysUserService;
 
     /**
-     * POST 请求
+     * POST   登录请求
      *
      * @param username 用户名
      * @param password 密码MD5加密过的
@@ -67,7 +67,7 @@ public class LoginController {
     }
 
     /**
-     * 注册请求
+     * POST  注册请求
      *
      * @param username 用户名
      * @param password 密码  MD5加过的
