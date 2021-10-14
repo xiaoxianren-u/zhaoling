@@ -1,7 +1,4 @@
-create DATABASE zhaoling;
-
 use zhaoling;
-
 
 CREATE TABLE mulu_db
 (
@@ -25,10 +22,11 @@ VALUES ('主页', 1, 'layui-icon layui-icon-home'),
        ('内容管理', 3, 'layui-icon layui-icon-file'),
        ('消息管理', 4, 'iconfont icon-xiaoxi'),
        ('日志管理', 5, 'layui-icon layui-icon-form'),
-       ('我的设置', 6, 'layui-icon layui-icon-username');
+       ('我的设置', 6, 'layui-icon layui-icon-username'),
+       ('系统监视', 7, 'iconfont icon-jianshi');
 
 # --------------------------------------------------------------------
-
+# DROP TABLE IF EXISTS `con_tents_db`;
 CREATE TABLE con_tents_db
 (
     con_id         INT(11)     NOT NULL AUTO_INCREMENT COMMENT '目录id',
@@ -49,8 +47,8 @@ CREATE TABLE con_tents_db
 INSERT INTO zhaoling.con_tents_db (con_name, con_url, con_number, con_icon)
 VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('普通用户', DEFAULT, 2, 'iconfont icon-yonghuliebiao'),
-       ('后台管理员', DEFAULT, 2, 'iconfont icon-guanliyuan'),
-       ('角色管理', DEFAULT, 2, 'iconfont icon-jiaoseguanli'),
+       ('后台管理员', '/sys/administrator.action', 2, 'iconfont icon-guanliyuan'),
+       ('角色管理', '/sys/role.action', 2, 'iconfont icon-jiaoseguanli'),
        ('菜单管理', '/sys/menu.action', 2, 'iconfont icon-caidanguanli'),
        ('用户黑名单', DEFAULT, 2, 'iconfont icon-heimingdan'),
        ('帖子管理', DEFAULT, 3, 'iconfont icon-yunyingguanli_tieziguanli'),
@@ -66,24 +64,34 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('操作日志', DEFAULT, 5, 'iconfont icon-caozuorizhi'),
        ('登录日志', DEFAULT, 5, 'iconfont icon-drxx92'),
        ('基本资料', DEFAULT, 6, 'iconfont icon-jibenziliao'),
-       ('修改密码', DEFAULT, 6, 'iconfont icon-xiugaimima');
+       ('修改密码', DEFAULT, 6, 'iconfont icon-xiugaimima'),
+       ('系统接口', '/swagger-ui.html', 7, 'iconfont icon-xitongjiekou');
 
 
 # -----------------------------------------------------------------------------------------------------------------
 # 角色表
+
+# DROP TABLE IF EXISTS `role_db`;
 CREATE TABLE `role_db`
 (
     ro_id       INT(11)            NOT NULL AUTO_INCREMENT COMMENT '角色id',
-    `status`    VARCHAR(50) UNIQUE NOT NULL DEFAULT '' COMMENT '角色类型',
-    ro_have     VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '拥有权限',
-    ro_describe VARCHAR(100)       NOT NULL DEFAULT '' COMMENT '具体描述',
+    ro_number   INT(11)            NOT NULL DEFAULT -1 COMMENT '编号',
+    `status`    VARCHAR(50) unique NOT NULL DEFAULT '' COMMENT '角色类型',
     ro_status   INT(11)            NOT NULL DEFAULT 0 COMMENT '角色状态 0,启用，1禁止',
+    ro_have     VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '拥有权限',
+    ro_describe VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '具体描述',
     PRIMARY KEY (ro_id, status)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT '角色表';
+  DEFAULT CHARSET = utf8mb4 COMMENT 'role';
 
+
+insert into zhaoling.role_db(ro_number, status)
+values (100, '超级管理员'),
+       (101, '管理员'),
+       (102, '普通用户');
 
 # 用户列表
+# DROP TABLE IF EXISTS `user_db`;
 CREATE TABLE user_db
 (
     user_id       INT(11)     NOT NULL AUTO_INCREMENT COMMENT '用户id',
@@ -93,7 +101,7 @@ CREATE TABLE user_db
     user_iphone   VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户电话',
     `name`        VARCHAR(20) NOT NULL DEFAULT '' COMMENT '用户姓名',
     user_sex      VARCHAR(4)  NOT NULL DEFAULT '' COMMENT '用户性别',
-    `status`      VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户状态',
+    `status`      VARCHAR(50) NOT NULL DEFAULT '普通用户' COMMENT '用户状态',
     user_image    VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户头像',
     register_time DATETIME    NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户注册时间',
     finally_time  DATETIME    NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户最后一次登录时间',
@@ -102,7 +110,12 @@ CREATE TABLE user_db
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT 'user_db';
 
+insert into zhaoling.user_db(user_name, pass_word, user_iphone, status)
+values ('admin', '3903f200079e275e6d508aa453350784', '15877102026', '超级管理员');
+
+
 # 通知表
+# DROP TABLE IF EXISTS `notify_db`;
 CREATE TABLE notify_db
 (
     noti_id        INT(11)      NOT NULL AUTO_INCREMENT COMMENT '通知id',
@@ -114,6 +127,7 @@ CREATE TABLE notify_db
   DEFAULT CHARSET = utf8mb4 COMMENT 'notify';
 
 # 感谢表
+# DROP TABLE IF EXISTS `grate_ful_db`;
 CREATE TABLE grate_ful_db
 (
     gra_id        INT(11)      NOT NULL AUTO_INCREMENT COMMENT '感谢id',
@@ -125,6 +139,7 @@ CREATE TABLE grate_ful_db
   DEFAULT CHARSET = utf8mb4 COMMENT 'grate_ful_db';
 
 # 标签表
+# DROP TABLE IF EXISTS `label_db`;
 CREATE TABLE `label_db`
 (
     lab_id   INT(11)            NOT NULL AUTO_INCREMENT COMMENT '标签id',
@@ -133,6 +148,7 @@ CREATE TABLE `label_db`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT 'label_db';
 # 帖子表
+# DROP TABLE IF EXISTS `post_db`;
 CREATE TABLE post_db
 (
     post_id           INT(11)      NOT NULL AUTO_INCREMENT COMMENT '帖子id （主键）',
@@ -155,7 +171,7 @@ CREATE TABLE post_db
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT 'post_db';
 
-
+# DROP TABLE IF EXISTS `picture_db`;
 CREATE TABLE picture_db
 (
     pic_id    INT(11)      NOT NULL AUTO_INCREMENT COMMENT '图片id',

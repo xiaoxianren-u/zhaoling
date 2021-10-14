@@ -21,6 +21,7 @@ public enum PageCodeEnum {
     REMOVE_SUCCESS(1200, "删除成功！", true),
     REMOVE_FAIL(1201, "删除失败！", false),
     LOGIN_FAIL(1301, "登录失败！用户名密码错误！", false),
+    LOGIN_SUCCESS(1301, "登录成功！", true),
     SESSION_TIMEOUT(1302, "session超时，请重新登录！", false),
     NO_AUTH(1303, "没有权限访问请求资源，请切换账户后重试！", false),
     USERNAME_EXISTS(1401, "用户名已存在！", false),
@@ -29,9 +30,9 @@ public enum PageCodeEnum {
     ;
 
 
-    private Integer code;
-    private String msg;
-    private Boolean bool;
+    private final Integer code;
+    private final String msg;
+    private final Boolean bool;
 
 
     /**
@@ -40,7 +41,7 @@ public enum PageCodeEnum {
      * @param code
      * @param msg
      */
-    private PageCodeEnum(Integer code, String msg, Boolean bool) {
+    PageCodeEnum(Integer code, String msg, Boolean bool) {
         this.code = code;
         this.msg = msg;
         this.bool = bool;

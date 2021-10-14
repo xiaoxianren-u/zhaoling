@@ -8,4 +8,36 @@
             where status like '%管理员'
     </select>
 
+
+<!--查询是否有该用户-->
+    <select id="selectRec" resultType="java.lang.Integer">
+        select COUNT(*) from zhaoling.user_db where user_name = #{username}
+    </select>
+
+
+<!--用户注册-->
+    <insert id="insertRegister">
+            insert into zhaoling.user_db(user_name,pass_word,register_time,user_iphone) values (#{username},#{password},#{date},#{home})
+    </insert>
+
+<!--    用户登录-->
+    <select id="countUserAdmin" resultType="java.lang.Integer">
+        select COUNT(*) from zhaoling.user_db
+        where user_name = #{username} and pass_word = #{password}
+    </select>
+
+<!--查询角色类型是普通用户还是管理员-->
+        <select id="selectStatus" resultType="java.lang.String">
+            select status from zhaoling.user_db where user_name = #{username}
+        </select>
+<!--最后后一次登录-->
+    <update id="updateLogin">
+        update zhaoling.user_db
+        set finally_time = #{date}
+        where user_name  = #{username}
+    </update>
+
+
+
+
 </mapper>
