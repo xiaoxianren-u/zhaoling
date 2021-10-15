@@ -1,6 +1,7 @@
 package com.edu.controller.back;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.User;
 import com.edu.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class SysUserController {
      * @return
      */
     @RequestMapping("/adminlist")
+    @UserLoginToken
     public String adminList() {
         List<User> list = sysUserService.selectAdminList();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

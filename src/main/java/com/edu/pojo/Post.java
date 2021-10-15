@@ -1,5 +1,6 @@
 package com.edu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.Date;
@@ -41,6 +42,7 @@ public class Post {
     /**
      * 帖子发表时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_time;
     /**
      * 帖子内容
@@ -62,6 +64,7 @@ public class Post {
     /**
      * 拾到物品时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_found_time;
     /**
      * 拾到物品地点
@@ -78,6 +81,7 @@ public class Post {
     /**
      * 领取时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_receive_time;
 
 }

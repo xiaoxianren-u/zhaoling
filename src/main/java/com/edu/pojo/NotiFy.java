@@ -6,6 +6,7 @@ package com.edu.pojo;
  * @file : NotiFy.java
  */
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.Date;
@@ -31,6 +32,7 @@ public class NotiFy {
     /**
      * 通知时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date noti_time;
     /**
      * 通知状态（0，普通，1重要，2紧急，3过时）

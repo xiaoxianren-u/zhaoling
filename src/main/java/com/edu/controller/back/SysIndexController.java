@@ -1,5 +1,7 @@
 package com.edu.controller.back;
 
+import com.edu.intercept.PassToken;
+import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.ConTents;
 import com.edu.service.SysConTentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class SysIndexController {
      *
      * @return
      */
+    @PassToken
     @RequestMapping("/index.action")
     public String SysIndex(ModelMap modelMap) {
         List<ConTents> list = sysConTentService.selectContents_sys();
@@ -43,7 +46,6 @@ public class SysIndexController {
      *
      * @return
      */
-//    @RequiresPermissions("tool:gen:list")
     @RequestMapping("/menu.action")
     public String listAction(ModelMap modelMap) {
 
@@ -69,6 +71,8 @@ public class SysIndexController {
      *
      * @return
      */
+
+    @UserLoginToken
     @RequestMapping("/administrator.action")
     public String administratorAction() {
 

@@ -1,5 +1,6 @@
 package com.edu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ public class GrateFul {
     /**
      * 发表感谢时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date gra_time;
     /**
      * 感谢内容

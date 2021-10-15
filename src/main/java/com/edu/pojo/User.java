@@ -1,5 +1,6 @@
 package com.edu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -69,11 +70,13 @@ public class User {
      * 用户注册时间
      */
     @ApiModelProperty("用户注册时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date register_time;
     /**
      * 用户最后一次登录时间
      */
     @ApiModelProperty("用户最后一次登录时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date finally_time;
 
 

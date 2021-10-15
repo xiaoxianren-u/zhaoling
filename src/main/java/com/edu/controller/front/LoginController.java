@@ -2,6 +2,7 @@ package com.edu.controller.front;
 
 import com.alibaba.fastjson.JSON;
 import com.edu.service.SysUserService;
+import com.edu.util.JwtUtils;
 import com.edu.util.MD5Util;
 import com.edu.util.PageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class LoginController {
             }
             hashMap.put("bool", PageCodeEnum.LOGIN_SUCCESS.getBool());
             if (status == sta) {
+                hashMap.put("token", JwtUtils.generateToken(username));
                 hashMap.put("msg", PageCodeEnum.LOGIN_SUCCESS.getMsg());
                 sysUserService.updateLogin(username, new Date());
             } else {

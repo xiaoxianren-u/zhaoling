@@ -48,5 +48,32 @@
         <property name="characterEncoding" value="UTF-8"/>
         <property name="cacheable" value="false"/>
     </bean>
+    <!--登录拦截-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.edu.intercept.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--时间格式的转换-->
+    <!--    <mvc:annotation-driven>-->
+    <!--        <mvc:message-converters>-->
+    <!--            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+    <!--                <property name="objectMapper">-->
+    <!--                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
+    <!--                        <property name="dateFormat">-->
+    <!--                            <bean class="java.text.SimpleDateFormat">-->
+    <!--                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss " />-->
+    <!--                            </bean>-->
+    <!--                        </property>-->
+    <!--                    </bean>-->
+    <!--                </property>-->
+    <!--            </bean>-->
+
+    <!--        </mvc:message-converters>-->
+
+    <!--    </mvc:annotation-driven>-->
+
 
 </beans>
