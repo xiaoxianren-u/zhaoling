@@ -1,7 +1,9 @@
 package com.edu.intercept;
 
+import com.edu.service.SysUserService;
 import com.edu.util.JwtUtils;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,14 +19,25 @@ import java.lang.reflect.Method;
  */
 public class LoginInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private SysUserService sysUserService;
+
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        request.setCharacterEncoding("utf-8");
+
+
         String token = request.getHeader("token");
         System.out.println("token = " + token);
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+        if (token == null) {
+            token = request.getParameter("token");
+        }
+        System.out.println("token = " + token);
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
@@ -46,7 +59,13 @@ public class LoginInterceptor implements HandlerInterceptor {
                 // 获取 token 中的 username
                 Claims claims = JwtUtils.checkToken(token);
                 if (claims == null) {
-                    return false;
+                    throw new RuntimeException("身份错误！！！");
+                } else {
+                    String username = (String) claims.get("username");
+                    int n = sysUserService.selectRec(username);
+                    if (n != 1) {
+                        throw new RuntimeException("用户不存在，请创新登录！！！");
+                    }
                 }
             }
         }

@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * @file : UserLoginAnno.java
  */
 //用于判断该控制器是否需要用户登录权限  ,需要有token
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserLoginToken {
     boolean value() default true;

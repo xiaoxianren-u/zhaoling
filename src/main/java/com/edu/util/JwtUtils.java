@@ -14,7 +14,7 @@ import java.util.Date;
 public class JwtUtils {
 
     //设置有效时间
-    private static final long EXPIRE = 24 * 60 * 1000;
+    private static final long EXPIRE = 24 * 60 * 60 * 1000;
     //秘钥 （签名）
     private static final String SECRET = "yang";
     //秘钥前缀  (加强破解难度)

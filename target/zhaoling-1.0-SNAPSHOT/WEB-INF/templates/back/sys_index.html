@@ -153,15 +153,16 @@
             href_url = "https://gitee.com/";
         }
         if (href_url !== null || href_url === "" || href_url !== undefined) {
-            $("#iframe").attr('src', href_url);
+            $("#iframe").attr('src', href_url+"?token="+window.sessionStorage.getItem("token"));
+            console.log(href_url + "?token=" + window.sessionStorage.getItem("token"));
         }
         $(document).ready(function () {
             $("dd a").click(function (e) {
                 e.preventDefault();
                 if ($(this).attr("href") !== "" && $(this).attr("href") !== undefined) {
                     sessionStorage.setItem("url1", $(this).attr("href"));
-                    console.log($(this).attr("href"));
-                    $("#iframe").attr('src', $(this).attr("href"));
+                    console.log("sdsd"+$(this).attr("href"));
+                    $("#iframe").attr('src', $(this).attr("href")+"?token="+window.sessionStorage.getItem("token"));
                 }
             })
         })

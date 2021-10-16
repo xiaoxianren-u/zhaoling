@@ -15,50 +15,88 @@
 
     body {
 
-        background-color:wheat;
+        background-color: wheat;
     }
-    img{ width: 150px;height: 100px;}
+
+    img {
+        width: 150px;
+        height: 100px;
+    }
 </style>
 <body>
-<form class="layui-form" action="index.html" >
+<!--<form class="layui-form">-->
 <div class="layui-row">
-    <div class="layui-col-xs4">
-        <div class="grid-demo grid-demo-bg1">
-           <img src="left.png">
-        </div>
-    </div>
-
     <div class="layui-col-xs4">
         <div class="grid-demo grid-demo-bg1">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
                 <legend>欢迎使用招领系统</legend>
-           </fieldset>
+            </fieldset>
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请用户名" class="layui-input">
+                    <input autocomplete="off" class="layui-input" id="username" lay-verify="title" name="username"
+                           placeholder="请用户名" type="text" value="admin">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">密码：</label>
                 <div class="layui-input-block">
-                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input autocomplete="off" class="layui-input" id="password" name="password" placeholder="请输入密码"
+                           type="password" value="0192023a7bbd73250516f069df18b500">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                   <a href="zhuce.html"><input type="submit" value="注册" ></a>
-                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
+                    <button class="layui-btn" id="btn" lay-filter="demo1" lay-submit="" type="submit">登录</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
 
+            </div>
+        </div>
     </div>
-        </div></div>
     <div class="layui-col-xs4">
         <div class="grid-demo">右</div>
     </div>
-<!--    这是代码的提交-->
+    <!--    这是代码的提交-->
 </div>
-</form>
+<!--</form>-->
+
+
+<script>
+
+    $("#btn").click(function () {
+
+
+        let username = $("#username").val();
+        let password = $("#password").val();
+        console.log(username);
+        console.log(password);
+        console.log("sdfjksdhfjsd");
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            async: true,
+            data: JSON.stringify({user_name: username, pass_word: password, status: "1"}),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success: function (sre) {
+                console.log(sre);
+
+                if (sre.bool) {
+                    window.sessionStorage.setItem('token', sre.token);
+                    document.cookie = sre.token;
+                    window.location = "/sys/index.action?token=" + window.sessionStorage.getItem("token");
+
+                } else {
+                    layer.msg("noNONONONOONNONONO");
+                }
+
+            }
+
+        })
+    })
+
+
+</script>
 </body>
 </html>
