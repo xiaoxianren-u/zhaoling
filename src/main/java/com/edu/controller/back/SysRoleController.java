@@ -1,6 +1,7 @@
 package com.edu.controller.back;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.Role;
 import com.edu.service.SysRoleService;
 import com.edu.util.PageCodeEnum;
@@ -32,7 +33,7 @@ public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
 
-
+    @UserLoginToken
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "角色管理列表")
     public String roleList() {
@@ -52,6 +53,7 @@ public class SysRoleController {
      * @param roStatus
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/edit", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ro_id", value = "角色id", required = true, dataType = "Integer", paramType = "query"),
@@ -85,6 +87,7 @@ public class SysRoleController {
      * @param roleId
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/del", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "角色管理内容的删除")
     @ApiImplicitParam(name = "ro_id", value = "角色id", required = true, dataType = "Integer", paramType = "query")
@@ -111,6 +114,7 @@ public class SysRoleController {
      * @param roStatus
      * @return
      */
+    @UserLoginToken
     @RequestMapping("/add")
     public String roleAdd(@RequestParam("status") String status,
                           @RequestParam("ro_have") String roHave,

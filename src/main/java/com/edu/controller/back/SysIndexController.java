@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public class SysIndexController {
 
     @UserLoginToken
     @RequestMapping("/index.action")
-    public String SysIndex(ModelMap modelMap) {
+    public String sysIndex(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
         List<ConTents> list = sysConTentService.selectContents_sys();
         modelMap.put("list", list);
         return "/back/sys_index";
@@ -80,6 +82,30 @@ public class SysIndexController {
     @RequestMapping("/administrator.action")
     public String administratorAction() {
         return "/back/administrator";
+    }
+
+    /**
+     * 用户列表
+     *
+     * @return
+     */
+
+    @UserLoginToken
+    @RequestMapping("/user.action")
+    public String userAction() {
+        return "/back/user";
+    }
+
+    /**
+     * 用户列表
+     *
+     * @return
+     */
+
+    @UserLoginToken
+    @RequestMapping("/black.action")
+    public String blackAction() {
+        return "/back/black";
     }
 
 

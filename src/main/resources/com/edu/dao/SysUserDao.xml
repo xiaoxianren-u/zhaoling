@@ -5,7 +5,7 @@
 <!--管理员列表-->
     <select id="selectAdminList" resultType="com.edu.pojo.User">
             select user_id, user_name,  user_email, user_iphone, user_sex, status, user_image, register_time from zhaoling.user_db
-            where status like '%管理员'
+            where status like '%管理员' and pull_black = 0
     </select>
 
 
@@ -23,7 +23,7 @@
 <!--    用户登录-->
     <select id="countUserAdmin" resultType="java.lang.Integer">
         select COUNT(*) from zhaoling.user_db
-        where user_name = #{username} and pass_word = #{password}
+        where user_name = #{username} and pass_word = #{password} and pull_black = 0
     </select>
 
 <!--查询角色类型是普通用户还是管理员-->
@@ -37,7 +37,28 @@
         where user_name  = #{username}
     </update>
 
+<!--用户列表-->
+    <select id="selectUserList" resultType="com.edu.pojo.User">
+        select user_id, user_name,  user_email, user_iphone, user_sex, status, user_image, register_time from zhaoling.user_db
+        where status = '普通用户' and pull_black = 0
+        Limit #{page},#{limit}
+    </select>
 
+<!--普通用户数量-->
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from zhaoling.user_db where status = '普通用户' and pull_black = 0
+    </select>
+<!--    用户黑名单列表-->
+    <select id="selectBlackList" resultType="com.edu.pojo.User">
+        select user_id, user_name,  user_email, user_iphone, user_sex, status, user_image, register_time from zhaoling.user_db
+        where pull_black = 1
+        Limit #{page},#{limit}
+    </select>
+<!--    用户黑名单数量-->
+    <select id="selectblackCount" resultType="java.lang.Integer">
+        select count(*) from zhaoling.user_db where pull_black = 1
+    </select>
 
 
 </mapper>

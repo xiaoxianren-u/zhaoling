@@ -63,7 +63,7 @@ public class SysUserServiceImpl implements SysUserService {
      *
      * @param username
      * @param password
-     * @param date
+     * @param
      * @return
      */
     @Override
@@ -92,5 +92,47 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public String selectStatus(String username) {
         return sysUserDao.selectStatus(username);
+    }
+
+    /**
+     * 用户列表
+     *
+     * @return
+     */
+    @Override
+    public List<User> selectUserList(Integer page, Integer limit) {
+        return sysUserDao.selectUserList(page, limit);
+    }
+
+    /**
+     * 普通用户数量
+     *
+     * @return
+     */
+    @Override
+    public int selectCount() {
+        return sysUserDao.selectCount();
+    }
+
+    /**
+     * 用户黑名单列表
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @Override
+    public List<User> selectBlackList(Integer page, Integer limit) {
+        return sysUserDao.selectBlackList(page, limit);
+    }
+
+    /**
+     * 黑名单数量
+     *
+     * @return
+     */
+    @Override
+    public int selectblackCount() {
+        return sysUserDao.selectblackCount();
     }
 }

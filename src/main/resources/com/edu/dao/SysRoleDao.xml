@@ -53,4 +53,9 @@
 
 
 
+    <select id="selectStatus" resultType="java.lang.Integer">
+        select ro_status from zhaoling.role_db where status = #{statusStr}
+    </select>
+
+
 </mapper>

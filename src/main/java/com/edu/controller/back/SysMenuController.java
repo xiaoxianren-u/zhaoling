@@ -1,6 +1,7 @@
 package com.edu.controller.back;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.ConTents;
 import com.edu.pojo.mulu;
 import com.edu.service.SysMenuService;
@@ -46,6 +47,7 @@ public class SysMenuController {
      * @param vital      //可见
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/insert", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "目录以及菜单的添加")
     @ApiImplicitParams({
@@ -119,6 +121,7 @@ public class SysMenuController {
      * @param mNumber
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/m_update", method = RequestMethod.GET)
     public String mUpdate(@RequestParam("m_number") Integer mNumber) {
         HashMap<String, Object> map = new HashMap<>(2);
@@ -144,6 +147,7 @@ public class SysMenuController {
      * @param mNumber
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/m_update/data", method = RequestMethod.GET)
     public String mUpdateData(@RequestParam("m_name") String mName,
                               @RequestParam("m_vital") Integer mVital,
@@ -172,6 +176,7 @@ public class SysMenuController {
      * @param conNumber
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/con_update", method = RequestMethod.GET)
     public String conUpdate(@RequestParam("con_number") Integer conNumber) {
         HashMap<String, Object> map = new HashMap<>(2);
@@ -197,7 +202,7 @@ public class SysMenuController {
      * @param conId
      * @return
      */
-
+    @UserLoginToken
     @RequestMapping(value = "/con_update/data", method = RequestMethod.GET)
     public String conUpdateData(@RequestParam("con_name") String conName,
                                 @RequestParam("con_vital") Integer conVital,
@@ -226,6 +231,7 @@ public class SysMenuController {
      * @param conId
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/con_delete", method = RequestMethod.GET)
     public String conDelete(@RequestParam("con_id") Integer conId) {
         HashMap<String, Object> map = sysMenuService.conDeleTe(conId);
@@ -238,6 +244,7 @@ public class SysMenuController {
      * @param mNumber
      * @return
      */
+    @UserLoginToken
     @RequestMapping(value = "/m_delete", method = RequestMethod.GET)
     public String mDelete(@RequestParam("m_number") Integer mNumber) {
         HashMap<String, Object> map = new HashMap<>(2);

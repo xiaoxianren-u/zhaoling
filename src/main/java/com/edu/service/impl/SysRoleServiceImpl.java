@@ -64,4 +64,15 @@ public class SysRoleServiceImpl implements SysRoleService {
 //        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
         return sysRoleDao.add(role);
     }
+
+    /**
+     * 查询改类角色是否已经被禁止登录
+     *
+     * @param statusStr
+     * @return
+     */
+    @Override
+    public int selectStatus(String statusStr) {
+        return sysRoleDao.selectStatus(statusStr);
+    }
 }

@@ -65,4 +65,37 @@ public interface SysUserDao {
      * @return
      */
     String selectStatus(String username);
+
+
+    /**
+     * 用户列表实现分页
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<User> selectUserList(@Param("page") Integer page, @Param("limit") Integer limit);
+
+    /**
+     * 普通用户数量
+     *
+     * @return
+     */
+    int selectCount();
+
+    /**
+     * 用户黑名单列表
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<User> selectBlackList(@Param("page") Integer page, @Param("limit") Integer limit);
+
+    /**
+     * 用户黑名单列表
+     *
+     * @return
+     */
+    int selectblackCount();
 }

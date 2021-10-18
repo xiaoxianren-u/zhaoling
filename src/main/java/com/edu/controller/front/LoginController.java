@@ -3,6 +3,7 @@ package com.edu.controller.front;
 import com.alibaba.fastjson.JSON;
 import com.edu.intercept.PassToken;
 import com.edu.pojo.User;
+import com.edu.service.SysRoleService;
 import com.edu.service.SysUserService;
 import com.edu.util.JwtUtils;
 import com.edu.util.MD5Util;
@@ -31,6 +32,10 @@ public class LoginController {
     @Autowired
     private SysUserService sysUserService;
 
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
     /**
      * POST   登录请求
      *
@@ -44,8 +49,9 @@ public class LoginController {
     @PassToken
     public String loginPost(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
 
+
         int status = Integer.parseInt(user.getStatus());
-        System.out.println("user = " + user);
+//        System.out.println("user = " + user);
         HashMap<String, Object> hashMap = new HashMap<String, Object>(4);
         int n = sysUserService.countUserAdmin(user.getUser_name(), MD5Util.inputPassToFromPass(user.getPass_word()));
         /*
@@ -58,13 +64,23 @@ public class LoginController {
             if (statusStr.contains("管理员")) {
                 sta = 1;
             }
+            int st = sysRoleService.selectStatus(statusStr);
+            if (st == 1) {
+                hashMap.put("bool", PageCodeEnum.LOGIN_FAIL.getBool());
+                hashMap.put("msg", "该角色已被停止登录系统了");
+
+                return JSON.toJSONString(hashMap);
+            }
+
             if (status == sta) {
+
+
                 hashMap.put("bool", PageCodeEnum.LOGIN_SUCCESS.getBool());
                 String token = JwtUtils.generateToken(user.getUser_name());
                 hashMap.put("key", sta);
                 hashMap.put("token", token);
                 hashMap.put("msg", PageCodeEnum.LOGIN_SUCCESS.getMsg());
-                response.setHeader("token", token);
+                System.out.println("new Date() = " + new Date());
                 sysUserService.updateLogin(user.getUser_name(), new Date());
             } else {
                 hashMap.put("bool", PageCodeEnum.LOGIN_FAIL.getBool());

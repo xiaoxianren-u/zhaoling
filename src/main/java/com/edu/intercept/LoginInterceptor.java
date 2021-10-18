@@ -26,18 +26,16 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        request.setCharacterEncoding("utf-8");
+        String token = null;
 
-
-        String token = request.getHeader("token");
-        System.out.println("token = " + token);
+//        System.out.println("request.getHeader(\"accept-language\") = " + request.getHeader("accept-language"));
+//        System.out.println("token = " + token);
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        if (token == null) {
-            token = request.getParameter("token");
-        }
-        System.out.println("token = " + token);
+
+//        System.out.println("token = " + token);
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
@@ -52,6 +50,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (method.isAnnotationPresent(UserLoginToken.class)) {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.value()) {
+                token = request.getHeader("cookie");
+//                System.out.println("token = " + token);
+
+                if (token == null) {
+                    token = request.getParameter("token");
+                }
+
                 // 执行认证
                 if (token == null) {
                     throw new RuntimeException("无token，请重新登录");

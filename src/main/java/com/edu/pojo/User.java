@@ -79,6 +79,11 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date finally_time;
 
+    /**
+     * 拉黑 (0不拉黑，1拉黑)
+     */
+    @ApiModelProperty("拉黑")
+    private Integer pull_black;
 
     /**
      * 将时间转换成yy:dd/MM 。。。。。

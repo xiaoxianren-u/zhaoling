@@ -46,11 +46,11 @@ CREATE TABLE con_tents_db
 
 INSERT INTO zhaoling.con_tents_db (con_name, con_url, con_number, con_icon)
 VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
-       ('普通用户', DEFAULT, 2, 'iconfont icon-yonghuliebiao'),
+       ('普通用户', '/sys/user.action', 2, 'iconfont icon-yonghuliebiao'),
        ('后台管理员', '/sys/administrator.action', 2, 'iconfont icon-guanliyuan'),
        ('角色管理', '/sys/role.action', 2, 'iconfont icon-jiaoseguanli'),
        ('菜单管理', '/sys/menu.action', 2, 'iconfont icon-caidanguanli'),
-       ('用户黑名单', DEFAULT, 2, 'iconfont icon-heimingdan'),
+       ('用户黑名单', '/sys/black.action', 2, 'iconfont icon-heimingdan'),
        ('帖子管理', DEFAULT, 3, 'iconfont icon-yunyingguanli_tieziguanli'),
        ('发布帖子', DEFAULT, 3, 'iconfont icon-fabudetiezi'),
        ('寻物帖子', DEFAULT, 3, 'iconfont icon-0-10'),
@@ -103,15 +103,19 @@ CREATE TABLE user_db
     user_sex      VARCHAR(4)  NOT NULL DEFAULT '' COMMENT '用户性别',
     `status`      VARCHAR(50) NOT NULL DEFAULT '普通用户' COMMENT '用户状态',
     user_image    VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户头像',
+    pull_black    INT(1)      NOT NULL DEFAULT 0 COMMENT '拉黑 (0不拉黑，1拉黑)',
     register_time DATETIME    NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户注册时间',
     finally_time  DATETIME    NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户最后一次登录时间',
+
     PRIMARY KEY (user_id),
     constraint fk_ro_user foreign key (status) references role_db (status)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT 'user_db';
 
 insert into zhaoling.user_db(user_name, pass_word, user_iphone, status)
-values ('admin', '3903f200079e275e6d508aa453350784', '15877102026', '超级管理员');
+values ('admin', '3903f200079e275e6d508aa453350784', '15877102026', '超级管理员'),
+       ('12345678', '3903f200079e275e6d508aa453350784', '15877102026', '管理员'),
+       ('123456789', '3903f200079e275e6d508aa453350784', '15877102026', '普通用户');
 
 
 # 通知表

@@ -70,4 +70,34 @@ public interface SysUserService {
      * @return
      */
     String selectStatus(String username);
+
+    /**
+     * 用户列表
+     *
+     * @return
+     */
+    List<User> selectUserList(Integer page, Integer limit);
+
+    /**
+     * 普通用户数量
+     *
+     * @return
+     */
+    int selectCount();
+
+    /**
+     * 用户黑名单列表
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<User> selectBlackList(Integer page, Integer limit);
+
+    /**
+     * 用户黑名单数量
+     *
+     * @return
+     */
+    int selectblackCount();
 }

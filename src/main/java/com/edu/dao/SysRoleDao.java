@@ -57,4 +57,11 @@ public interface SysRoleDao {
     int add(Role role);
 
 
+    /**
+     * 查询改类角色是否已经被禁止登录
+     *
+     * @param statusStr
+     * @return
+     */
+    int selectStatus(@Param("statusStr") String statusStr);
 }
