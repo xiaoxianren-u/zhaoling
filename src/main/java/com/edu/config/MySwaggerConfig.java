@@ -28,10 +28,14 @@ public class MySwaggerConfig {
     public Docket myDocket() {
         Docket docket = new Docket(DocumentationType.SWAGGER_2);
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("招领管理系统[Api接口文档]") // 标题
-                .description("") // 描述
-                .contact(new Contact("yang_", "", "1793925141@qq.com")) // 联系方式
-                .version("v1.0") // 版本号
+                // 标题
+                .title("招领管理系统[Api接口文档]")
+                // 描述
+                .description("")
+                // 联系方式
+                .contact(new Contact("yang_", "", "1793925141@qq.com"))
+                // 版本号
+                .version("v1.0")
                 .build();
         docket.apiInfo(apiInfo);
         //设置只生成被Api这个注解注解过的Ctrl类中有ApiOperation注解的api接口的文档

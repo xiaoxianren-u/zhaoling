@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +27,20 @@ import java.util.HashMap;
  */
 
 @Controller
+@RequestMapping
 public class LoginController {
 
 
+    /**
+     * 用户业务
+     */
     @Autowired
     private SysUserService sysUserService;
 
 
+    /**
+     * df
+     */
     @Autowired
     private SysRoleService sysRoleService;
 
@@ -50,8 +58,9 @@ public class LoginController {
     public String loginPost(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
 
 
+        request.getSession().setAttribute("name", user.getUser_name());
         int status = Integer.parseInt(user.getStatus());
-//        System.out.println("user = " + user);
+
         HashMap<String, Object> hashMap = new HashMap<String, Object>(4);
         int n = sysUserService.countUserAdmin(user.getUser_name(), MD5Util.inputPassToFromPass(user.getPass_word()));
         /*
@@ -68,26 +77,26 @@ public class LoginController {
             if (st == 1) {
                 hashMap.put("bool", PageCodeEnum.LOGIN_FAIL.getBool());
                 hashMap.put("msg", "该角色已被停止登录系统了");
-
+                request.getSession().setAttribute("log", "登录失败");
                 return JSON.toJSONString(hashMap);
             }
-
             if (status == sta) {
-
-
                 hashMap.put("bool", PageCodeEnum.LOGIN_SUCCESS.getBool());
                 String token = JwtUtils.generateToken(user.getUser_name());
                 hashMap.put("key", sta);
                 hashMap.put("token", token);
                 hashMap.put("msg", PageCodeEnum.LOGIN_SUCCESS.getMsg());
-                System.out.println("new Date() = " + new Date());
+                request.getSession().setAttribute("log", "登录成功");
+                response.setHeader("token", token);
                 sysUserService.updateLogin(user.getUser_name(), new Date());
             } else {
+                request.getSession().setAttribute("log", "登录失败");
                 hashMap.put("bool", PageCodeEnum.LOGIN_FAIL.getBool());
                 hashMap.put("msg", "角色错误");
             }
         } else {
-//            登录失败
+            //登录失败
+            request.getSession().setAttribute("log", "登录失败");
             hashMap.put("bool", PageCodeEnum.LOGIN_FAIL.getBool());
             hashMap.put("msg", PageCodeEnum.LOGIN_FAIL.getMsg());
         }

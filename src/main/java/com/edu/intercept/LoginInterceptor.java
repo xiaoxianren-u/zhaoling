@@ -3,6 +3,7 @@ package com.edu.intercept;
 import com.edu.service.SysUserService;
 import com.edu.util.JwtUtils;
 import io.jsonwebtoken.Claims;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,19 +25,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        request.setCharacterEncoding("utf-8");
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
         String token = null;
-
-//        System.out.println("request.getHeader(\"accept-language\") = " + request.getHeader("accept-language"));
-//        System.out.println("token = " + token);
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-
-//        System.out.println("token = " + token);
-
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         //检查是否有PassToken注释，有则跳过认证
@@ -50,16 +44,21 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (method.isAnnotationPresent(UserLoginToken.class)) {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.value()) {
-                token = request.getHeader("cookie");
-//                System.out.println("token = " + token);
-
+                String cookie = request.getHeader("Cookie");
+                String[] output = cookie.split(";");
+                for (int i = 0; i <= cookie.length(); i++) {
+                    if (output[i].contains("token")) {
+                        token = output[i];
+                        break;
+                    }
+                }
                 if (token == null) {
                     token = request.getParameter("token");
                 }
 
                 // 执行认证
                 if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
+                    throw new RuntimeException("无令牌，请重新登录");
                 }
                 // 获取 token 中的 username
                 Claims claims = JwtUtils.checkToken(token);
@@ -74,19 +73,16 @@ public class LoginInterceptor implements HandlerInterceptor {
                 }
             }
         }
-
-
-        System.out.println("==========================================================");
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) throws Exception {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, Exception ex) throws Exception {
 
     }
 }

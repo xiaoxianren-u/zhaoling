@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +51,7 @@ public class SysIndexController {
      * @return
      */
     @UserLoginToken
-    @RequestMapping("/menu.action")
+    @RequestMapping(value = "/menu.action", method = RequestMethod.GET)
     public String listAction(ModelMap modelMap) {
 
         List<ConTents> list = sysConTentService.selectContents();
@@ -65,7 +66,7 @@ public class SysIndexController {
      * @return
      */
     @UserLoginToken
-    @RequestMapping("/role.action")
+    @RequestMapping(value = "/role.action", method = RequestMethod.GET)
     public String roleAction(ModelMap modelMap) {
 
         return "/back/role";
@@ -79,7 +80,7 @@ public class SysIndexController {
 
 
     @UserLoginToken
-    @RequestMapping("/administrator.action")
+    @RequestMapping(value = "/administrator.action", method = RequestMethod.GET)
     public String administratorAction() {
         return "/back/administrator";
     }
@@ -91,7 +92,7 @@ public class SysIndexController {
      */
 
     @UserLoginToken
-    @RequestMapping("/user.action")
+    @RequestMapping(value = "/user.action", method = RequestMethod.GET)
     public String userAction() {
         return "/back/user";
     }
@@ -99,14 +100,35 @@ public class SysIndexController {
     /**
      * 用户列表
      *
-     * @return
+     * @return S
      */
 
     @UserLoginToken
-    @RequestMapping("/black.action")
+    @RequestMapping(value = "/black.action", method = RequestMethod.GET)
     public String blackAction() {
         return "/back/black";
     }
 
+    /**
+     * 用户登录日志
+     *
+     * @return
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/log.action", method = RequestMethod.GET)
+    public String logAction() {
+        return "/back/log";
+    }
+
+    /**
+     * 用户操作日志
+     *
+     * @return
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/operate.action", method = RequestMethod.GET)
+    public String operateAction() {
+        return "/back/operate";
+    }
 
 }

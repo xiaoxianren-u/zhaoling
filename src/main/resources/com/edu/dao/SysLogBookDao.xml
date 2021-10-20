@@ -1,0 +1,57 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.SysLogBookDao">
+
+
+<!--登陆日志-->
+        <insert id="logInsert">
+            insert into zhaoling.log_book_db(
+                <trim suffixOverrides=",">
+                    <if test="log_id != null">log_id,</if>
+                    <if test="log_date != null">log_date,</if>
+                    <if test="log_browser != null and log_browser != ''">log_browser,</if>
+                    <if test="log_class_method != null and log_class_method != ''">log_class_method,</if>
+                    <if test="log_url_type != null and log_url_type != ''">log_url_type,</if>
+                    <if test="log_url != null and log_url != ''">log_url,</if>
+                    <if test="ip != null and ip != ''">ip,</if>
+                    <if test="log_user != null and log_user != ''">log_user,</if>
+                    <if test="log_time != null">log_time,</if>
+                    <if test="log_start != null and log_start != ''">log_start,</if>
+                    <if test="discern != null">discern,</if>
+                </trim>
+            )values (
+                <trim suffixOverrides=",">
+                    <if test="log_id != null">#{log_id},</if>
+                    <if test="log_date != null">#{log_date},</if>
+                    <if test="log_browser != null and log_browser != ''">#{log_browser},</if>
+                    <if test="log_class_method != null and log_class_method != ''">#{log_class_method},</if>
+                    <if test="log_url_type != null and log_url_type != ''">#{log_url_type},</if>
+                    <if test="log_url != null and log_url != ''">#{log_url},</if>
+                    <if test="ip != null and ip != ''">#{ip},</if>
+                    <if test="log_user != null and log_user != ''">#{log_user},</if>
+                    <if test="log_time != null">#{log_time},</if>
+                    <if test="log_start != null and log_start != ''">#{log_start},</if>
+                    <if test="discern != null">#{discern},</if>
+                </trim>
+            )
+        </insert>
+
+<!--        日志列表-->
+        <select id="selectList" resultType="com.edu.pojo.LogBook">
+
+            select log_date, log_browser, log_class_method, log_url_type, log_url, ip, log_user, log_time, log_start from zhaoling.log_book_db
+            where discern = #{t}
+            Limit #{page},#{limit}
+        </select>
+
+<!--        相应日志数量-->
+        <select id="selectCount" resultType="java.lang.Integer">
+            select COUNT(*) from zhaoling.log_book_db where discern = #{t}
+        </select>
+
+
+
+
+
+
+
+</mapper>

@@ -1,6 +1,6 @@
 package com.edu.controller.front;
 
-import com.edu.intercept.UserLoginToken;
+import com.edu.intercept.PassToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +16,7 @@ public class IndexController {
 
 
     @RequestMapping("/")
-    @UserLoginToken
+    @PassToken
     public String indexAction() {
         return "/index.html";
     }
@@ -35,6 +35,7 @@ public class IndexController {
         return "/login1.html";
     }
 
+    @PassToken
     @RequestMapping("/zhuce")
     public String zhuceAction() {
         return "/zhuce.html";

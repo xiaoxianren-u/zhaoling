@@ -1,6 +1,7 @@
 package com.edu.controller.back;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.intercept.OperateSer;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.User;
 import com.edu.service.SysUserService;
@@ -37,6 +38,7 @@ public class SysUserController {
      *
      * @return
      */
+    @OperateSer(operationName = "select操作", operationType = "查询管理列表")
     @RequestMapping("/adminlist")
     @UserLoginToken
     public String adminList() {
@@ -57,6 +59,7 @@ public class SysUserController {
      * @param limit
      * @return
      */
+    @OperateSer(operationName = "select操作", operationType = "查询用户列表")
     @RequestMapping("/userlist")
     @UserLoginToken
     public String userList(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {
@@ -79,6 +82,7 @@ public class SysUserController {
      * @param limit
      * @return
      */
+    @OperateSer(operationName = "select操作", operationType = "查询用户黑名单列表")
     @RequestMapping("/blacklist")
     @UserLoginToken
     public String blackList(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {

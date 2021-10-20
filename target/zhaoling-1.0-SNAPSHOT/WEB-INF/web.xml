@@ -36,7 +36,19 @@
     <welcome-file-list>
         <welcome-file>templates/index.html</welcome-file>
     </welcome-file-list>
+<!--存储request、response到ThreadLocal中-->
+    <filter>
+        <filter-name>InitContent</filter-name>
+        <filter-class>com.edu.config.InitContentConfig</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>InitContent</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
+
+
+<!--    -->
     <filter>
         <filter-name>CORS</filter-name>
         <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
