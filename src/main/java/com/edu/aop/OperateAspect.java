@@ -2,10 +2,10 @@ package com.edu.aop;
 
 import com.edu.config.IpConfig;
 import com.edu.config.SysContentConfig;
+import com.edu.config.UserConfig;
 import com.edu.intercept.OperateSer;
 import com.edu.pojo.LogBook;
 import com.edu.service.SysLogBookService;
-import com.edu.util.JwtUtils;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.aspectj.lang.JoinPoint;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author yz
@@ -69,7 +68,7 @@ public class OperateAspect {
 
         if (annotation != null) {
             /*获取页面的用户名*/
-            username = getToken(request);
+            username = UserConfig.tokenUserName(request);
             //获取浏览器信息
             Browser browser = UserAgent.parseUserAgentString(request.getHeader("User-Agent")).getBrowser();
             //浏览器 及系统
@@ -103,9 +102,10 @@ public class OperateAspect {
                     // ....
                     1, null);
             sysLogBookService.logInsert(logBook);
-
+//            System.out.println("logBook = " + logBook);
 
         }
+
         return joinPoint.proceed();
     }
 
@@ -135,21 +135,6 @@ public class OperateAspect {
             }
         }
         return url;
-    }
-
-    /*获取页面的token*/
-
-    public String getToken(HttpServletRequest request) {
-
-        cookie = request.getHeader("Cookie");
-        String[] output = cookie.split(";");
-        for (int i = 0; i <= cookie.length(); i++) {
-            if (output[i].contains("token")) {
-                token = output[i];
-                break;
-            }
-        }
-        return (String) Objects.requireNonNull(JwtUtils.checkToken(token)).get("username");
     }
 
 

@@ -23,6 +23,7 @@ public class IndexController {
 
     //如：修改下面的内容
     //    这里的url不能跟上面的一样
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginAction() {
         return "/login.html";
@@ -31,7 +32,7 @@ public class IndexController {
     //先上传 Can't commit changes due to unresolved conflicts. 什么意思啊 等下
 
     @RequestMapping("/login1")
-    public String loginaAction() {
+    public String login1Action() {
         return "/login1.html";
     }
 

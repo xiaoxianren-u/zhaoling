@@ -63,7 +63,7 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('用户消息', DEFAULT, 4, 'iconfont icon-xiaoxi'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
        ('登录日志', '/sys/log.action', 5, 'iconfont icon-drxx92'),
-       ('基本资料', DEFAULT, 6, 'iconfont icon-jibenziliao'),
+       ('基本资料', '/sys/basic.action', 6, 'iconfont icon-jibenziliao'),
        ('修改密码', DEFAULT, 6, 'iconfont icon-xiugaimima'),
        ('系统接口', '/swagger-ui.html', 7, 'iconfont icon-xitongjiekou');
 

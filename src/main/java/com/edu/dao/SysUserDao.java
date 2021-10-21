@@ -98,4 +98,14 @@ public interface SysUserDao {
      * @return
      */
     int selectblackCount();
+
+
+    /**
+     * 获取某位用户的信息
+     *
+     * @param username
+     * @return
+     */
+    User selectBasic(@Param("username") String username);
+
 }

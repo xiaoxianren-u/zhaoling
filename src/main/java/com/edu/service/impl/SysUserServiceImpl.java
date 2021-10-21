@@ -135,4 +135,15 @@ public class SysUserServiceImpl implements SysUserService {
     public int selectblackCount() {
         return sysUserDao.selectblackCount();
     }
+
+    /**
+     * 获取某位用户的信息
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public User selectBasic(String username) {
+        return sysUserDao.selectBasic(username);
+    }
 }

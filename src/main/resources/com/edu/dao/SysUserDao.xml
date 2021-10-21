@@ -59,6 +59,12 @@
     <select id="selectblackCount" resultType="java.lang.Integer">
         select count(*) from zhaoling.user_db where pull_black = 1
     </select>
+<!--   获取某位用户的信息-->
+    <select id="selectBasic" resultType="com.edu.pojo.User">
+
+        select user_name,user_email,user_iphone,name,user_sex,user_image,register_time from zhaoling.user_db
+        where user_name = #{username}
+    </select>
 
 
 </mapper>

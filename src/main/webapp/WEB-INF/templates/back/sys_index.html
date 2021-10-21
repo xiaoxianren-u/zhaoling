@@ -30,13 +30,17 @@
             <li class="layui-nav-item layui-hide layui-show-md-inline-block">
                 <a>
                     <img class="layui-nav-img"
-                         src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-                    tester
+                         style="border-radius: 50%; width: 40px;height: 40px; border: 1px cornflowerblue solid; "
+                         th:if="${user.user_image} != ''" th:src="${user.user_image}">
+                    <img class="layui-nav-img" src="../../../static/image/img.png"
+                         style="border-radius: 50%; width: 40px;height: 40px; border: 2px cornflowerblue solid;"
+                         th:if="${user.user_image} == ''">
+                    <span style="font-size: 16px;" th:text="${user.user_name}"></span>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">Your Profile</a></dd>
-                    <dd><a href="">Settings</a></dd>
-                    <dd><a href="">Sign out</a></dd>
+                    <dd><a href="">个人中心</a></dd>
+                    <!--                    <dd><a href="">Settings</a></dd>-->
+                    <dd><a href="">退出</a></dd>
                 </dl>
             </li>
         </ul>

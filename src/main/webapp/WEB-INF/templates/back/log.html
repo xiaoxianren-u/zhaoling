@@ -13,7 +13,7 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
 </head>
-<body>
+<body style="background-color: #e3e1e1">
 
 
 <div class="layui-bg-gray" style="padding: 30px;">
@@ -80,7 +80,7 @@
     {{#  if(d.log_url_type == 'POST'){ }}
     <p style="color: #1E9FFF">{{d.log_url_type}}</p>
     {{#  } else { }}
-    <p style="color: yellow">{{d.log_url_type}}</p>
+    <p style="color: #cd944e">{{d.log_url_type}}</p>
     {{#  } }}
 </script>
 <!--登录失败红色 ，登录成蓝色-->
@@ -88,7 +88,7 @@
     {{#  if(d.log_start == '登录成功'){ }}
     <p style="color: #1E9FFF">{{d.log_start}}</p>
     {{#  } else { }}
-    <p style="color: #cd944e">{{d.log_start}}</p>
+    <p style="color: red">{{d.log_start}}</p>
     {{#  } }}
 </script>
 <!--设置执行时间的后缀 s-->

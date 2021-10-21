@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+</head>
+<body style="background-color: #faf8f8">
+
+<form>
+    <div class="layui-bg-gray" style="padding: 30px;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md4">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">
+                        <div class="layui-fluid">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><p
+                                                style="font-size: 25px;text-shadow: 5px 5px 5px black"><i>我的资料</i></p>
+                                        </div>
+                                        <div class="layui-card-body" pad15>
+                                            <div class="layui-form" lay-filter="">
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">头像</label>
+                                                    <div style="text-align: left">
+                                                        <img class="layui-upload layui-anim"
+                                                             data-anim="layui-anim-scaleSpring" id="id_upload_img"
+                                                             style="border-radius: 50%; width: 150px;height: 150px; box-shadow: 0 0 0 4px rgb(0 0 0 /10%);"
+                                                             th:if="${user.user_image} != ''"
+                                                             th:src="${user.user_image}">
+                                                        <img class="layui-upload layui-anim"
+                                                             data-anim="layui-anim-scaleSpring" id="id_upload_img"
+                                                             src="../../../static/image/img.png"
+                                                             style="border-radius: 50%; width: 150px;height: 150px;box-shadow: 0 0 0 4px rgb(0 0 0 /10%);"
+                                                             th:if="${user.user_image} == ''">
+                                                        <div class="layui-word-aux"
+                                                             style="margin-top: 10px;margin-left: 120px">点击更换我的头像
+                                                        </div>
+                                                        <div class="layui-word-aux" style="margin-left: 100px">上传图片限制大小
+                                                            600kb
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">用户名</label>
+                                                    <div class="layui-input-inline">
+                                                        <p style="margin-top: 6px;font-size: 20px"
+                                                           th:text="${user.user_name}">2021-10-12 19:22:12</p>
+                                                        <!--                                                    <input type="text" name="username"  th:value="${user.user_name}" readonly class="layui-input">-->
+                                                    </div>
+                                                    <div class="layui-form-mid layui-word-aux">不可修改。</div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">昵称</label>
+                                                    <div class="layui-input-inline">
+                                                        <input autocomplete="off" class="layui-input"
+                                                               lay-verify="nickname" name="nickname" placeholder="请输入昵称"
+                                                               th:value="${user.name}" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">性别</label>
+                                                    <div class="layui-input-block" th:if="${user.user_sex == '男'}">
+                                                        <input checked name="sex" title="男" type="radio" value="男">
+                                                        <input name="sex" title="女" type="radio" value="女">
+                                                        <input name="sex" title="保密" type="radio" value="保密">
+                                                    </div>
+                                                    <div class="layui-input-block" th:if="${user.user_sex == '女'}">
+                                                        <input name="sex" title="男" type="radio" value="男">
+                                                        <input checked name="sex" title="女" type="radio" value="女">
+                                                        <input name="sex" title="保密" type="radio" value="保密">
+                                                    </div>
+                                                    <div class="layui-input-block" th:if="${user.user_sex == '保密'}">
+                                                        <input name="sex" title="男" type="radio" value="男">
+                                                        <input name="sex" title="女" type="radio" value="女">
+                                                        <input checked name="sex" title="保密" type="radio" value="保密">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">手机</label>
+                                                    <div class="layui-input-inline">
+                                                        <input autocomplete="off" class="layui-input" lay-verify="phone"
+                                                               name="cellphone" th:value="${user.user_iphone}"
+                                                               type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">邮箱</label>
+                                                    <div class="layui-input-inline">
+                                                        <input autocomplete="off" class="layui-input" lay-verify="email"
+                                                               name="email" th:value="${user.user_email}" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">注册时间</label>
+                                                    <div class="layui-input-inline">
+                                                        <p style="margin-top: 6px;font-size: 15px"
+                                                           th:text="${user.date}">2021-10-12 19:22:12</p>
+                                                    </div>
+                                                    <div class="layui-form-mid layui-word-aux">不可修改。</div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block">
+                                                        <button class="layui-btn" lay-filter="setmyinfo" lay-submit>
+                                                            确认修改
+                                                        </button>
+                                                        <button class="layui-btn layui-btn-primary" type="reset">重新填写
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    layui.use(['upload'], function () {
+        var layer = layui.layer;
+        var $ = layui.jquery,
+            upload = layui.upload;
+        //普通图片上传开始
+        var uploadInst = upload.render({
+            elem: '#id_upload_img',
+            url: '/user/upload_img/',
+            size: 600, //限制文件大小，单位 KB
+            before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#id_upload_img').attr('src', result); //图片链接（base64）
+                });
+            },
+            done: function (res) {
+                //如果上传失败
+                if (res.status > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            },
+            error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html(
+                    '<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+        //普通图片上传结束
+    })
+
+</script>
+
+
+</body>
+</html>

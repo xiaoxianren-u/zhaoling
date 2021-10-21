@@ -38,7 +38,6 @@ public class SysRoleController {
     @ApiOperation(value = "角色管理列表")
     public String roleList() {
         List<Role> roleList = sysRoleService.listRole();
-        System.out.println("roleList = " + roleList);
         String s = "{\"code\":0,\"msg\":\"\",\"count\":" + 0 + ",\"data\":" + JSON.toJSONString(roleList) + "}";
         return s;
     }

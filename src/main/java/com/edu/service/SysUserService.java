@@ -100,4 +100,12 @@ public interface SysUserService {
      * @return
      */
     int selectblackCount();
+
+    /**
+     * 获取某位用户的信息
+     *
+     * @param username
+     * @return
+     */
+    User selectBasic(String username);
 }
