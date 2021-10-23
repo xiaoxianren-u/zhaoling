@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+</head>
+<body>
+
+
+<div class="layui-bg-gray" style="padding: 30px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-panel">
+                <div>
+                    <div class="layui-card-body">
+                        <div style="padding-bottom: 10px;">
+                            <!--                            <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>-->
+                            <button class="layui-btn layuiadmin-btn-admin" data-type="add" id="add"><i
+                                    class="iconfont icon-zengjia"></i>&nbsp;添加
+                            </button>
+                        </div>
+                    </div>
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    {{#  if(d.status == '超级管理员'){ }}
+    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } }}
+</script>
+
+<!--修改-->
+<div class="site-text" id="update" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">拥有权限：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" id="ro_have" lay-verify="required" name="" placeholder="请输入"
+                          required></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">具体描述：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" id="ro_describe" lay-verify="required" name="" placeholder="请输入"
+                          required></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>角色状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="ro_status" title="启用" type="radio" value="0">
+                <input name="ro_status" title="禁止" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script id="img" th:inline="none" type="text/html">
+
+    <!--    头像-->
+
+    <div><img style="height:35px;width:35px; border-radius: 10px" th:src="@{/static/image/img.png}"></div>
+
+    <div><img style="height:35px;width:35px; border-radius: 10px" src="{{ d.user_image}}"></div>
+</script>
+<script th:inline="none">
+    layui.use('table', function () {
+        var table = layui.table,
+            $ = layui.jquery;
+        table.render({
+            elem: '#test'
+            , url: '/user/adminlist'
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , title: '用户表'
+            , cols: [[
+                {type: 'checkbox', fixed: 'center'}
+                , {field: 'user_id', title: 'ID', width: 100, fixed: 'left', sort: true}
+                , {field: 'user_name', title: '用户名', width: 220, edit: 'text'}
+                , {field: 'user_image', title: '头像', width: 80, templet: '#img'}
+                , {field: 'user_email', title: '邮箱', width: 250, edit: 'text'}
+                , {field: 'user_iphone', title: '手机', width: 250}
+                , {field: 'user_sex', title: '性别', width: 80, edit: 'text', sort: true}
+                , {field: 'status', title: '角色', width: 160}
+                , {field: 'date', title: '加入时间', width: 220}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            ]]
+            // , page: true
+        });
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.prompt({
+                    formType: 1
+                    , title: '敏感操作，请验证口令'
+                }, function (value, index) {
+                    layer.close(index);
+
+                    layer.confirm('确定删除吗？', function (index) {
+                        table.reload('LAY-user-back-manage');
+                        obj.del();
+                        layer.close(index);
+                        layer.msg('已删除');
+                    });
+                });
+
+
+                //
+                // layer.confirm('真的删除行么', function(index){
+                //
+                // });
+            } else if (obj.event === 'edit') {
+
+                console.log("=================" + data.user_id);
+                // layer.open({
+                //     type: 1,
+                //     title: "信息修改",
+                //     area: ["450px", "500px"],
+                //     btn: ['提交', '取消'], //可以无限个按钮
+                //     Number: 900000,   //自动关闭的时间
+                //     anim: 2,
+                //     maxmin: true, // 最大最小化。
+                //     resize: true, // 是否允许拉伸
+                //     content: $('#update'), //添加表单到弹出层
+                //     yes: function (index) {
+                //
+                //
+                //     }
+                // })
+
+                layer.msg('该功能暂时无法实现', {icon: 0});
+
+            }
+        });
+
+        $('#add').click(function () {
+
+            layer.msg("添加");
+            console.log("添加");
+
+        })
+
+    });
+
+
+</script>
+</body>
+</html>
