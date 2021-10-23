@@ -14,7 +14,7 @@
 </head>
 <body style="background-color: #faf8f8">
 
-<form>
+<form onsubmit="return false">
     <div class="layui-bg-gray" style="padding: 30px;">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md4">
@@ -65,7 +65,7 @@
                                                     <div class="layui-input-inline">
                                                         <input autocomplete="off" class="layui-input"
                                                                lay-verify="nickname" name="nickname" placeholder="请输入昵称"
-                                                               th:value="${user.name}" type="text">
+                                                               id="name" th:value="${user.name}" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
@@ -91,14 +91,15 @@
                                                     <div class="layui-input-inline">
                                                         <input autocomplete="off" class="layui-input" lay-verify="phone"
                                                                name="cellphone" th:value="${user.user_iphone}"
-                                                               type="text">
+                                                               id="phone" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label">邮箱</label>
                                                     <div class="layui-input-inline">
                                                         <input autocomplete="off" class="layui-input" lay-verify="email"
-                                                               name="email" th:value="${user.user_email}" type="text">
+                                                               id="email" name="email" th:value="${user.user_email}"
+                                                               type="text">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
@@ -111,7 +112,8 @@
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block">
-                                                        <button class="layui-btn" lay-filter="setmyinfo" lay-submit>
+                                                        <button class="layui-btn" id="sub" lay-filter="setmyinfo"
+                                                                lay-submit>
                                                             确认修改
                                                         </button>
                                                         <button class="layui-btn layui-btn-primary" type="reset">重新填写
@@ -135,38 +137,79 @@
 
 <script>
     layui.use(['upload'], function () {
-        var layer = layui.layer;
-        var $ = layui.jquery,
+        const layer = layui.layer;
+        const $ = layui.jquery,
             upload = layui.upload;
+
+        let imagePath = '';
         //普通图片上传开始
         var uploadInst = upload.render({
             elem: '#id_upload_img',
-            url: '/user/upload_img/',
+            url: '/user/upload_img',
             size: 600, //限制文件大小，单位 KB
             before: function (obj) {
                 //预读本地文件示例，不支持ie8
+                console.log(obj);
                 obj.preview(function (index, file, result) {
-                    $('#id_upload_img').attr('src', result); //图片链接（base64）
+                    // 保存预览显示图片
+                    sessionStorage.setItem("img", result);
                 });
             },
+            //后台返回数据
             done: function (res) {
-                //如果上传失败
-                if (res.status > 0) {
-                    return layer.msg('上传失败');
+                if (res.bool === true) {
+                    // 当上传成功才回显图片
+                    st = res.bool;
+                    layer.msg(res.msg);
+                    imagePath = res.data;
+                    sessionStorage.setItem("imagePath", imagePath);
+                    //回去预显示图片并回显
+                    $('#id_upload_img').attr('src', sessionStorage.getItem("img"));
+                } else {
+                    layer.msg(res.msg);
                 }
-                //上传成功
             },
-            error: function () {
-                //演示失败状态，并实现重传
-                var demoText = $('#demoText');
-                demoText.html(
-                    '<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function () {
-                    uploadInst.upload();
-                });
-            }
         });
-        //普通图片上传结束
+        //确认修改
+        $("#sub").click(function () {
+            let image = sessionStorage.getItem("imagePath");
+            if (image === undefined) {
+                image = "";
+            }
+            let sex = $('input[name="sex"]:checked').val();
+            let email = $("#email").val();
+            let phone = $("#phone").val();
+            let name = $("#name").val();
+
+            console.log({image: image, sex: sex, email: email, phone: phone, name: name});
+
+            $.ajax({
+                type: 'POST',
+                url: '/user/update/basic',
+                async: true,
+                data: JSON.stringify(
+                    {
+                        user_image: image,
+                        user_sex: sex,
+                        user_email: email,
+                        user_iphone: phone,
+                        name: name
+                    }
+                ),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (rse) {
+
+                    if (rse.bool === true) {
+                        layer.msg(rse.msg, {icon: 1});
+                    } else {
+                        layer.msg(rse.msg, {icon: 5});
+                    }
+                }
+            })
+        })
+
+
     })
 
 </script>

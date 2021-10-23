@@ -3,6 +3,7 @@ package com.edu.service;
 import com.edu.pojo.LogBook;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public interface SysLogBookService {
      * @return
      */
 
-    List<LogBook> selectList(Integer t, Integer page, Integer limit);
+    List<LogBook> selectList(Integer t, Integer page, Integer limit, String log_user, Date time, String log_start);
 
     /**
      * 相应日志数量
@@ -44,5 +45,5 @@ public interface SysLogBookService {
      * @return
      */
 
-    int selectCount(Integer t);
+    int selectCount(Integer t, String log_user, Date time, String log_start);
 }

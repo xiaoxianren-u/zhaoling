@@ -45,20 +45,33 @@ public class LoginInterceptor implements HandlerInterceptor {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.value()) {
                 String cookie = request.getHeader("Cookie");
-                String[] output = cookie.split(";");
-                for (int i = 0; i <= cookie.length(); i++) {
-                    if (output[i].contains("token")) {
-                        token = output[i];
-                        break;
+                String[] output = null;
+                try {
+                    output = cookie.split(";");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("无令牌，请重新登录");
+
+                }
+                try {
+                    for (int i = 0; i < cookie.length(); i++) {
+                        if (output[i].contains("token")) {
+                            token = output[i];
+                            break;
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("无令牌，请重新登录");
                 }
                 if (token == null) {
+
                     token = request.getParameter("token");
                 }
 
                 // 执行认证
                 if (token == null) {
-                    throw new RuntimeException("无令牌，请重新登录");
+                    throw new RuntimeException("无令牌，请重新登录 ");
                 }
                 // 获取 token 中的 username
                 Claims claims = JwtUtils.checkToken(token);
@@ -68,7 +81,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     String username = (String) claims.get("username");
                     int n = sysUserService.selectRec(username);
                     if (n != 1) {
-                        throw new RuntimeException("用户不存在，请创新登录！！！");
+                        throw new RuntimeException("用户不存在，请重新登录！！！");
                     }
                 }
             }

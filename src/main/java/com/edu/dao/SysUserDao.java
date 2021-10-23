@@ -108,4 +108,10 @@ public interface SysUserDao {
      */
     User selectBasic(@Param("username") String username);
 
+    /**
+     * 基本信息修改
+     *
+     * @param user
+     */
+    void updateBasic(User user);
 }

@@ -1,16 +1,20 @@
 package com.edu.controller.back;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.config.UserConfig;
 import com.edu.intercept.OperateSer;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.User;
 import com.edu.service.SysUserService;
+import com.edu.util.PageCodeEnum;
+import com.edu.util.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -95,6 +99,53 @@ public class SysUserController {
         }
         int n = sysUserService.selectblackCount();
         return "{\"code\":0,\"msg\":\"\",\"count\":" + n + ",\"data\":" + JSON.toJSONString(list) + "}";
+    }
+
+
+    @RequestMapping(value = "/upload_img", method = RequestMethod.POST)
+    @ResponseBody
+    @UserLoginToken
+    public String updateImager(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+
+        HashMap<String, Object> hashMap = new HashMap<>(3);
+        System.out.println("file = " + file);
+
+        String imagePath = UploadUtils.upload(file, request);
+        System.out.println("image = " + imagePath);
+        if (imagePath != null) {
+            hashMap.put("bool", true);
+            hashMap.put("msg", "上传成功");
+            hashMap.put("data", imagePath);
+        } else {
+            hashMap.put("bool", false);
+            hashMap.put("msg", "上传失败");
+        }
+        return JSON.toJSONString(hashMap);
+    }
+
+    /**
+     * 基本
+     *
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/update/basic", method = RequestMethod.POST)
+    @UserLoginToken
+    @ResponseBody
+    public String updateBasic(@RequestBody User user, HttpServletRequest request) {
+        HashMap<String, Object> hashMap = new HashMap<>(3);
+        System.out.println("user = " + user);
+        user.setUser_name(UserConfig.tokenUserName(request));
+        try {
+            sysUserService.updateBasic(user);
+            hashMap.put("bool", PageCodeEnum.MODIFY_SUCCESS.getBool());
+            hashMap.put("msg", PageCodeEnum.MODIFY_SUCCESS.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            hashMap.put("bool", PageCodeEnum.MODIFY_FAIL.getBool());
+            hashMap.put("msg", PageCodeEnum.MODIFY_FAIL.getMsg());
+        }
+        return JSON.toJSONString(hashMap);
     }
 
 

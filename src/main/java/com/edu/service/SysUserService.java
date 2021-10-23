@@ -108,4 +108,11 @@ public interface SysUserService {
      * @return
      */
     User selectBasic(String username);
+
+    /**
+     * 基本信息修改
+     *
+     * @param user
+     */
+    void updateBasic(User user);
 }

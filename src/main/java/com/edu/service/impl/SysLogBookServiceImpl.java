@@ -6,6 +6,7 @@ import com.edu.service.SysLogBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,8 +48,8 @@ public class SysLogBookServiceImpl implements SysLogBookService {
      */
 
     @Override
-    public List<LogBook> selectList(Integer t, Integer page, Integer limit) {
-        return sysLogBookDao.selectList(t, page, limit);
+    public List<LogBook> selectList(Integer t, Integer page, Integer limit, String log_user, Date time, String log_start) {
+        return sysLogBookDao.selectList(t, page, limit, log_user, time, log_start);
     }
 
     /**
@@ -58,7 +59,7 @@ public class SysLogBookServiceImpl implements SysLogBookService {
      * @return
      */
     @Override
-    public int selectCount(Integer t) {
-        return sysLogBookDao.selectCount(t);
+    public int selectCount(Integer t, String log_user, Date time, String log_start) {
+        return sysLogBookDao.selectCount(t, log_user, time, log_start);
     }
 }

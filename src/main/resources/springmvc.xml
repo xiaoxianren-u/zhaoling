@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -56,25 +56,10 @@
             <bean class="com.edu.intercept.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
-    <!--时间格式的转换-->
-    <!--    <mvc:annotation-driven>-->
-    <!--        <mvc:message-converters>-->
-    <!--            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-    <!--                <property name="objectMapper">-->
-    <!--                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
-    <!--                        <property name="dateFormat">-->
-    <!--                            <bean class="java.text.SimpleDateFormat">-->
-    <!--                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss " />-->
-    <!--                            </bean>-->
-    <!--                        </property>-->
-    <!--                    </bean>-->
-    <!--                </property>-->
-    <!--            </bean>-->
-
-    <!--        </mvc:message-converters>-->
-
-    <!--    </mvc:annotation-driven>-->
-
+    <!--文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="#{1024*1024}"/>
+    </bean>
 
 </beans>

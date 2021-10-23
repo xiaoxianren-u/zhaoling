@@ -38,9 +38,6 @@ public class LoginController {
     private SysUserService sysUserService;
 
 
-    /**
-     * df
-     */
     @Autowired
     private SysRoleService sysRoleService;
 

@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,15 +44,36 @@ public class SysLogBookController {
     @UserLoginToken
     @OperateSer(operationName = "select操作", operationType = "通过相应的t来获取不同的日志")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String logLogin(@RequestParam("t") Integer t, @RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {
+    public String logLogin(@RequestParam("t") Integer t,
+                           @RequestParam("page") Integer page,
+                           @RequestParam("limit") Integer limit,
+                           @RequestParam("log_user") String log_user,
+                           @RequestParam("log_time") String log_time,
+                           @RequestParam("log_start") String log_start) {
+        Date time = null;
+        if (!"".equals(log_time)) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                time = format.parse(log_time);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!"".equals(log_start)) {
+            try {
+                log_start = new String(log_start.getBytes("ISO8859-1"), StandardCharsets.UTF_8);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
         page = page > 1 ? limit * (page - 1) : 0;
-        List<LogBook> list = sysLogBookService.selectList(t, page, limit);
+        List<LogBook> list = sysLogBookService.selectList(t, page, limit, log_user, time, log_start);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         for (LogBook s : list) {
             s.setDate(formatter.format(s.getLog_date()));
         }
-        int n = sysLogBookService.selectCount(t);
+        int n = sysLogBookService.selectCount(t, log_user, time, log_start);
         return "{\"code\":0,\"msg\":\"\",\"count\":" + n + ",\"data\":" + JSON.toJSONString(list) + "}";
     }
 

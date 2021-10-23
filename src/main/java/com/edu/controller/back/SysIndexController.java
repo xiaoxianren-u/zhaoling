@@ -154,7 +154,6 @@ public class SysIndexController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String username = UserConfig.tokenUserName(request);
         User user = sysUserService.selectBasic(username);
-        System.out.println("user = " + user);
         user.setDate(formatter.format(user.getRegister_time()));
         modelMap.put("user", user);
         return "/back/basic";

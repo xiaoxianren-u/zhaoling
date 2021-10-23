@@ -21,7 +21,7 @@ public class UserConfig {
 
         cookie = request.getHeader("Cookie");
         String[] output = cookie.split(";");
-        for (int i = 0; i <= cookie.length(); i++) {
+        for (int i = 0; i < cookie.length(); i++) {
             if (output[i].contains("token")) {
                 token = output[i];
                 break;

@@ -146,4 +146,15 @@ public class SysUserServiceImpl implements SysUserService {
     public User selectBasic(String username) {
         return sysUserDao.selectBasic(username);
     }
+
+    /**
+     * 基本信息修改
+     *
+     * @param user
+     */
+
+    @Override
+    public void updateBasic(User user) {
+        sysUserDao.updateBasic(user);
+    }
 }

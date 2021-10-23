@@ -4,6 +4,7 @@ import com.edu.pojo.LogBook;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,8 @@ public interface SysLogBookDao {
      * @param limit
      * @return
      */
-    List<LogBook> selectList(@Param("t") Integer t, @Param("page") Integer page, @Param("limit") Integer limit);
+    List<LogBook> selectList(@Param("t") Integer t, @Param("page") Integer page, @Param("limit") Integer limit,
+                             @Param("log_user") String log_user, @Param("time") Date time, @Param("log_start") String log_start);
 
     /**
      * 相应日志数量
@@ -41,6 +43,6 @@ public interface SysLogBookDao {
      * @param t
      * @return
      */
-    int selectCount(@Param("t") Integer t);
+    int selectCount(@Param("t") Integer t, @Param("log_user") String log_user, @Param("time") Date time, @Param("log_start") String log_start);
 
 }
