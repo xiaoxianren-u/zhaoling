@@ -14,5 +14,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserLoginToken {
+    //用于校验是否要拦截
     boolean value() default true;
+
+    //用于校验该角色是否有权限
+    int state() default 0;
 }

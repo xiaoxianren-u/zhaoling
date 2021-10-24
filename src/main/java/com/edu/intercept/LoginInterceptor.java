@@ -43,6 +43,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(UserLoginToken.class)) {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
+            //对象验证 ，0位普通用户访问 1为管理员访问
+            int state = userLoginToken.state();
             if (userLoginToken.value()) {
                 String cookie = request.getHeader("Cookie");
                 String[] output = null;
@@ -84,6 +86,10 @@ public class LoginInterceptor implements HandlerInterceptor {
                         throw new RuntimeException("用户不存在，请重新登录！！！");
                     }
                 }
+                if (state != (int) claims.get("state")) {
+                    throw new RuntimeException("该用户无权限访问");
+                }
+
             }
         }
         return true;

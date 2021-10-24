@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <script th:src="@{/static/js/md5.js}"></script>
+</head>
+<body>
+
+<div style="margin: auto">
+    <div class="layui-bg-gray" style="padding: 30px;margin: auto;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6" style="left: 350px">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">
+                        <div class="layui-fluid">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header">修改密码</div>
+                                        <div class="layui-card-body" pad15>
+
+                                            <div class="layui-form" lay-filter="">
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">用户名</label>
+                                                    <div class="layui-input-inline">
+                                                        <p id="username" style="font-size: 18px;margin-top: 6px"
+                                                           th:text="${username}" th:value="${username}"></p>
+                                                    </div>
+                                                    <div class="layui-form-mid layui-word-aux">不可修改</div>
+                                                </div>
+
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">当前密码</label>
+                                                    <div class="layui-input-inline">
+                                                        <input class="layui-input password" lay-verType="tips"
+                                                               lay-verify="required" name="oldPassword" type="password">
+                                                    </div>
+                                                    <div class="layui-form-mid " style="color: red">*</div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">新密码</label>
+                                                    <div class="layui-input-inline">
+                                                        <input autocomplete="off" class="layui-input" id="LAY_password"
+                                                               lay-verType="tips" lay-verify="required" name="password"
+                                                               type="password">
+                                                    </div>
+                                                    <div class="layui-form-mid" id="text" style="color: red">*</div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">确认新密码</label>
+                                                    <div class="layui-input-inline">
+                                                        <input autocomplete="off" class="layui-input"
+                                                               id="LAY_password_L" lay-verType="tips"
+                                                               lay-verify="required" name="repassword" type="password">
+                                                    </div>
+                                                    <div class="layui-form-mid " id="text1" style="color: red">*</div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block">
+                                                        <button class="layui-btn" lay-filter="setmypass" lay-submit>
+                                                            确认修改
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(function () {
+        const $ = layui.jquery;
+        $(".layui-btn").click(function () {
+            let password = $(".password").val();
+            let LAY_password = $("#LAY_password").val();
+            let LAY_password_L = $("#LAY_password_L").val();
+            const yan = '!a@n%p&';
+            if (password !== '' && LAY_password_L !== '' && LAY_password !== '') {
+                if (LAY_password !== LAY_password_L) {
+                    $("#text").html("密码不一致");
+                    $("#text1").html("密码不一致");
+                } else {
+                    $("#text").html("*");
+                    $("#text1").html("*");
+                    password = md5(yan + password + yan);
+                    LAY_password = md5(yan + LAY_password + yan);
+                    LAY_password_L = md5(yan + LAY_password_L + yan);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/user/pass',
+                        async: true,
+                        data: JSON.stringify(
+                            {
+                                pass_word: password,
+                                name: LAY_password,
+                            }
+                        ),
+                        dataType: 'json',
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function (src) {
+                            if (src.bool === true) {
+                                layer.msg(src.msg, {icon: 1});
+                            } else {
+                                layer.msg(src.msg, {icon: 2});
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

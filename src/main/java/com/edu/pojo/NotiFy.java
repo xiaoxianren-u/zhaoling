@@ -7,6 +7,7 @@ package com.edu.pojo;
  */
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.Date;
@@ -38,4 +39,8 @@ public class NotiFy {
      * 通知状态（0，普通，1重要，2紧急，3过时）
      */
     private Integer noti_status;
+
+
+    @ApiModelProperty("将时间转换")
+    private String date;
 }

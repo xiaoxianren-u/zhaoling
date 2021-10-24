@@ -27,23 +27,24 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             用户名：
                             <div class="layui-inline">
-                                <input class="layui-input" name="id" id="text_id" placeholder="输入用户名" autocomplete="off">
+                                <input autocomplete="off" class="layui-input" id="text_id" name="id"
+                                       placeholder="输入用户名">
                             </div>
                             &nbsp;&nbsp;
                             时间：
                             <div class="layui-inline">
-                                <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+                                <input class="layui-input" id="test1" placeholder="yyyy-MM-dd" type="text">
                             </div>
                             &nbsp;&nbsp;
                             登录状态：
                             <div class="layui-inline" style="width: 200px;">
-                                <input name="" placeholder="选择内容类型" class="layui-input" id="text_label">
+                                <input class="layui-input" id="text_label" name="" placeholder="选择内容类型">
                             </div>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="submit" class="layui-btn" data-type="reload">搜索</button>
-                            <button type="reset" class="layui-btn layui-btn-warm">重置</button>
+                            <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+                            <button class="layui-btn layui-btn-warm" type="reset">重置</button>
                         </div>
-                    </form >
+                    </form>
                     <table class="layui-hide" id="test" lay-filter="test"></table>
                 </div>
             </div>
@@ -127,23 +128,23 @@
         //下拉选择框
         dropdown.render({
             elem: '#text_label'
-            ,data: [{
+            , data: [{
                 title: ''
-            },{
+            }, {
                 title: '登录成功'
-            },{
+            }, {
                 title: '登录失败'
             }]
-            ,click: function(obj){
+            , click: function (obj) {
                 this.elem.val(obj.title);
             }
-            ,style: 'width: 200px;'
+            , style: 'width: 200px;'
         });
 
 
         table.render({
             elem: '#test'
-            , url: '/log/list?t='+0+"&log_user="+""+"&log_time="+""+"&log_start="+""
+            , url: '/log/list?t=' + 0 + "&log_user=" + "" + "&log_time=" + "" + "&log_start=" + ""
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , title: '用户表'
             , limit: 15
@@ -162,28 +163,26 @@
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
             ]]
             , page: true
-            ,id: 'testReload'
-            ,loading:true
+            , id: 'testReload'
+            , loading: true
         });
-
-
 
         var active = {
             reload: function () {
                 let log_user = $('#text_id').val();
                 let log_time = $('#test1').val();
                 let log_start = $('#text_label').val();
-                console.log({log_user:log_user,log_time:log_time,log_start:log_start});
+                console.log({log_user: log_user, log_time: log_time, log_start: log_start});
                 //执行重载
                 table.reload('testReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     },
-                    url: '/log/list?t='+0+"&log_user="+log_user+"&log_time="+log_time+"&log_start="+log_start
+                    url: '/log/list?t=' + 0 + "&log_user=" + log_user + "&log_time=" + log_time + "&log_start=" + log_start
                 });
             }
         };
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });

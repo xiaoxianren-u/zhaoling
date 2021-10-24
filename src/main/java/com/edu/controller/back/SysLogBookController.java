@@ -41,7 +41,7 @@ public class SysLogBookController {
      * @return
      */
 
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @OperateSer(operationName = "select操作", operationType = "通过相应的t来获取不同的日志")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String logLogin(@RequestParam("t") Integer t,

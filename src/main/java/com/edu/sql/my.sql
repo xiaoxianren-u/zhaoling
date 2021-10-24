@@ -64,7 +64,7 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
        ('登录日志', '/sys/log.action', 5, 'iconfont icon-drxx92'),
        ('基本资料', '/sys/basic.action', 6, 'iconfont icon-jibenziliao'),
-       ('修改密码', DEFAULT, 6, 'iconfont icon-xiugaimima'),
+       ('修改密码', '/sys/upPass.action', 6, 'iconfont icon-xiugaimima'),
        ('系统接口', '/swagger-ui.html', 7, 'iconfont icon-xitongjiekou');
 
 
@@ -82,7 +82,7 @@ CREATE TABLE `role_db`
     ro_describe VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '具体描述',
     PRIMARY KEY (ro_id, status)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'role';
+  DEFAULT CHARSET = utf8mb4 COMMENT '角色表';
 
 
 insert into zhaoling.role_db(ro_number, status)
@@ -106,16 +106,13 @@ CREATE TABLE user_db
     pull_black    INT(1)       NOT NULL DEFAULT 0 COMMENT '拉黑 (0不拉黑，1拉黑)',
     register_time DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户注册时间',
     finally_time  DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户最后一次登录时间',
-
     PRIMARY KEY (user_id),
     constraint fk_ro_user foreign key (status) references role_db (status)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'user_db';
+  DEFAULT CHARSET = utf8mb4 COMMENT '用户列表';
 
 insert into zhaoling.user_db(user_name, pass_word, user_iphone, status)
-values ('admin', '3903f200079e275e6d508aa453350784', '15877102026', '超级管理员'),
-       ('12345678', '3903f200079e275e6d508aa453350784', '15877102026', '管理员'),
-       ('123456789', '3903f200079e275e6d508aa453350784', '15877102026', '普通用户');
+values ('admin', '2e0118c5664f714f411d41c1f530af48', '15877102026', '超级管理员');
 
 
 # 通知表
@@ -128,7 +125,7 @@ CREATE TABLE notify_db
     noti_status    INT(1)       NOT NULL DEFAULT -1 COMMENT '通知状态（0，普通，1重要，2紧急，3过时）',
     PRIMARY KEY (noti_id)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'notify';
+  DEFAULT CHARSET = utf8mb4 COMMENT '通知表';
 
 # 感谢表
 # DROP TABLE IF EXISTS `grate_ful_db`;
@@ -140,7 +137,7 @@ CREATE TABLE grate_ful_db
     gra_bean      INT(11)      NOT NULL DEFAULT -1 COMMENT '感谢对象',
     PRIMARY KEY (gra_id)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'grate_ful_db';
+  DEFAULT CHARSET = utf8mb4 COMMENT '感谢表';
 
 # 标签表
 # DROP TABLE IF EXISTS `label_db`;
@@ -150,7 +147,7 @@ CREATE TABLE `label_db`
     lab_name VARCHAR(50) unique NOT NULL DEFAULT '' COMMENT '标签名',
     PRIMARY KEY (lab_id, lab_name)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'label_db';
+  DEFAULT CHARSET = utf8mb4 COMMENT '标签表';
 # 帖子表
 # DROP TABLE IF EXISTS `post_db`;
 CREATE TABLE post_db
@@ -173,7 +170,7 @@ CREATE TABLE post_db
     constraint fk_user_post foreign key (user_id) references user_db (user_id),
     constraint fk_label foreign key (lab_name) references label_db (lab_name)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'post_db';
+  DEFAULT CHARSET = utf8mb4 COMMENT '帖子表';
 
 # DROP TABLE IF EXISTS `picture_db`;
 CREATE TABLE picture_db

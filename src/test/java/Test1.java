@@ -1,6 +1,3 @@
-
-
-import com.edu.util.JwtUtils;
 import org.junit.Test;
 
 /**
@@ -13,7 +10,7 @@ public class Test1 {
 
     @Test
     public void fun() {
-        System.out.println("JwtUtils.generateToken(\"admin\") = " + JwtUtils.generateToken("admin"));
+//        System.out.println("JwtUtils.generateToken(\"admin\") = " + JwtUtils.generateToken("admin"));
 
 
     }

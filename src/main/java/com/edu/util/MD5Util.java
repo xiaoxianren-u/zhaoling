@@ -28,24 +28,5 @@ public class MD5Util {
         return md5(str);
     }
 
-//    //    第二次加密在后端 salt 随机生成的眼并且要保存到后端
-//    public static String fromPassToInputPass(String fromPass, String salt) {
-//        String str = salt.charAt(0) + salt.charAt(2) + fromPass + salt.charAt(4) + salt.charAt(1);
-//        return md5(str);
-//    }
-//
-//    public static String inputPassToFrom(String inputPass, String salt) {
-//
-//        String fromPass = inputPassToFromPass(inputPass);
-//        String dbPass = fromPassToInputPass(fromPass, salt);
-//        return dbPass;
-//
-//    }
-
-    public static void main(String[] args) {
-        System.out.println("md5(\"admin123\") = " + md5("12345678"));
-        System.out.println("inputPassToFromPass(md5(\"admin123\")) = " + inputPassToFromPass(md5("admin123")));
-    }
-
 
 }

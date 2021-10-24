@@ -65,7 +65,7 @@
                                                     <div class="layui-input-inline">
                                                         <input autocomplete="off" class="layui-input"
                                                                lay-verify="nickname" name="nickname" placeholder="请输入昵称"
-                                                               th:value="${user.name}" type="text" id="name">
+                                                               id="name" th:value="${user.name}" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
@@ -98,7 +98,7 @@
                                                     <label class="layui-form-label">邮箱</label>
                                                     <div class="layui-input-inline">
                                                         <input autocomplete="off" class="layui-input" lay-verify="email"
-                                                               name="email" id="email" th:value="${user.user_email}"
+                                                               id="email" name="email" th:value="${user.user_email}"
                                                                type="text">
                                                     </div>
                                                 </div>
@@ -112,7 +112,7 @@
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block">
-                                                        <button class="layui-btn" lay-filter="setmyinfo" id="sub"
+                                                        <button class="layui-btn" id="sub" lay-filter="setmyinfo"
                                                                 lay-submit>
                                                             确认修改
                                                         </button>

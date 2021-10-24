@@ -45,7 +45,7 @@ public class SysIndexController {
      * @return
      */
 
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/index.action", method = RequestMethod.GET)
     public String sysIndex(@NotNull ModelMap modelMap, HttpServletRequest request) {
         List<ConTents> list = sysConTentService.selectContents_sys();
@@ -53,7 +53,7 @@ public class SysIndexController {
         User user = sysUserService.selectBasic(username);
         modelMap.put("user", user);
         modelMap.put("list", list);
-        return "/back/sys_index";
+        return "back/sys_index";
     }
 
     /**
@@ -61,13 +61,13 @@ public class SysIndexController {
      *
      * @return
      */
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/menu.action", method = RequestMethod.GET)
     public String listAction(@NotNull ModelMap modelMap) {
 
         List<ConTents> list = sysConTentService.selectContents();
         modelMap.put("list", list);
-        return "/back/menu";
+        return "back/menu";
     }
 
     /**
@@ -76,11 +76,10 @@ public class SysIndexController {
      * @param modelMap
      * @return
      */
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/role.action", method = RequestMethod.GET)
     public String roleAction(ModelMap modelMap) {
-
-        return "/back/role";
+        return "back/role";
     }
 
     /**
@@ -90,10 +89,10 @@ public class SysIndexController {
      */
 
 
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/administrator.action", method = RequestMethod.GET)
     public String administratorAction() {
-        return "/back/administrator";
+        return "back/administrator";
     }
 
     /**
@@ -102,10 +101,10 @@ public class SysIndexController {
      * @return
      */
 
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/user.action", method = RequestMethod.GET)
     public String userAction() {
-        return "/back/user";
+        return "back/user";
     }
 
     /**
@@ -114,10 +113,10 @@ public class SysIndexController {
      * @return S
      */
 
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/black.action", method = RequestMethod.GET)
     public String blackAction() {
-        return "/back/black";
+        return "back/black";
     }
 
     /**
@@ -125,10 +124,10 @@ public class SysIndexController {
      *
      * @return
      */
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/log.action", method = RequestMethod.GET)
     public String logAction() {
-        return "/back/log";
+        return "back/log";
     }
 
     /**
@@ -136,10 +135,10 @@ public class SysIndexController {
      *
      * @return
      */
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/operate.action", method = RequestMethod.GET)
     public String operateAction() {
-        return "/back/operate";
+        return "back/operate";
     }
 
 
@@ -148,7 +147,7 @@ public class SysIndexController {
      *
      * @return
      */
-    @UserLoginToken
+    @UserLoginToken(state = 1)
     @RequestMapping(value = "/basic.action", method = RequestMethod.GET)
     public String basicAction(@NotNull ModelMap modelMap, @NotNull HttpServletRequest request) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -156,7 +155,30 @@ public class SysIndexController {
         User user = sysUserService.selectBasic(username);
         user.setDate(formatter.format(user.getRegister_time()));
         modelMap.put("user", user);
-        return "/back/basic";
+        return "back/basic";
+    }
+
+    /**
+     * 修改密码页面
+     *
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/upPass.action", method = RequestMethod.GET)
+    public String upPassAction(HttpServletRequest request, ModelMap modelMap) {
+        modelMap.put("username", UserConfig.tokenUserName(request));
+        return "back/uppass";
+    }
+
+    /**
+     * 公告页面
+     *
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/anNoun.action", method = RequestMethod.GET)
+    public String anNounCementAction() {
+        return "back/announcement";
     }
 
 

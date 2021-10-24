@@ -65,11 +65,18 @@ public class LoginController {
           获取当前用户的角色类型 statusStr 并判断是管理员还是普通用户
          */
         if (n == 1) {
+            /*
+             * 获取用户的就是，判断他是否为管理员，
+             * 如果是管理员则将sta=1，不是sta=0
+             */
             String statusStr = sysUserService.selectStatus(user.getUser_name());
             int sta = 0;
             if (statusStr.contains("管理员")) {
                 sta = 1;
             }
+            /*
+             * 获取该用户的状态，判断他是否已经被拉黑 ，st=0表示正常 ，st=1表示黑名单
+             */
             int st = sysRoleService.selectStatus(statusStr);
             if (st == 1) {
                 hashMap.put("bool", PageCodeEnum.LOGIN_FAIL.getBool());
@@ -77,9 +84,15 @@ public class LoginController {
                 request.getSession().setAttribute("log", "登录失败");
                 return JSON.toJSONString(hashMap);
             }
+
             if (status == sta) {
                 hashMap.put("bool", PageCodeEnum.LOGIN_SUCCESS.getBool());
-                String token = JwtUtils.generateToken(user.getUser_name());
+                /*
+                 * 生成token用于校验是否登陆，并设置权限，
+                 * 当sta=1时，只有可以访问 @UserLoginToken(state = "1")的其他的不能访问 管理员权限
+                 * 当sta=0时，同理
+                 */
+                String token = JwtUtils.generateToken(user.getUser_name(), sta);
                 hashMap.put("key", sta);
                 hashMap.put("token", token);
                 hashMap.put("msg", PageCodeEnum.LOGIN_SUCCESS.getMsg());

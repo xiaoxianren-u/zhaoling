@@ -115,4 +115,19 @@ public interface SysUserService {
      * @param user
      */
     void updateBasic(User user);
+
+    /**
+     * 获取密码
+     *
+     * @param user_name
+     * @return
+     */
+    String selectPassword(String user_name);
+
+    /**
+     * 更改密码
+     *
+     * @param name
+     */
+    void updatePass(String username, String name);
 }

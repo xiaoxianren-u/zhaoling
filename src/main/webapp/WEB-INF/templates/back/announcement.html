@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+</head>
+<body>
+<div class="layui-bg-gray" style="padding: 15px; ">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-panel">
+                <div style="padding: 50px 30px;">
+
+
+                    <div class="layui-row">
+                        <div class="layui-col-xs1">
+                            <div class="grid-demo grid-demo-bg1">
+                                <button class="layui-btn layuiadmin-btn-admin" data-type="add" id="add"><i
+                                        class="iconfont icon-zengjia"></i>&nbsp;添加
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs11">
+                            <div class="grid-demo">
+                                <form action="" class="layui-form" onsubmit="return false">
+
+
+                                    <div class="layui-form-item" style="width: 200px;float: left">
+                                        <label class="layui-form-label">通知状态</label>
+                                        <div class="layui-input-block" style="width: 100px">
+                                            <select id="noti_status">
+                                                <option selected value=""></option>
+                                                <option value="0">普通通知</option>
+                                                <option value="1">重要通知</option>
+                                                <option value="2">紧急通知</option>
+                                                <option value="3">过时通知</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn" data-type="reload" id="btn" style="margin-left: 30px">搜索
+                                    </button>
+                                    <button class="layui-btn layui-btn-warm" type="reset">重置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-hide" id="test" lay-filter="test" style="color: red"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    {{#  if(d.status == '超级管理员'){ }}
+    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
+    {{#  } }}
+</script>
+
+<script id="sta" th:inline="none" type="text/html">
+    {{#  if(d.noti_status == 0){ }}
+    <p style="color: #1E9FFF">普通通知</p>
+    {{#  } }}
+    {{#  if(d.noti_status == 1){ }}
+    <p style="color: #e9ca58">重要通知</p>
+    {{#  } }}
+    {{#  if(d.noti_status == 2){ }}
+    <p style="color: red">紧急通知</p>
+    {{#  } }}
+    {{#  if(d.noti_status == 3){ }}
+    <p style="color: #797676">过时通知</p>
+    {{#  } }}
+</script>
+
+
+<script th:inline="none">
+    layui.use('table', function () {
+        const table = layui.table,
+            $ = layui.jquery;
+        table.render({
+            elem: '#test'
+            , url: '/notify/listNot?noti_status=' + -1
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , title: '用户表'
+            , limit: 15
+            , limits: [15, 25, 50]
+            , cols: [[
+                {type: 'checkbox', fixed: 'center'}
+                // ,{field: 'noti_id', title: 'ID', width: 80, fixed: 'left'}
+                , {field: 'noti_substance', title: '通知内容', width: 1130, edit: 'text'}
+                , {field: 'noti_status', title: '通知状态', width: 90, templet: '#sta'}
+                , {field: 'date', title: '通知时间', width: 180}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+            ]]
+            , page: true
+            , id: 'testReload'
+            , loading: true
+
+        });
+
+        var active = {
+            reload: function () {
+
+                var obj = $("#noti_status option:selected");
+                var artime_val = obj.val();
+                console.log({artime_val: artime_val});
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    url: '/notify/listNot?noti_status=' + artime_val
+                });
+            }
+        };
+        $('#btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        // 监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+
+                layer.confirm('确定删除吗？', function (index) {
+                    // table.reload('LAY-user-back-manage');
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/notify/del?noti_id=" + data.noti_id,
+                        async: true,
+                        dataType: 'json',
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function (src) {
+                            if (src.bool === true) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg('已删除');
+                            } else {
+                                layer.msg(src.msg);
+                            }
+
+                        }
+                    })
+
+
+                });
+
+
+                //
+                // layer.confirm('真的删除行么', function(index){
+                //
+                // });
+            } else if (obj.event === 'edit') {
+
+                console.log("=================" + data.noti_id);
+
+                //
+                // layer.msg('该功能暂时无法实现', {icon: 0});
+
+            }
+        });
+
+    })
+
+
+</script>
+</body>
+</html>

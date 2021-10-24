@@ -114,4 +114,20 @@ public interface SysUserDao {
      * @param user
      */
     void updateBasic(User user);
+
+    /**
+     * 获取密码
+     *
+     * @param user_name
+     * @return
+     */
+    String selectPassword(String user_name);
+
+    /**
+     * 更改密码
+     *
+     * @param username
+     * @param name
+     */
+    void updatePass(@Param("username") String username, @Param("password") String name);
 }

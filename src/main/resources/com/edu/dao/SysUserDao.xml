@@ -124,4 +124,17 @@
         </set>
         where user_name = #{user_name}
     </update>
+<!--    获取密码-->
+    <select id="selectPassword" resultType="java.lang.String">
+        select pass_word from zhaoling.user_db
+        where user_name = #{user_name}
+    </select>
+
+
+<!--    更改密码-->
+    <update id="updatePass">
+        update zhaoling.user_db
+        set pass_word = #{password}
+        where user_name = #{username}
+    </update>
 </mapper>

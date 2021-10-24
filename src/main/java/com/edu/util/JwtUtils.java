@@ -28,7 +28,7 @@ public class JwtUtils {
      *
      * @return
      */
-    public static String generateToken(String username) {
+    public static String generateToken(String username, int sta) {
         //设置颁布者
         String token = Jwts.builder().setSubject(SUBJECT)
                 //设置token 有效时间的开始
@@ -36,6 +36,7 @@ public class JwtUtils {
                 //结束时间
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 .claim("username", username)
+                .claim("state", sta)
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 //字符串紧凑
                 .compact();
