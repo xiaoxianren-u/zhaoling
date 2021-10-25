@@ -58,7 +58,7 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('物品状态', DEFAULT, 3, 'iconfont icon-iconfkzt'),
        ('帖子分类', DEFAULT, 3, 'iconfont icon-fenlei'),
        ('发表感谢', DEFAULT, 3, 'iconfont icon-ganxie'),
-       ('通知公告', DEFAULT, 4, 'iconfont icon-tongzhigonggao'),
+       ('通知公告', '/sys/anNoun.action', 4, 'iconfont icon-tongzhigonggao'),
        ('意见与反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
        ('用户消息', DEFAULT, 4, 'iconfont icon-xiaoxi'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
@@ -94,19 +94,19 @@ values (100, '超级管理员'),
 # DROP TABLE IF EXISTS `user_db`;
 CREATE TABLE user_db
 (
-    user_id       INT(11)      NOT NULL AUTO_INCREMENT COMMENT '用户id',
-    user_name     VARCHAR(35)  NOT NULL DEFAULT '' COMMENT '用户名',
-    pass_word     VARCHAR(32)  NOT NULL DEFAULT '' COMMENT '用户密码',
-    user_email    VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '用户邮箱',
-    user_iphone   VARCHAR(12)  NOT NULL DEFAULT '' COMMENT '用户电话',
-    `name`        VARCHAR(20)  NOT NULL DEFAULT '' COMMENT '用户姓名',
-    user_sex      VARCHAR(4)   NOT NULL DEFAULT '' COMMENT '用户性别',
-    `status`      VARCHAR(20)  NOT NULL DEFAULT '普通用户' COMMENT '用户状态',
-    user_image    VARCHAR(300) NOT NULL DEFAULT '' COMMENT '用户头像',
-    pull_black    INT(1)       NOT NULL DEFAULT 0 COMMENT '拉黑 (0不拉黑，1拉黑)',
-    register_time DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户注册时间',
-    finally_time  DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户最后一次登录时间',
-    PRIMARY KEY (user_id),
+    user_id       INT(11)            NOT NULL AUTO_INCREMENT COMMENT '用户id',
+    user_name     VARCHAR(35) unique NOT NULL DEFAULT '' COMMENT '用户名',
+    pass_word     VARCHAR(32)        NOT NULL DEFAULT '' COMMENT '用户密码',
+    user_email    VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '用户邮箱',
+    user_iphone   VARCHAR(12)        NOT NULL DEFAULT '' COMMENT '用户电话',
+    `name`        VARCHAR(20)        NOT NULL DEFAULT '' COMMENT '用户姓名',
+    user_sex      VARCHAR(4)         NOT NULL DEFAULT '' COMMENT '用户性别',
+    `status`      VARCHAR(20)        NOT NULL DEFAULT '普通用户' COMMENT '用户状态',
+    user_image    VARCHAR(300)       NOT NULL DEFAULT '' COMMENT '用户头像',
+    pull_black    INT(1)             NOT NULL DEFAULT 0 COMMENT '拉黑 (0不拉黑，1拉黑)',
+    register_time DATETIME           NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户注册时间',
+    finally_time  DATETIME           NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '用户最后一次登录时间',
+    PRIMARY KEY (user_id, user_name),
     constraint fk_ro_user foreign key (status) references role_db (status)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '用户列表';
@@ -117,15 +117,21 @@ values ('admin', '2e0118c5664f714f411d41c1f530af48', '15877102026', '超级管�
 
 # 通知表
 # DROP TABLE IF EXISTS `notify_db`;
+
 CREATE TABLE notify_db
 (
-    noti_id        INT(11)      NOT NULL AUTO_INCREMENT COMMENT '通知id',
-    noti_substance VARCHAR(400) NOT NULL DEFAULT '' COMMENT '通知内容',
-    noti_time      DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '通知时间',
-    noti_status    INT(1)       NOT NULL DEFAULT -1 COMMENT '通知状态（0，普通，1重要，2紧急，3过时）',
-    PRIMARY KEY (noti_id)
+    noti_id        INT(11)       NOT NULL AUTO_INCREMENT COMMENT '通知id',
+    noti_name      VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '通知标题',
+    user_name      VARCHAR(35)   NOT NULL DEFAULT '' COMMENT '发通知的用户',
+    noti_substance VARCHAR(3000) NOT NULL DEFAULT '' COMMENT '通知内容',
+    noti_time      DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '通知时间',
+    noti_status    INT(1)        NOT NULL DEFAULT -1 COMMENT '通知状态（0，普通，1重要，2紧急，3过时）',
+    PRIMARY KEY (noti_id),
+    constraint fk_no_user foreign key (user_name) references user_db (user_name)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT '通知表';
+  DEFAULT CHARSET = utf8mb4 COMMENT '通知公告';
+
+
 
 # 感谢表
 # DROP TABLE IF EXISTS `grate_ful_db`;
@@ -185,12 +191,12 @@ CREATE TABLE picture_db
 
 # 日志表
 
-CREATE TABLE log_book
+CREATE TABLE log_book_db
 (
     log_id           INT(11)       NOT NULL AUTO_INCREMENT COMMENT '日志id',
     log_date         DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '开始时间',
     log_browser      VARCHAR(20)   NOT NULL DEFAULT '' COMMENT '浏览器',
-    log_class_method VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '执行的类与方法',
+    log_class_method VARCHAR(300)  NOT NULL DEFAULT '' COMMENT '执行的类与方法',
     log_url_type     VARCHAR(10)   NOT NULL DEFAULT '' COMMENT '请求类型',
     log_url          VARCHAR(250)  NOT NULL DEFAULT '' COMMENT '请求url',
     ip               VARCHAR(30)   NOT NULL DEFAULT '' COMMENT 'ip地址',
@@ -198,6 +204,7 @@ CREATE TABLE log_book
     log_time         DOUBLE(16, 4) NOT NULL DEFAULT -1.0 COMMENT '方法执行时间',
     log_start        VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '登录成功还是失败',
     discern          INT(1)        NOT NULL DEFAULT -1 COMMENT '用来识别是登录日志还是操作日志（0，登录日志，1 操作日志）',
-    PRIMARY KEY (log_id)
+    PRIMARY KEY (log_id),
+    constraint fk_log_user foreign key (log_user) references user_db (user_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '系统日志表';

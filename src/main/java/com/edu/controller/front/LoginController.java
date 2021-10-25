@@ -5,6 +5,7 @@ import com.edu.intercept.PassToken;
 import com.edu.pojo.User;
 import com.edu.service.SysRoleService;
 import com.edu.service.SysUserService;
+import com.edu.util.AjaxUtils;
 import com.edu.util.JwtUtils;
 import com.edu.util.MD5Util;
 import com.edu.util.PageCodeEnum;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 
 @Controller
 @RequestMapping
-public class LoginController {
+public class LoginController extends AjaxUtils {
 
 
     /**

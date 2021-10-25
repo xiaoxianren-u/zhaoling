@@ -11,15 +11,26 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <script th:src="@{/static/js/wangEditor.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/css/wangEditor.css}">
+
+    <style>
+        .toolbar {
+            border: 1px solid #ccc;
+        }
+
+        .text {
+            border: 1px solid #ccc;
+            min-height: 400px;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-bg-gray" style="padding: 15px; ">
+<div class="layui-bg-gray" style="padding: 10px; ">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-panel">
-                <div style="padding: 50px 30px;">
-
-
+                <div style="padding: 30px 15px;">
                     <div class="layui-row">
                         <div class="layui-col-xs1">
                             <div class="grid-demo grid-demo-bg1">
@@ -56,11 +67,10 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
-
+<!--侧边按钮-->
 <script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
     {{#  if(d.status == '超级管理员'){ }}
@@ -70,7 +80,7 @@
             class="layui-icon layui-icon-delete"></i>删除</a>
     {{#  } }}
 </script>
-
+<!--通知颜色-->
 <script id="sta" th:inline="none" type="text/html">
     {{#  if(d.noti_status == 0){ }}
     <p style="color: #1E9FFF">普通通知</p>
@@ -85,7 +95,71 @@
     <p style="color: #797676">过时通知</p>
     {{#  } }}
 </script>
+<!--标题-->
+<script id="tilti" th:inline="none" type="text/html">
+    <h4 style="color: black;font-weight: bolder;">{{d.noti_name}}</h4>
+</script>
+<!--新增弹出层-->
+<div class="site-text" id="window" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" id="book" lay-filter="example" method="post">
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知标题：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="name" name="name" type="text">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="vital" title="普通通知" type="radio" value="0">
+                <input name="vital" title="重要通知" type="radio" value="1">
+                <input name="vital" title="紧急通知" type="radio" value="2">
+            </div>
+        </div>
+
+        <div>
+            <div><h3>通知内容</h3></div>
+            <div class="toolbar" id="toolbar-container"></div>
+            <div class="text" id="text-container"></div>
+        </div>
+
+
+    </form>
+</div>
+
+
+<script>
+    const E = window.wangEditor
+    const editor = new E('#toolbar-container', '#text-container') // 传入两个元素
+    editor.customConfig.menus = [
+        'head',
+        'bold',
+        'fontSize',
+        'fontName',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'indent',
+        'lineHeight',
+        'foreColor',
+        'backColor',
+        'link',
+        'list',
+        'todo',
+        'justify',
+        'quote',
+        'emoticon',
+        'splitLine',
+        'undo',
+        'redo',
+    ]
+    editor.create()
+    // E.fullscreen.init('#toolbar-container','#text-container');
+
+
+</script>
 
 <script th:inline="none">
     layui.use('table', function () {
@@ -101,7 +175,9 @@
             , cols: [[
                 {type: 'checkbox', fixed: 'center'}
                 // ,{field: 'noti_id', title: 'ID', width: 80, fixed: 'left'}
-                , {field: 'noti_substance', title: '通知内容', width: 1130, edit: 'text'}
+                , {field: 'user_name', title: '发布者', width: 80}
+                , {field: 'noti_name', title: '通知标题', width: 230, templet: '#tilti'}
+                , {field: 'noti_substance', title: '通知内容', width: 820, edit: 'text'}
                 , {field: 'noti_status', title: '通知状态', width: 90, templet: '#sta'}
                 , {field: 'date', title: '通知时间', width: 180}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
@@ -159,27 +235,60 @@
 
                         }
                     })
-
-
                 });
-
-
-                //
-                // layer.confirm('真的删除行么', function(index){
-                //
-                // });
             } else if (obj.event === 'edit') {
 
                 console.log("=================" + data.noti_id);
 
-                //
-                // layer.msg('该功能暂时无法实现', {icon: 0});
 
             }
         });
 
+        //新增
+        $("#add").click(function () {
+            console.log("000000000000000")
+            layer.open({
+                type: 1,
+                title: "页面新增",
+                area: ["900px", "800px"],
+                btn: ['提交', '取消'], //可以无限个按钮
+                Number: 9000000,   //自动关闭的时间
+                anim: 2,
+                maxmin: true, // 最大最小化。
+                resize: true, // 是否允许拉伸
+                content: $('#window'), //添加表单到弹出层
+                yes: function (index) {
+                    // let text = editor.txt.text();
+                    let text = editor.txt.html();
+                    let vital = $('input[name="vital"]:checked').val();              //可见
+                    let name = $("#name").val();                //名字
+                    console.log({text: text, name: name, vital: vital});
+                    $.ajax({
+                        type: "POST",
+                        // url: "/notify/insertTex?noti_substance="+text+"&noti_name="+name+"&noti_status="+vital,
+                        url: "/notify/insertTex",
+                        async: true,
+                        data: JSON.stringify({
+                            noti_substance: text,
+                            noti_name: name,
+                            noti_status: vital
+                        }),
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function (src) {
+                            console.log(src);
+                            layer.msg(src.msg);
+                            if (src.bool === true) {
+                                setTimeout(function () {
+                                    window.location.reload();  //刷新页面
+                                }, 800);
+                            }
+                        }
+                    })
+                },
+            });
+        });
     })
-
 
 </script>
 </body>

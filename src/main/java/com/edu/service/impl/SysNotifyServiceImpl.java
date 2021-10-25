@@ -3,6 +3,7 @@ package com.edu.service.impl;
 import com.edu.dao.SysNotifyDao;
 import com.edu.pojo.NotiFy;
 import com.edu.service.SysNotifyService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,4 +55,16 @@ public class SysNotifyServiceImpl implements SysNotifyService {
     public void del(Integer noti_id) {
         sysNotifyDao.del(noti_id);
     }
+
+    /**
+     * 添加通知公告
+     *
+     * @param notiFy
+     */
+    @Override
+    public int insertT(@NotNull NotiFy notiFy) {
+
+        return sysNotifyDao.insertT(notiFy);
+    }
+
 }

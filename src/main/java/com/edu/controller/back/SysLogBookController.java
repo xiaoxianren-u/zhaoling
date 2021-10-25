@@ -1,10 +1,10 @@
 package com.edu.controller.back;
 
-import com.alibaba.fastjson.JSON;
 import com.edu.intercept.OperateSer;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.LogBook;
 import com.edu.service.SysLogBookService;
+import com.edu.util.AjaxUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/log")
-public class SysLogBookController {
+public class SysLogBookController extends AjaxUtils {
 
 
     @Autowired
@@ -44,12 +44,12 @@ public class SysLogBookController {
     @UserLoginToken(state = 1)
     @OperateSer(operationName = "select操作", operationType = "通过相应的t来获取不同的日志")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String logLogin(@RequestParam("t") Integer t,
-                           @RequestParam("page") Integer page,
-                           @RequestParam("limit") Integer limit,
-                           @RequestParam("log_user") String log_user,
-                           @RequestParam("log_time") String log_time,
-                           @RequestParam("log_start") String log_start) {
+    public AjaxUtils logLogin(@RequestParam("t") Integer t,
+                              @RequestParam("page") Integer page,
+                              @RequestParam("limit") Integer limit,
+                              @RequestParam("log_user") String log_user,
+                              @RequestParam("log_time") String log_time,
+                              @RequestParam("log_start") String log_start) {
         Date time = null;
         if (!"".equals(log_time)) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -69,13 +69,10 @@ public class SysLogBookController {
         page = page > 1 ? limit * (page - 1) : 0;
         List<LogBook> list = sysLogBookService.selectList(t, page, limit, log_user, time, log_start);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         for (LogBook s : list) {
             s.setDate(formatter.format(s.getLog_date()));
         }
         int n = sysLogBookService.selectCount(t, log_user, time, log_start);
-        return "{\"code\":0,\"msg\":\"\",\"count\":" + n + ",\"data\":" + JSON.toJSONString(list) + "}";
+        return new AjaxUtils(n, list);
     }
-
-
 }

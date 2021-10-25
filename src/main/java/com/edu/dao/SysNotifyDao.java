@@ -41,4 +41,11 @@ public interface SysNotifyDao {
      * @param noti_id
      */
     void del(@Param("noti_id") Integer noti_id);
+
+
+    /**
+     * @param notiFy
+     */
+    int insertT(NotiFy notiFy);
+
 }

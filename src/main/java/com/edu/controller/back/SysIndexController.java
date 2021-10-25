@@ -6,6 +6,7 @@ import com.edu.pojo.ConTents;
 import com.edu.pojo.User;
 import com.edu.service.SysConTentService;
 import com.edu.service.SysUserService;
+import com.edu.util.AjaxUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "sys")
-public class SysIndexController {
+public class SysIndexController extends AjaxUtils {
 
     @Autowired
     private SysConTentService sysConTentService;

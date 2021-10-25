@@ -1,9 +1,9 @@
 package com.edu.controller.back;
 
-import com.alibaba.fastjson.JSON;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.Role;
 import com.edu.service.SysRoleService;
+import com.edu.util.AjaxUtils;
 import com.edu.util.PageCodeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 @Api(tags = "SysRoleController", description = "角色管理")
-public class SysRoleController {
+public class SysRoleController extends AjaxUtils {
 
 
     @Autowired
@@ -36,10 +36,9 @@ public class SysRoleController {
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "角色管理列表")
-    public String roleList() {
+    public AjaxUtils roleList() {
         List<Role> roleList = sysRoleService.listRole();
-        String s = "{\"code\":0,\"msg\":\"\",\"count\":" + 0 + ",\"data\":" + JSON.toJSONString(roleList) + "}";
-        return s;
+        return new AjaxUtils(0, roleList);
     }
 
 
@@ -61,23 +60,17 @@ public class SysRoleController {
             @ApiImplicitParam(name = "ro_status", value = "角色状态", required = false, dataType = "Integer", paramType = "query"),
     })
     @ApiOperation(value = "角色管理内容的修改")
-    public String roleEdit(@RequestParam("ro_id") Integer roleId,
-                           @RequestParam("ro_have") String roHave,
-                           @RequestParam("ro_describe") String roDescribe,
-                           @RequestParam("ro_status") Integer roStatus) {
-
-        HashMap<String, Object> map = new HashMap<>(2);
+    public AjaxUtils roleEdit(@RequestParam("ro_id") Integer roleId,
+                              @RequestParam("ro_have") String roHave,
+                              @RequestParam("ro_describe") String roDescribe,
+                              @RequestParam("ro_status") Integer roStatus) {
         Role role = new Role(roleId, null, null, roStatus, roHave, roDescribe);
-        System.out.println("role = " + role);
         int n = sysRoleService.edit(role);
         if (n > 0) {
-            map.put("bool", PageCodeEnum.MODIFY_SUCCESS.getBool());
-            map.put("msg", PageCodeEnum.MODIFY_SUCCESS.getMsg());
+            return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
         } else {
-            map.put("bool", PageCodeEnum.MODIFY_FAIL.getBool());
-            map.put("msg", PageCodeEnum.MODIFY_FAIL.getMsg());
+            return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
         }
-        return JSON.toJSONString(map);
     }
 
     /**
@@ -90,17 +83,13 @@ public class SysRoleController {
     @RequestMapping(value = "/del", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "角色管理内容的删除")
     @ApiImplicitParam(name = "ro_id", value = "角色id", required = true, dataType = "Integer", paramType = "query")
-    public String roleDle(@RequestParam("ro_id") Integer roleId) {
-        HashMap<String, Object> map = new HashMap<>(2);
+    public AjaxUtils roleDle(@RequestParam("ro_id") Integer roleId) {
         int n = sysRoleService.dle(roleId);
         if (n > 0) {
-            map.put("bool", PageCodeEnum.REMOVE_SUCCESS.getBool());
-            map.put("msg", PageCodeEnum.REMOVE_SUCCESS.getMsg());
+            return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.REMOVE_SUCCESS.getMsg());
         } else {
-            map.put("bool", PageCodeEnum.REMOVE_FAIL.getBool());
-            map.put("msg", PageCodeEnum.REMOVE_FAIL.getMsg());
+            return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
         }
-        return JSON.toJSONString(map);
     }
 
 
@@ -115,30 +104,18 @@ public class SysRoleController {
      */
     @UserLoginToken(state = 1)
     @RequestMapping("/add")
-    public String roleAdd(@RequestParam("status") String status,
-                          @RequestParam("ro_have") String roHave,
-                          @RequestParam("ro_describe") String roDescribe,
-                          @RequestParam("ro_status") Integer roStatus) {
-
-
-        System.out.println("status = " + status);
-        System.out.println("roHave = " + roHave);
-        System.out.println("roDescribe = " + roDescribe);
-        System.out.println("roStatus = " + roStatus);
+    public AjaxUtils roleAdd(@RequestParam("status") String status,
+                             @RequestParam("ro_have") String roHave,
+                             @RequestParam("ro_describe") String roDescribe,
+                             @RequestParam("ro_status") Integer roStatus) {
         HashMap<String, Object> map = new HashMap<>(2);
         Role role = new Role(null, null, status, roStatus, roHave, roDescribe);
-        System.out.println("role = " + role);
-
         int n = sysRoleService.add(role);
-//        System.out.println("n = " + n);
         if (n > 0) {
-            map.put("bool", PageCodeEnum.ADD_SUCCESS.getBool());
-            map.put("msg", PageCodeEnum.ADD_SUCCESS.getMsg());
+            return new AjaxUtils(PageCodeEnum.ADD_SUCCESS.getBool(), PageCodeEnum.ADD_SUCCESS.getMsg());
         } else {
-            map.put("bool", PageCodeEnum.ADD_FAIL.getBool());
-            map.put("msg", PageCodeEnum.ADD_FAIL.getMsg());
+            return new AjaxUtils(PageCodeEnum.ADD_FAIL.getBool(), PageCodeEnum.ADD_FAIL.getMsg());
         }
-        return JSON.toJSONString(map);
     }
 
 

@@ -1,15 +1,19 @@
 package com.edu.controller.back;
 
-import com.alibaba.fastjson.JSON;
+import com.edu.config.UserConfig;
+import com.edu.intercept.OperateSer;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.NotiFy;
 import com.edu.service.SysNotifyService;
+import com.edu.util.AjaxUtils;
 import com.edu.util.PageCodeEnum;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,12 +24,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/notify")
-public class SysNotifyController {
+public class SysNotifyController extends AjaxUtils {
 
 
     @Autowired
     private SysNotifyService sysNotifyService;
-
 
     /**
      * 通知列表
@@ -36,12 +39,11 @@ public class SysNotifyController {
      * @return
      */
 
-    @ResponseBody
     @UserLoginToken(state = 1)
     @RequestMapping("/listNot")
-    public String listNot(@RequestParam("noti_status") Integer notiStatus,
-                          @RequestParam("page") Integer page,
-                          @RequestParam("limit") Integer limit) {
+    public AjaxUtils listNot(@RequestParam("noti_status") Integer notiStatus,
+                             @RequestParam("page") Integer page,
+                             @RequestParam("limit") Integer limit) {
         page = page > 1 ? limit * (page - 1) : 0;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<NotiFy> list = sysNotifyService.list(notiStatus, page, limit);
@@ -49,26 +51,48 @@ public class SysNotifyController {
             s.setDate(format.format(s.getNoti_time()));
         }
         int n = sysNotifyService.count(notiStatus);
-        return "{\"code\":0,\"msg\":\"\",\"count\":" + n + ",\"data\":" + JSON.toJSONString(list) + "}";
+        return new AjaxUtils(0, "", n, list);
     }
 
 
-    @ResponseBody
+    /**
+     * 删除通知
+     *
+     * @param noti_id
+     * @return
+     */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/del", method = RequestMethod.GET)
-    public String delete(@RequestParam("noti_id") Integer noti_id) {
-        HashMap<String, Object> hashMap = new HashMap<>();
-
+    public AjaxUtils delete(@RequestParam("noti_id") Integer noti_id) {
         try {
             sysNotifyService.del(noti_id);
-            hashMap.put("bool", true);
+            return new AjaxUtils(PageCodeEnum.LOGIN_SUCCESS.getBool());
         } catch (Exception e) {
-            hashMap.put("bool", PageCodeEnum.REMOVE_FAIL.getBool());
-            hashMap.put("msg", PageCodeEnum.REMOVE_FAIL.getMsg());
             e.printStackTrace();
+            return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
         }
-        return JSON.toJSONString(hashMap);
+    }
 
+
+    /**
+     * 新增公告通知
+     *
+     * @param notiFy
+     * @param request
+     * @return
+     */
+    @OperateSer(operationType = "add", operationName = "新增公告通知")
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/insertTex", method = RequestMethod.POST)
+    public AjaxUtils insertStatus(@NotNull @RequestBody NotiFy notiFy, HttpServletRequest request) {
+        notiFy.setNoti_time(new Date());
+        notiFy.setUser_name(UserConfig.tokenUserName(request));
+        int n = sysNotifyService.insertT(notiFy);
+        if (n > 0) {
+            return new AjaxUtils(PageCodeEnum.ADD_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
+        } else {
+            return new AjaxUtils(PageCodeEnum.ADD_FAIL.getBool(), PageCodeEnum.ADD_FAIL.getMsg());
+        }
     }
 
 

@@ -4,12 +4,13 @@
 
 <!--通知列表-->
         <select id="list" resultType="com.edu.pojo.NotiFy">
-            select noti_id, noti_substance, noti_time, noti_status from zhaoling.notify_db
+            select user_name,noti_name, noti_id, noti_substance, noti_time, noti_status from zhaoling.notify_db
             <where>
                 <if test="notiStatus != null and  notiStatus != -1">
                     and noti_status = #{notiStatus}
                 </if>
             </where>
+            order by noti_id desc
              Limit #{page},#{limit}
         </select>
 
@@ -28,4 +29,27 @@
             delete from zhaoling.notify_db
             where noti_id = #{noti_id}
         </delete>
+<!--        添加通知公告-->
+        <insert id="insertT">
+            insert into zhaoling.notify_db (
+                <trim suffixOverrides=",">
+                    <if test="user_name != null and user_name != ''">user_name,</if>
+                    <if test="noti_name != null and noti_name != ''">noti_name,</if>
+                    <if test="noti_substance != null and noti_substance != ''">noti_substance,</if>
+                    <if test="noti_status != null">noti_status,</if>
+                    <if test="noti_time != null">noti_time,</if>
+                </trim>
+            )values (
+                <trim suffixOverrides=",">
+                    <if test="user_name != null and user_name != ''">#{user_name},</if>
+                    <if test="noti_name != null and noti_name != ''">#{noti_name},</if>
+                    <if test="noti_substance != null and noti_substance != ''">#{noti_substance},</if>
+                    <if test="noti_status != null">#{noti_status},</if>
+                    <if test="noti_time != null">#{noti_time},</if>
+                </trim>
+            )
+        </insert>
+        <insert id="insert">
+            insert into zhaoling.notify_db(user_name,noti_substance) values ('admin',#{noti_substance})
+        </insert>
 </mapper>

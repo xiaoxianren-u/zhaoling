@@ -27,38 +27,7 @@
     }
 </style>
 
-
 <body style="background-color: #f3f3f4 ">
-<!--输入框-->
-<!--<div class="layui-bg-gray" style="padding: 10px; ">-->
-<!--    <div class="layui-row layui-col-space15">-->
-<!--        <div class="layui-col-md12">-->
-<!--            <div class="layui-panel" style="border-radius:15px;">-->
-<!--                <div style="padding: 10px;">-->
-
-<!--                    <form οnsubmit="return false">-->
-<!--                        <div class="demoTable" style="padding-left: 30px">-->
-<!--                            菜单名称：-->
-<!--                            <div class="layui-inline" style="padding-right: 30px;">-->
-<!--                                <input autocomplete="off" class="layui-input" id="text_id" name="id"-->
-<!--                                       placeholder="输入内容id">-->
-<!--                            </div>-->
-<!--                            菜单状态：-->
-<!--                            <div class="layui-inline" style="width: 200px;padding-right: 20px;">-->
-<!--                                <input class="layui-input" id="text_label" name="" placeholder="选择内容类型">-->
-<!--                            </div>-->
-<!--                            <button class="layui-btn" data-type="reload" style="border-radius: 20px"-->
-<!--                                    type="submit">搜索-->
-<!--                            </button>-->
-<!--                            <button class="layui-btn layui-btn-warm" style="border-radius: 20px" type="reset">重置-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <!--菜单-->
 <div class="layui-bg-gray" style="padding: 10px;">
     <div class="layui-row layui-col-space15">
@@ -485,9 +454,9 @@
                 dataType: "json",
                 contentType: "application/json;charset=UTF-8",
                 success: function (sre) {
-                    $("#con_name").attr("value", sre.date.con_name);
-                    $("#con_url").attr("value", sre.date.con_url);
-                    $("#con_competence").attr("value", sre.date.con_competence);
+                    $("#con_name").attr("value", sre.data.con_name);
+                    $("#con_url").attr("value", sre.data.con_url);
+                    $("#con_competence").attr("value", sre.data.con_competence);
                     console.log(sre);
                     if (sre.bool === true) {
                         layer.open({
@@ -520,7 +489,7 @@
 
                                 $.ajax({
                                     type: "GET",
-                                    url: "/menu/con_update/data?con_name=" + con_name + "&con_url=" + con_url + "&con_competence=" + con_competence + "&con_vital=" + con_vital + "&con_id=" + sre.date.con_id,
+                                    url: "/menu/con_update/data?con_name=" + con_name + "&con_url=" + con_url + "&con_competence=" + con_competence + "&con_vital=" + con_vital + "&con_id=" + sre.data.con_id,
                                     async: true,
                                     dataType: "json",
                                     contentType: "application/json;charset=UTF-8",
@@ -590,7 +559,8 @@
                 dataType: "json",
                 contentType: "application/json;charset=UTF-8",
                 success: function (sre) {
-                    $("#m_name").attr("value", sre.date.m_name);
+                    console.log(sre);
+                    $("#m_name").attr("value", sre.data.m_name);
                     console.log(sre.date);
                     if (sre.bool === true) {
                         layer.open({
@@ -608,7 +578,7 @@
                                 let m_vital = $('input[name="m_vital"]:checked').val();
                                 $.ajax({
                                     type: "GET",
-                                    url: "/menu/m_update/data?m_name=" + m_name + "&m_vital=" + m_vital + "&m_number=" + sre.date.m_number,
+                                    url: "/menu/m_update/data?m_name=" + m_name + "&m_vital=" + m_vital + "&m_number=" + sre.data.m_number,
                                     async: true,
                                     dataType: "json",
                                     contentType: "application/json;charset=UTF-8",

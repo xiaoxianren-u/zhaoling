@@ -14,6 +14,8 @@ import java.util.Date;
 
 /**
  * 通知公告
+ *
+ * @author yangzhan
  */
 @Getter
 @Setter
@@ -26,6 +28,16 @@ public class NotiFy {
      * 通知id
      */
     private Integer noti_id;
+    /**
+     * 通知标题
+     */
+    private String noti_name;
+
+
+    /**
+     * 发通知的用户
+     */
+    private String user_name;
     /**
      * 通知内容
      */

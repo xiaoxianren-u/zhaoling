@@ -37,4 +37,11 @@ public interface SysNotifyService {
      * @param noti_id
      */
     void del(Integer noti_id);
+
+    /**
+     * 添加通知公告
+     *
+     * @param notiFy
+     */
+    int insertT(NotiFy notiFy);
 }
