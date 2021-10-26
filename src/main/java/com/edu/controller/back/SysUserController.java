@@ -45,15 +45,18 @@ public class SysUserController extends AjaxUtils {
      * @return
      */
     @OperateSer(operationName = "select操作", operationType = "查询管理列表")
-    @RequestMapping("/adminlist")
+    @RequestMapping(value = "/adminlist", method = RequestMethod.GET)
     @UserLoginToken(state = 1)
-    public AjaxUtils adminList() {
-        List<User> list = sysUserService.selectAdminList();
+    public AjaxUtils adminList(@RequestParam("page") Integer page,
+                               @RequestParam("limit") Integer limit,
+                               @RequestParam("username") String username) {
+        page = page > 1 ? limit * (page - 1) : 0;
+        List<User> list = sysUserService.selectAdminList(page, limit, username);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (User s : list) {
             s.setDate(formatter.format(s.getRegister_time()));
         }
-        int n = list.size();
+        int n = sysUserService.adminCount(username);
         return new AjaxUtils(n, list);
     }
 
@@ -67,14 +70,16 @@ public class SysUserController extends AjaxUtils {
     @OperateSer(operationName = "select操作", operationType = "查询用户列表")
     @RequestMapping("/userlist")
     @UserLoginToken(state = 1)
-    public AjaxUtils userList(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {
+    public AjaxUtils userList(@RequestParam("page") Integer page,
+                              @RequestParam("limit") Integer limit,
+                              @RequestParam("username") String username) {
         page = page > 1 ? limit * (page - 1) : 0;
-        List<User> list = sysUserService.selectUserList(page, limit);
+        List<User> list = sysUserService.selectUserList(page, limit, username);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (User s : list) {
             s.setDate(formatter.format(s.getRegister_time()));
         }
-        int n = sysUserService.selectCount();
+        int n = sysUserService.selectCount(username);
         return new AjaxUtils(n, list);
     }
 
@@ -89,14 +94,16 @@ public class SysUserController extends AjaxUtils {
     @OperateSer(operationName = "select操作", operationType = "查询用户黑名单列表")
     @RequestMapping("/blacklist")
     @UserLoginToken(state = 1)
-    public AjaxUtils blackList(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {
+    public AjaxUtils blackList(@RequestParam("page") Integer page,
+                               @RequestParam("limit") Integer limit,
+                               @RequestParam("username") String username) {
         page = page > 1 ? limit * (page - 1) : 0;
-        List<User> list = sysUserService.selectBlackList(page, limit);
+        List<User> list = sysUserService.selectBlackList(page, limit, username);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (User s : list) {
             s.setDate(formatter.format(s.getRegister_time()));
         }
-        int n = sysUserService.selectblackCount();
+        int n = sysUserService.selectblackCount(username);
         return new AjaxUtils(n, list);
     }
 
@@ -168,4 +175,72 @@ public class SysUserController extends AjaxUtils {
             return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), "当前密码不对");
         }
     }
+
+    /**
+     * 修改用户表角色类型或拉黑
+     *
+     * @param user
+     * @return
+     */
+
+    @OperateSer(operationName = "Update", operationType = "修改用户表角色类型或拉黑")
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/upUser", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxUtils upUser(@NotNull @RequestBody User user) {
+        user.setPass_word(MD5Util.inputPassToFromPass(user.getPass_word()));
+        return sysUserService.upUser(user);
+    }
+
+    /**
+     * 修改黑名单的角色类型或拉黑
+     *
+     * @param user
+     * @return
+     */
+    @OperateSer(operationName = "Update", operationType = "修改黑名单的角色类型或拉黑")
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/upUserBlack", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxUtils upUserBlack(@NotNull @RequestBody User user) {
+        user.setPass_word(MD5Util.inputPassToFromPass(user.getPass_word()));
+        return sysUserService.upUserBlack(user);
+    }
+
+    /**
+     * 修改黑名单的角色类型或拉黑
+     *
+     * @param user
+     * @return
+     */
+    @OperateSer(operationName = "Update", operationType = "修改黑名单的角色类型或拉黑")
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/upUserNot", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxUtils upUserNot(@NotNull @RequestBody User user) {
+        user.setPass_word(MD5Util.inputPassToFromPass(user.getPass_word()));
+        return sysUserService.upUserNot(user);
+    }
+
+
+    /**
+     * 删除用户
+     *
+     * @param user
+     * @return
+     */
+    @OperateSer(operationName = "delete", operationType = "删除用户")
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/dlUser", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxUtils dlUser(@NotNull @RequestBody User user) {
+
+        user.setPass_word(MD5Util.inputPassToFromPass(user.getPass_word()));
+
+        System.out.println("user = " + user);
+
+        return sysUserService.dlUser(user);
+    }
+
+
 }

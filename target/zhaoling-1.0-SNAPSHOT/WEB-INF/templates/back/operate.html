@@ -41,8 +41,8 @@
                             <!--                                <input name="" placeholder="选择内容类型" class="layui-input" id="text_label">-->
                             <!--                            </div>-->
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <button class="layui-btn" data-type="reload" type="submit">搜索</button>
-                            <button class="layui-btn layui-btn-warm" type="reset">重置</button>
+                            <button class="layui-btn" data-type="reload" type="submit"><i class="iconfont icon-sousuo"></i>搜索</button>
+                            <button class="layui-btn layui-btn-warm" type="reset"><i class="iconfont icon-zhongzhi"></i>重置</button>
                         </div>
                     </form>
                     <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -162,7 +162,12 @@
                 // , {field: 'log_start', title: '登录状态', width: 90, templet: '#start'}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
             ]]
-            , page: true
+            ,page: {
+                layout: [ 'prev', 'page', 'next',  'refresh', 'skip','count','limit']
+                ,first: '首页' //不显示首页
+                ,last: '尾页' //不显示尾页
+                ,groups: 3 //显示 3个连续页码
+            }
             , id: 'testReload'
             , loading: true
         });

@@ -138,6 +138,12 @@
                 }
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
             ]]
+            ,page: {
+                layout: [ 'prev', 'page', 'next',  'refresh', 'skip','count','limit']
+                ,first: '首页' //不显示首页
+                ,last: '尾页' //不显示尾页
+                ,groups: 3 //显示 3个连续页码
+            }
         });
         table.on('tool(test)', function (obj) {
             var data = obj.data;

@@ -11,6 +11,8 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <script th:src="@{/static/js/md5.js}"></script>
+
 </head>
 <body>
 
@@ -23,11 +25,38 @@
                     <div class="layui-card-body">
                         <div style="padding-bottom: 10px;">
                             <!--                            <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>-->
-                            <button class="layui-btn layuiadmin-btn-admin" data-type="add" id="add"><i
-                                    class="iconfont icon-zengjia"></i>&nbsp;添加
-                            </button>
+                            <div class="layui-row">
+                                <div class="layui-col-xs1">
+                                    <div class="grid-demo grid-demo-bg1">
+                                        <button class="layui-btn " data-type="add" id="add"><i
+                                                class="iconfont icon-zengjia" style="float: left"></i>&nbsp;添加
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs11">
+                                    <div class="grid-demo">
+                                        <form style="" onsubmit="return false">
+                                            <div class="demoTable">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                用户名：
+                                                <div class="layui-inline">
+                                                    <input autocomplete="off" class="layui-input" id="username" name="id"
+                                                           placeholder="输入用户名">
+                                                </div>
+                                                <button class="layui-btn" data-type="reload" type="submit"><i class="iconfont icon-sousuo"></i>搜索</button>
+                                                <button class="layui-btn layui-btn-warm" type="reset"><i class="iconfont icon-zhongzhi"></i>重置</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
+
                     </div>
+
                     <table class="layui-hide" id="test" lay-filter="test"></table>
                 </div>
             </div>
@@ -36,12 +65,13 @@
 </div>
 
 <script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+
     {{#  if(d.status == '超级管理员'){ }}
+    <a class="layui-btn  layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-edit"></i>编辑</a>
     <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
-            class="layui-icon layui-icon-delete"></i>删除</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
     {{#  } }}
 </script>
 
@@ -73,7 +103,17 @@
         </div>
     </form>
 </div>
-
+<div class="site-text" id="window" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" id="book" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知状态：</label>
+            <div class="layui-input-block">
+                <input name="vital" title="普通用户" type="radio" value="0">
+                <input name="vital" title="拉黑" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
 
 <script id="img" th:inline="none" type="text/html">
 
@@ -89,7 +129,7 @@
             $ = layui.jquery;
         table.render({
             elem: '#test'
-            , url: '/user/adminlist'
+            , url: '/user/adminlist?username='+""
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , title: '用户表'
             , cols: [[
@@ -104,53 +144,125 @@
                 , {field: 'date', title: '加入时间', width: 220}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
             ]]
-            // , page: true
+            ,page: {
+                layout: [ 'prev', 'page', 'next',  'refresh', 'skip','count','limit']
+                ,first: '首页' //不显示首页
+                ,last: '尾页' //不显示尾页
+                ,groups: 3 //显示 3个连续页码
+            }
+            , id: 'testReload'
+
         });
+
+
+        var active = {
+            reload: function () {
+                let username = $('#username').val();
+                console.log({username:username})
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    url: '/user/adminlist?username='+username
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
         //监听行工具事件
         table.on('tool(test)', function (obj) {
             var data = obj.data;
             //console.log(obj)
             if (obj.event === 'del') {
+                let user_id = data.user_id;
+                // console.log(user_id)
                 layer.prompt({
                     formType: 1
                     , title: '敏感操作，请验证口令'
                 }, function (value, index) {
                     layer.close(index);
-
                     layer.confirm('确定删除吗？', function (index) {
-                        table.reload('LAY-user-back-manage');
-                        obj.del();
-                        layer.close(index);
-                        layer.msg('已删除');
+                        const yan = '!a@n%p&';
+                        let pwd =md5(yan + value + yan);
+                        // console.log(pwd);
+                        $.ajax({
+                            type: "POST",
+                            url: '/user/dlUser',
+                            async: true,
+                            data:JSON.stringify({
+                                user_id:user_id,
+                                pass_word:pwd,
+                            }),
+                            dataType: 'json',
+                            contentType: 'application/json;charset=UTF-8',
+                            success: function (src) {
+                                if (src.bool === true) {
+                                    obj.del();
+                                    layer.close(index);
+                                    layer.msg(src.msg);
+                                } else {
+                                    layer.msg(src.msg);
+                                }
+                            }
+                        })
                     });
                 });
-
-
-                //
-                // layer.confirm('真的删除行么', function(index){
-                //
-                // });
             } else if (obj.event === 'edit') {
+                let user_id = data.user_id;
+                console.log(user_id);
+                layer.open({
+                    type: 1,
+                    title: "修改",
+                    area: ["400px", "200px"],
+                    btn: ['提交', '取消'], //可以无限个按钮
+                    Number: 9000000,   //自动关闭的时间
+                    anim: 2,
+                    content: $('#window'), //添加表单到弹出层
+                    yes: function (index) {
+                        let pull_black = $('input[name="vital"]:checked').val();
+                        layer.prompt({
+                            formType: 1
+                            , title: '敏感操作，请验证口令'
+                        }, function (value, index) {
+                            layer.close(index);
+                            console.log(value)
+                            layer.confirm('确定修改吗？', function (index) {
+                                const yan = '!a@n%p&';
+                                let pwd =md5(yan + value + yan);
+                                console.log(pwd);
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/user/upUserNot',
+                                    async: true,
+                                    data:JSON.stringify({
+                                        user_id:user_id,
+                                        pass_word:pwd,
+                                        pull_black:pull_black
+                                    }),
+                                    dataType: 'json',
+                                    contentType: 'application/json;charset=UTF-8',
+                                    success: function (src) {
+                                        if (src.bool === true) {
+                                            obj.del();
+                                            layer.close(index);
+                                            layer.msg(src.msg);
+                                            setTimeout(function () {
+                                                window.location.reload();
+                                            },500);
+                                        } else {
+                                            layer.msg(src.msg);
+                                        }
 
-                console.log("=================" + data.user_id);
-                // layer.open({
-                //     type: 1,
-                //     title: "信息修改",
-                //     area: ["450px", "500px"],
-                //     btn: ['提交', '取消'], //可以无限个按钮
-                //     Number: 900000,   //自动关闭的时间
-                //     anim: 2,
-                //     maxmin: true, // 最大最小化。
-                //     resize: true, // 是否允许拉伸
-                //     content: $('#update'), //添加表单到弹出层
-                //     yes: function (index) {
-                //
-                //
-                //     }
-                // })
-
-                layer.msg('该功能暂时无法实现', {icon: 0});
-
+                                    }
+                                })
+                            });
+                        });
+                    }
+                })
             }
         });
 

@@ -100,7 +100,7 @@ CREATE TABLE user_db
     user_email    VARCHAR(50)        NOT NULL DEFAULT '' COMMENT '用户邮箱',
     user_iphone   VARCHAR(12)        NOT NULL DEFAULT '' COMMENT '用户电话',
     `name`        VARCHAR(20)        NOT NULL DEFAULT '' COMMENT '用户姓名',
-    user_sex      VARCHAR(4)         NOT NULL DEFAULT '' COMMENT '用户性别',
+    user_sex      VARCHAR(4)         NOT NULL DEFAULT '保密' COMMENT '用户性别',
     `status`      VARCHAR(20)        NOT NULL DEFAULT '普通用户' COMMENT '用户状态',
     user_image    VARCHAR(300)       NOT NULL DEFAULT '' COMMENT '用户头像',
     pull_black    INT(1)             NOT NULL DEFAULT 0 COMMENT '拉黑 (0不拉黑，1拉黑)',
@@ -110,7 +110,7 @@ CREATE TABLE user_db
     constraint fk_ro_user foreign key (status) references role_db (status)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '用户列表';
-
+# 插入管理员
 insert into zhaoling.user_db(user_name, pass_word, user_iphone, status)
 values ('admin', '2e0118c5664f714f411d41c1f530af48', '15877102026', '超级管理员');
 

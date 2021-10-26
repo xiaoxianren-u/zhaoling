@@ -43,5 +43,5 @@ public interface SysNotifyService {
      *
      * @param notiFy
      */
-    int insertT(NotiFy notiFy);
+    void insertT(NotiFy notiFy);
 }

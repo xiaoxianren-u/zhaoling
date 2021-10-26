@@ -38,7 +38,7 @@ public class SysNotifyController extends AjaxUtils {
      * @param limit
      * @return
      */
-
+    @OperateSer(operationName = "select", operationType = "查询公告通知")
     @UserLoginToken(state = 1)
     @RequestMapping("/listNot")
     public AjaxUtils listNot(@RequestParam("noti_status") Integer notiStatus,
@@ -61,6 +61,7 @@ public class SysNotifyController extends AjaxUtils {
      * @param noti_id
      * @return
      */
+    @OperateSer(operationName = "delete", operationType = "删除公告通知")
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/del", method = RequestMethod.GET)
     public AjaxUtils delete(@RequestParam("noti_id") Integer noti_id) {
@@ -81,19 +82,18 @@ public class SysNotifyController extends AjaxUtils {
      * @param request
      * @return
      */
-    @OperateSer(operationType = "add", operationName = "新增公告通知")
+    @OperateSer(operationName = "add", operationType = "新增公告通知")
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/insertTex", method = RequestMethod.POST)
     public AjaxUtils insertStatus(@NotNull @RequestBody NotiFy notiFy, HttpServletRequest request) {
         notiFy.setNoti_time(new Date());
         notiFy.setUser_name(UserConfig.tokenUserName(request));
-        int n = sysNotifyService.insertT(notiFy);
-        if (n > 0) {
+        try {
+            sysNotifyService.insertT(notiFy);
             return new AjaxUtils(PageCodeEnum.ADD_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new AjaxUtils(PageCodeEnum.ADD_FAIL.getBool(), PageCodeEnum.ADD_FAIL.getMsg());
         }
     }
-
-
 }

@@ -120,12 +120,20 @@ public class SysMenuController extends AjaxUtils {
     @ApiOperation(value = "获取要修改指定目录的字段")
     @ApiImplicitParam(name = "m_number", value = "目录编号", required = true, dataType = "Integer", paramType = "query")
     public AjaxUtils mUpdate(@RequestParam("m_number") Integer mNumber) {
-        mulu m = sysMenuService.selectMone(mNumber);
-        if (m != null) {
+//        mulu m = sysMenuService.selectMone(mNumber);
+//        if (m != null) {
+//            return new AjaxUtils(true, m);
+//        } else {
+//            return new AjaxUtils(false, "服务器出错500！！！");
+//        }
+        try {
+            mulu m = sysMenuService.selectMone(mNumber);
             return new AjaxUtils(true, m);
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new AjaxUtils(false, "服务器出错500！！！");
         }
+
     }
 
 
@@ -149,12 +157,21 @@ public class SysMenuController extends AjaxUtils {
                                  @RequestParam("m_vital") Integer mVital,
                                  @RequestParam("m_number") Integer mNumber) {
         mulu m = new mulu(null, mName, mNumber, null, null, mVital, null, null, null);
-        int n = sysMenuService.updateM_nu(m);
-        if (n > 0) {
+//        int n = sysMenuService.updateM_nu(m);
+//        if (n > 0) {
+//            return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
+//        } else {
+//            return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
+//        }
+
+        try {
+            sysMenuService.updateM_nu(m);
             return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
         }
+
     }
 
 
@@ -169,10 +186,18 @@ public class SysMenuController extends AjaxUtils {
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/con_update", method = RequestMethod.GET)
     public AjaxUtils conUpdate(@RequestParam("con_number") Integer conNumber) {
-        ConTents conTents = sysMenuService.selectConone(conNumber);
-        if (conTents != null) {
+//        ConTents conTents = sysMenuService.selectConone(conNumber);
+//        if (conTents != null) {
+//            return new AjaxUtils(true, conTents);
+//        } else {
+//            return new AjaxUtils(false, "服务器出错500！！！");
+//        }
+
+        try {
+            ConTents conTents = sysMenuService.selectConone(conNumber);
             return new AjaxUtils(true, conTents);
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new AjaxUtils(false, "服务器出错500！！！");
         }
     }
@@ -203,10 +228,19 @@ public class SysMenuController extends AjaxUtils {
                                    @RequestParam("con_url") String conUrl,
                                    @RequestParam("con_id") Integer conId) {
         ConTents conTents = new ConTents(conId, conName, conUrl, null, null, conVital, conCompetence, null);
-        int n = sysMenuService.updateCon_nu(conTents);
-        if (n > 0) {
+//        int n = sysMenuService.updateCon_nu(conTents);
+//        if (n > 0) {
+//            return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
+//        } else {
+//            return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
+//        }
+
+
+        try {
+            sysMenuService.updateCon_nu(conTents);
             return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
         }
     }
@@ -238,11 +272,21 @@ public class SysMenuController extends AjaxUtils {
     @ApiImplicitParam(name = "m_number", value = "父目录id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = "/m_delete", method = RequestMethod.GET)
     public AjaxUtils mDelete(@RequestParam("m_number") Integer mNumber) {
-        int n = sysMenuService.mDeleTe(mNumber);
-        if (n > 0) {
+//        int n = sysMenuService.mDeleTe(mNumber);
+//        if (n > 0) {
+//            return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.REMOVE_SUCCESS.getMsg());
+//        } else {
+//            return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
+//        }
+
+
+        try {
+            sysMenuService.mDeleTe(mNumber);
             return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.REMOVE_SUCCESS.getMsg());
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
         }
+
     }
 }

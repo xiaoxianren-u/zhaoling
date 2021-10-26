@@ -56,9 +56,12 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button class="layui-btn" data-type="reload" id="btn" style="margin-left: 30px">搜索
+                                    <button class="layui-btn" data-type="reload" id="btn" style="margin-left: 30px"><i
+                                            class="iconfont icon-sousuo"></i>搜索
                                     </button>
-                                    <button class="layui-btn layui-btn-warm" type="reset">重置</button>
+                                    <button class="layui-btn layui-btn-warm" type="reset"><i
+                                            class="iconfont icon-zhongzhi"></i>重置
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -156,9 +159,6 @@
         'redo',
     ]
     editor.create()
-    // E.fullscreen.init('#toolbar-container','#text-container');
-
-
 </script>
 
 <script th:inline="none">
@@ -182,9 +182,15 @@
                 , {field: 'date', title: '通知时间', width: 180}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
             ]]
-            , page: true
+            , page: {
+                layout: ['prev', 'page', 'next', 'refresh', 'skip', 'count', 'limit']
+                , first: '首页' //不显示首页
+                , last: '尾页' //不显示尾页
+                , groups: 3 //显示 3个连续页码
+            }
             , id: 'testReload'
             , loading: true
+
 
         });
 

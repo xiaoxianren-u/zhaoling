@@ -21,7 +21,15 @@ public interface SysUserDao {
      *
      * @return
      */
-    List<User> selectAdminList();
+    List<User> selectAdminList(@Param("page") Integer page, @Param("limit") Integer limit, @Param("username") String username);
+
+    /**
+     * 管理员数量
+     *
+     * @param username
+     * @return
+     */
+    int adminCount(@Param("username") String username);
 
     /**
      * 查询是否有该用户
@@ -74,14 +82,14 @@ public interface SysUserDao {
      * @param limit
      * @return
      */
-    List<User> selectUserList(@Param("page") Integer page, @Param("limit") Integer limit);
+    List<User> selectUserList(@Param("page") Integer page, @Param("limit") Integer limit, @Param("username") String username);
 
     /**
      * 普通用户数量
      *
      * @return
      */
-    int selectCount();
+    int selectCount(@Param("username") String username);
 
     /**
      * 用户黑名单列表
@@ -90,14 +98,14 @@ public interface SysUserDao {
      * @param limit
      * @return
      */
-    List<User> selectBlackList(@Param("page") Integer page, @Param("limit") Integer limit);
+    List<User> selectBlackList(@Param("page") Integer page, @Param("limit") Integer limit, @Param("username") String username);
 
     /**
      * 用户黑名单列表
      *
      * @return
      */
-    int selectblackCount();
+    int selectblackCount(@Param("username") String username);
 
 
     /**
@@ -130,4 +138,26 @@ public interface SysUserDao {
      * @param name
      */
     void updatePass(@Param("username") String username, @Param("password") String name);
+
+
+    /**
+     * 拉黑用户
+     *
+     * @param user
+     */
+    void updataPull(User user);
+
+    /**
+     * 修改角色类型
+     *
+     * @param user
+     */
+    void updataStatus(User user);
+
+    /**
+     * 删除用户
+     *
+     * @param user
+     */
+    void dlUser(User user);
 }

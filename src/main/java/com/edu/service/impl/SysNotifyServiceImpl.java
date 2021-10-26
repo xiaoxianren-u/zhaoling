@@ -62,9 +62,9 @@ public class SysNotifyServiceImpl implements SysNotifyService {
      * @param notiFy
      */
     @Override
-    public int insertT(@NotNull NotiFy notiFy) {
+    public void insertT(@NotNull NotiFy notiFy) {
 
-        return sysNotifyDao.insertT(notiFy);
+        sysNotifyDao.insertT(notiFy);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.edu.service;
 
 import com.edu.pojo.User;
+import com.edu.util.AjaxUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -22,7 +23,15 @@ public interface SysUserService {
      *
      * @return
      */
-    List<User> selectAdminList();
+    List<User> selectAdminList(Integer page, Integer limit, String username);
+
+    /**
+     * 管理员数量
+     *
+     * @param username
+     * @return
+     */
+    int adminCount(String username);
 
 
     /**
@@ -76,14 +85,14 @@ public interface SysUserService {
      *
      * @return
      */
-    List<User> selectUserList(Integer page, Integer limit);
+    List<User> selectUserList(Integer page, Integer limit, String username);
 
     /**
      * 普通用户数量
      *
      * @return
      */
-    int selectCount();
+    int selectCount(String username);
 
     /**
      * 用户黑名单列表
@@ -92,14 +101,14 @@ public interface SysUserService {
      * @param limit
      * @return
      */
-    List<User> selectBlackList(Integer page, Integer limit);
+    List<User> selectBlackList(Integer page, Integer limit, String username);
 
     /**
      * 用户黑名单数量
      *
      * @return
      */
-    int selectblackCount();
+    int selectblackCount(String username);
 
     /**
      * 获取某位用户的信息
@@ -130,4 +139,39 @@ public interface SysUserService {
      * @param name
      */
     void updatePass(String username, String name);
+
+
+    /**
+     * 修改用户权限或拉黑
+     *
+     * @param user
+     * @return
+     */
+    AjaxUtils upUser(User user);
+
+    /**
+     * 对现有的管理员处理
+     *
+     * @param user
+     * @return
+     */
+    AjaxUtils upUserNot(User user);
+
+    /**
+     * 修改黑名单权限或拉黑
+     *
+     * @param user
+     * @return
+     */
+    AjaxUtils upUserBlack(User user);
+
+    /**
+     * 删除用户
+     *
+     * @param user
+     * @return
+     */
+    AjaxUtils dlUser(User user);
+
+
 }

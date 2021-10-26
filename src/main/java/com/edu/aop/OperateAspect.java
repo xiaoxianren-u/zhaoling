@@ -101,8 +101,12 @@ public class OperateAspect {
                     null,
                     // ....
                     1, null);
-            sysLogBookService.logInsert(logBook);
-//            System.out.println("logBook = " + logBook);
+
+            try {
+                sysLogBookService.logInsert(logBook);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
