@@ -1,0 +1,38 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.SysLabelDao">
+
+    <!--标签列表-->
+    <select id="list" resultType="com.edu.pojo.Label">
+        select lab_id, lab_name, lab_status from zhaoling.label_db
+    </select>
+
+    <!--删除帖子标签-->
+    <delete id="del">
+        delete from zhaoling.label_db
+        where lab_id = #{lab_id}
+    </delete>
+    <!--修改帖子标签-->
+    <update id="up">
+        update zhaoling.label_db
+        <set>
+            <if test="lab_name != null and lab_name != ''">lab_name = #{lab_name},</if>
+            <if test="lab_status != null"> lab_status = #{lab_status},</if>
+        </set>
+        where lab_id = #{lab_id}
+
+    </update>
+    <!--添加帖子标签-->
+    <insert id="add">
+        insert into zhaoling.label_db(
+            <trim suffixOverrides=",">
+                <if test="lab_name != null and lab_name != ''">lab_name,</if>
+                <if test="lab_status != null">lab_status,</if>
+            </trim>
+        )values (
+             <trim suffixOverrides=",">
+                <if test="lab_name != null and lab_name != ''">#{lab_name},</if>
+                <if test="lab_status != null">#{lab_status},</if>
+            </trim>
+        )
+    </insert>
+</mapper>

@@ -28,4 +28,10 @@ public class Label {
      */
     private String lab_name;
 
+    /**
+     * 标签状态 0启用，1禁止
+     */
+    private Integer lab_status;
+
+
 }

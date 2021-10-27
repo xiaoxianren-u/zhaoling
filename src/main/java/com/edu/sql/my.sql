@@ -56,7 +56,7 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('寻物帖子', DEFAULT, 3, 'iconfont icon-0-10'),
        ('帖子举报', DEFAULT, 3, 'iconfont icon-jubao'),
        ('物品状态', DEFAULT, 3, 'iconfont icon-iconfkzt'),
-       ('帖子分类', DEFAULT, 3, 'iconfont icon-fenlei'),
+       ('帖子分类', '/sys.label.action', 3, 'iconfont icon-fenlei'),
        ('发表感谢', DEFAULT, 3, 'iconfont icon-ganxie'),
        ('通知公告', '/sys/anNoun.action', 4, 'iconfont icon-tongzhigonggao'),
        ('意见与反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
@@ -131,6 +131,23 @@ CREATE TABLE notify_db
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '通知公告';
 
+# 存储过程
+CREATE PROCEDURE UPDATE_STA()
+BEGIN
+    update notify_db
+    SET noti_status = 3
+    WHERE (datediff(sysdate(), noti_time) >= 3 and noti_status = 0)
+       or (datediff(sysdate(), noti_time) >= 5 and noti_status = 1)
+       or (datediff(sysdate(), noti_time) >= 7 and noti_status = 2);
+
+END;
+
+# 执行存储过程的事件
+CREATE EVENT `zhaoling`.`test`
+    ON SCHEDULE
+        EVERY '1' DAY STARTS '2021-10-28 00:00:00'
+    on completion preserve
+    DO call UPDATE_STA();
 
 
 # 感谢表
@@ -149,8 +166,9 @@ CREATE TABLE grate_ful_db
 # DROP TABLE IF EXISTS `label_db`;
 CREATE TABLE `label_db`
 (
-    lab_id   INT(11)            NOT NULL AUTO_INCREMENT COMMENT '标签id',
-    lab_name VARCHAR(50) unique NOT NULL DEFAULT '' COMMENT '标签名',
+    lab_id     INT(11)            NOT NULL AUTO_INCREMENT COMMENT '标签id',
+    lab_name   VARCHAR(50) unique NOT NULL DEFAULT '' COMMENT '标签名',
+    lab_status INT(11)            NOT NULL DEFAULT 0 COMMENT '标签状态 0启用，1禁止',
     PRIMARY KEY (lab_id, lab_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '标签表';

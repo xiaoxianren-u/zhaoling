@@ -234,11 +234,7 @@ public class SysUserController extends AjaxUtils {
     @RequestMapping(value = "/dlUser", method = RequestMethod.POST)
     @ResponseBody
     public AjaxUtils dlUser(@NotNull @RequestBody User user) {
-
         user.setPass_word(MD5Util.inputPassToFromPass(user.getPass_word()));
-
-        System.out.println("user = " + user);
-
         return sysUserService.dlUser(user);
     }
 

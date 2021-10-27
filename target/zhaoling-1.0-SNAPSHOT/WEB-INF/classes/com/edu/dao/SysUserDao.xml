@@ -11,8 +11,21 @@
                user_image,
                register_time
         from zhaoling.user_db
-        where status like '%管理员'
-          and pull_black = 0
+          <where>
+            status like '%管理员'
+            and pull_black = 0
+            <if test="username != null and username != ''">and user_name = #{username}</if>
+        </where>
+        Limit #{page},#{limit}
+    </select>
+    <!--管理员数量-->
+    <select id="adminCount" resultType="java.lang.Integer">
+        select COUNT(*) from zhaoling.user_db
+        <where>
+            status like '%管理员'
+            and pull_black = 0
+            <if test="username != null and username != ''">and user_name = #{username}</if>
+        </where>
     </select>
 
 
@@ -28,6 +41,7 @@
     <insert id="insertRegister">
         insert into zhaoling.user_db(user_name, pass_word, register_time, user_iphone)
         values (#{username}, #{password}, #{date}, #{home})
+
     </insert>
 
     <!--    用户登录-->
@@ -63,8 +77,11 @@
                user_image,
                register_time
         from zhaoling.user_db
-        where status = '普通用户'
-          and pull_black = 0
+         <where>
+            status = '普通用户'
+            and pull_black = 0
+            <if test="username != null and username != ''">and user_name = #{username}</if>
+        </where>
         Limit #{page},#{limit}
     </select>
 
@@ -73,8 +90,12 @@
     <select id="selectCount" resultType="java.lang.Integer">
         select count(*)
         from zhaoling.user_db
-        where status = '普通用户'
-          and pull_black = 0
+        <where>
+            status = '普通用户'
+            and pull_black = 0
+            <if test="username != null and username != ''">and user_name = #{username}</if>
+        </where>
+
     </select>
     <!--    用户黑名单列表-->
     <select id="selectBlackList" resultType="com.edu.pojo.User">
@@ -87,15 +108,24 @@
                user_image,
                register_time
         from zhaoling.user_db
-        where pull_black = 1
+        <where>
+            pull_black = 1
+            <if test="username != null and username != ''">and user_name = #{username}</if>
+        </where>
         Limit #{page},#{limit}
     </select>
     <!--    用户黑名单数量-->
     <select id="selectblackCount" resultType="java.lang.Integer">
         select count(*)
         from zhaoling.user_db
-        where pull_black = 1
+        <where>
+            pull_black = 1
+            <if test="username != null and username != ''">and user_name = #{username}</if>
+        </where>
     </select>
+
+
+
     <!--   获取某位用户的信息-->
     <select id="selectBasic" resultType="com.edu.pojo.User">
         select user_name, user_email, user_iphone, name, user_sex, user_image, register_time
@@ -137,4 +167,24 @@
         set pass_word = #{password}
         where user_name = #{username}
     </update>
+<!--    拉黑用户-->
+    <update id="updataPull">
+        update zhaoling.user_db
+        set pull_black = #{pull_black}
+        where user_id = #{user_id}
+    </update>
+
+<!--    修改角色类型-->
+    <update id="updataStatus">
+        update zhaoling.user_db
+        set status = #{user_email}
+        where user_id = #{user_id}
+    </update>
+
+<!--    删除用户-->
+    <delete id="dlUser">
+        delete from zhaoling.user_db
+        where user_id = #{user_id}
+    </delete>
+
 </mapper>

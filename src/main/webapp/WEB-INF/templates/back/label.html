@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+</head>
+<body>
+<div class="layui-bg-gray" style="padding: 30px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-panel">
+                <div style="padding: 50px 30px;">
+                    <div style="padding: 10px;">
+                        <button class="layui-btn layuiadmin-btn-role  " id="add"><i class="iconfont icon-zengjia"></i>&nbsp;添加
+                        </button>
+                        <!--                        <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">删除</button>-->
+                    </div>
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="barDemo" th:inline="none" type="text/html">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
+</script>
+
+
+<div class="site-text" id="update" style="margin: 5%; display: none" target="test123">
+
+    <form class="layui-form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">具体描述：</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" id="lab_name" name="id" placeholder="输入标签名">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签状态：</label>
+            <div class="layui-input-block">
+                <input name="lab_status" title="启用" type="radio" value="0">
+                <input name="lab_status" title="禁止" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+    <span style="color: red;font-size: 9pt">注：修改后,相关的内容可能将无法正常使用</span>
+</div>
+<div class="site-text" id="add_A" style="margin: 5%; display: none" target="test123">
+
+    <form class="layui-form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">具体描述：</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" id="lab_name1" name="id" placeholder="输入标签名">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签状态：</label>
+            <div class="layui-input-block">
+                <input name="lab_status1" title="启用" type="radio" value="0">
+                <input name="lab_status1" title="禁止" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
+<script th:inline="none">
+    layui.use(function () {
+
+
+        var table = layui.table,
+            $ = layui.jquery;
+        table.render({
+            elem: '#test'
+            , url: '/label/list'
+            , toolbar: '#toolbarDemo'
+            , title: '用户数据表'
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'lab_id', title: 'ID', width: 150}
+                , {field: 'lab_name', title: '帖子标签', width: 1030}
+                , {
+                    field: 'lab_status', title: '角色状态', width: 150, templet: function (d) {
+                        if (d.lab_status === 0) {
+                            return '<span style="color: #1E9FFF">启用</span>';
+                        } else {
+                            return '<span style="color: red">禁止</span>';
+                        }
+                    }
+                }
+                , {title: '操作', toolbar: '#barDemo', width: 180}
+            ]]
+        });
+
+
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+
+            //删除操作
+            if (obj.event === 'del') {
+                layer.confirm('真的删除么，请先删除与该标签有关的内容', function (index) {
+                    let lab_id = data.lab_id;
+                    console.log(index + "sdfdsf" + "   " + lab_id);
+                    $.ajax({
+                        type: "GET",
+                        url: "/label/del?lab_id=" + lab_id,
+                        async: true,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function (sre) {
+                            if (sre.bool === true) {
+                                layer.msg(sre.msg);
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg(sre.msg);
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                let lab_id = data.lab_id;
+                let lab_name = data.lab_name;
+                document.getElementById("lab_name").value = lab_name;
+                layer.open({
+                    type: 1,
+                    title: "标签修改",
+                    area: ["450px", "290px"],
+                    btn: ['提交', '取消'], //可以无限个按钮
+                    Number: 900000,   //自动关闭的时间
+                    anim: 2,
+                    content: $('#update'), //添加表单到弹出层
+                    yes: function (index) {
+                        lab_name = $("#lab_name").val();
+                        let lab_status = $('input[name="lab_status"]:checked').val();
+                        $.ajax({
+                            type: "POSt",
+                            url: "/label/edit",
+                            async: true,
+                            data: JSON.stringify({lab_status: lab_status, lab_name: lab_name, lab_id: lab_id}),
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8",
+                            success: function (sre) {
+                                if (sre.bool === true) {
+                                    layer.msg(sre.msg);
+                                    setTimeout(function () {
+                                        window.location.reload();  //刷新页面
+                                    }, 800);
+                                } else {
+                                    layer.msg(sre.msg);
+                                }
+
+                            }
+                        })
+
+
+                    }
+                })
+            }
+        });
+        //添加
+        $(document).on('click', '#add', function () {
+            layer.open({
+                type: 1,
+                title: "标签添加",
+                area: ["450px", "250px"],
+                btn: ['提交', '取消'], //可以无限个按钮
+                Number: 900000,   //自动关闭的时间
+                anim: 2,
+                content: $('#add_A'), //添加表单到弹出层
+                yes: function () {
+                    let lab_name = $("#lab_name1").val();
+                    let lab_status = $('input[name="lab_status1"]:checked').val();
+                    console.log({lab_name: lab_name, lab_status: lab_status});
+                    if (lab_name === '') {
+                        layer.msg('标签名不能为空');
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            url: "/label/add",
+                            async: true,
+                            data: JSON.stringify({
+                                lab_name: lab_name,
+                                lab_status: lab_status
+                            }),
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8",
+                            success: function (sre) {
+                                console.log(sre);
+                                if (sre.bool === true) {
+                                    layer.msg(sre.msg);
+                                    setTimeout(function () {
+                                        window.location.reload();  //刷新页面
+                                    }, 800);
+                                } else {
+                                    layer.msg(sre.msg);
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
