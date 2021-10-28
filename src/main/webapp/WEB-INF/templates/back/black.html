@@ -125,10 +125,11 @@
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , title: '用户表'
             , limit: 15
+            , height: 730
             , limits: [15, 25, 50]
             , cols: [[
                 {type: 'checkbox', fixed: 'center'}
-                , {field: 'user_id', title: 'ID', width: 100, fixed: 'left', sort: true}
+                , {field: 'user_id', title: 'ID', width: 100, sort: true}
                 , {field: 'user_name', title: '用户名', width: 220, edit: 'text'}
                 , {field: 'user_image', title: '头像', width: 80, templet: '#img'}
                 , {field: 'user_email', title: '邮箱', width: 250, edit: 'text'}
@@ -136,7 +137,7 @@
                 , {field: 'user_sex', title: '性别', width: 80, edit: 'text', sort: true}
                 , {field: 'status', title: '角色', width: 160}
                 , {field: 'date', title: '加入时间', width: 220}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+                , {title: '操作', toolbar: '#barDemo', width: 180}
             ]]
             , page: {
                 layout: ['prev', 'page', 'next', 'refresh', 'skip', 'count', 'limit']

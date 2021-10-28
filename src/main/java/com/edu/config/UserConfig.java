@@ -21,7 +21,7 @@ public class UserConfig {
     public static String tokenUserName(@NotNull HttpServletRequest request) {
 
         cookie = request.getHeader("Cookie");
-        String[] output = cookie.split(";");
+        String[] output = cookie.split("[=,;]");
         for (int i = 0; i < cookie.length(); i++) {
             if (output[i].contains("token")) {
                 token = output[i];

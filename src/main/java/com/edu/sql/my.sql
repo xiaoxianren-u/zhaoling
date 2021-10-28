@@ -45,7 +45,7 @@ CREATE TABLE con_tents_db
 
 
 INSERT INTO zhaoling.con_tents_db (con_name, con_url, con_number, con_icon)
-VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
+VALUES ('了解招物', '/sys/welcome.action', 1, 'iconfont icon-lejie'),
        ('普通用户', '/sys/user.action', 2, 'iconfont icon-yonghuliebiao'),
        ('后台管理员', '/sys/administrator.action', 2, 'iconfont icon-guanliyuan'),
        ('角色管理', '/sys/role.action', 2, 'iconfont icon-jiaoseguanli'),
@@ -57,9 +57,9 @@ VALUES ('了解招物', DEFAULT, 1, 'iconfont icon-lejie'),
        ('帖子举报', DEFAULT, 3, 'iconfont icon-jubao'),
        ('物品状态', DEFAULT, 3, 'iconfont icon-iconfkzt'),
        ('帖子分类', '/sys.label.action', 3, 'iconfont icon-fenlei'),
-       ('发表感谢', DEFAULT, 3, 'iconfont icon-ganxie'),
        ('通知公告', '/sys/anNoun.action', 4, 'iconfont icon-tongzhigonggao'),
        ('意见与反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
+       ('发表感谢', DEFAULT, 4, 'iconfont icon-ganxie'),
        ('用户消息', DEFAULT, 4, 'iconfont icon-xiaoxi'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
        ('登录日志', '/sys/log.action', 5, 'iconfont icon-drxx92'),

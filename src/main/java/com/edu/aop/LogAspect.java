@@ -130,11 +130,14 @@ public class LogAspect {
                 (String) request.getSession().getAttribute("log"),
                 // ....
                 0, null);
-//        System.out.println("logBook = " + logBook);
-
-        //清除session里的内容
+        /*清除session里的内容*/
         request.getSession().removeAttribute("name");
         request.getSession().removeAttribute("log");
-        sysLogBookService.logInsert(logBook);
+        //捕获登录插入异常
+        try {
+            sysLogBookService.logInsert(logBook);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

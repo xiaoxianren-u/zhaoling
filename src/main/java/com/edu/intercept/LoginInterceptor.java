@@ -49,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 String cookie = request.getHeader("Cookie");
                 String[] output = null;
                 try {
-                    output = cookie.split(";");
+                    output = cookie.split("[;,=]");
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException("无令牌，请重新登录");

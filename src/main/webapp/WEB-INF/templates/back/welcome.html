@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <link rel="stylesheet" th:href="@{/static/css/public.css}">
+    <script th:src="@{/static/js/echarts.js}"></script>
+</head>
+<body>
+<div class="layuimini-main">
+
+
+    <div class="layui-bg-gray">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3">
+                <div class="layui-panel">
+                    <div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>访问量</span>
+                                <span class="layui-badge layui-bg-blue layuiadmin-badge"
+                                      style="float: right;margin-top: 12px">周</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font" style="font-size: 30px;color: black;margin-bottom: 20px">
+                                    9,999,666</p>
+                                <p>
+                                    <span>总计访问量</span>
+                                    <span class="layuiadmin-span-color" style="float: right">88万 <i
+                                            class="layui-inline layui-icon layui-icon-flag"></i></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-panel">
+                    <div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>访问量</span>
+                                <span class="layui-badge layui-bg-cyan layuiadmin-badge"
+                                      style="float: right;margin-top: 12px">月</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font" style="font-size: 30px;color: black;margin-bottom: 20px">
+                                    33,555</p>
+                                <p>
+                                    <span>总计访问量</span>
+                                    <span class="layuiadmin-span-color" style="float: right">10% <i
+                                            class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md3">
+                <div class="layui-panel">
+                    <div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>访问量</span>
+                                <span class="layui-badge layui-bg-cyan layuiadmin-badge"
+                                      style="float: right;margin-top: 12px">月</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font" style="font-size: 30px;color: black;margin-bottom: 20px">
+                                    33,555</p>
+                                <p>
+                                    <span>总计访问量</span>
+                                    <span class="layuiadmin-span-color" style="float: right">10% <i
+                                            class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-panel">
+                    <div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>活跃用户</span>
+                                <span class="layui-badge layui-bg-orange layuiadmin-badge"
+                                      style="float: right;margin-top: 12px">月</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+
+                                <p class="layuiadmin-big-font" style="font-size: 30px;color: black;margin-bottom: 20px">
+                                    66,666</p>
+                                <p>
+                                    <span>最近一个月</span>
+                                    <span class="layuiadmin-span-color" style="float: right">15% <i
+                                            class="layui-inline layui-icon layui-icon-user"></i></span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+
+    <div class="layui-bg-gray">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md9">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">
+
+                        <div id="tie" style="width:100%;height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">一个面板</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-bg-gray">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md9">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">
+
+                        <div id="main" style="width:100%;height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">一个面板</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    layui.use(function () {
+        var $ = layui.jquery,
+            layer = layui.layer;
+
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    let myChart = echarts.init(document.getElementById('main'));
+    let myChat_tie = echarts.init(document.getElementById('tie'));
+    // 指定图表的配置项和数据
+
+
+    // 柱状图
+    let option = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+            source: [
+                ['product', '丢失', '找回', '未找回'],
+                ['电子产品', 43.3, 85.8, 93.7],
+                ['随身物品',],
+                ['书籍', 86.4, 65.2, 82.5],
+                ['钱财', 72.4, 53.9, 39.1],
+                ['贵重物品', 72.4, 53.9, 39.1]
+            ]
+        },
+        xAxis: {type: 'category'},
+        yAxis: {},
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [{type: 'bar'}, {type: 'bar'}, {type: 'bar'}]
+    };
+    myChart.setOption(option);
+
+
+    let data1 = [120, 1000, 101, 134, 90, 230, 210];
+
+    //折线图
+    let option_tie = {
+        title: {
+            text: '物品丢失-报表'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['电子产品', '随身物品', '书籍', '钱财', '贵重物品']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '电子产品',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: data1
+            },
+            {
+                name: '随身物品',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name: '书籍',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name: '钱财',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name: '贵重物品',
+                type: 'line',
+                stack: 'Total',
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
+    myChat_tie.setOption(option_tie);
+</script>
+
+</body>
+</html>

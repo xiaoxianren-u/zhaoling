@@ -60,6 +60,10 @@ public class AjaxUtils extends HashMap<String, Object> {
         super.put(BOOL_TAG, bool);
     }
 
+    public AjaxUtils(String msg) {
+        super.put(MSG_TAG, msg);
+    }
+
 
     public AjaxUtils(Boolean bool, String msg) {
         super.put(BOOL_TAG, bool);

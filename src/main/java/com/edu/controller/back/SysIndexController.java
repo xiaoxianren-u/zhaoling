@@ -193,5 +193,16 @@ public class SysIndexController extends AjaxUtils {
         return "back/label";
     }
 
+    /**
+     * 了解招物
+     *
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/welcome.action", method = RequestMethod.GET)
+    public String findAction() {
+        return "back/welcome";
+    }
+
 
 }

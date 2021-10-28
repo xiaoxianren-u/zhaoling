@@ -3,6 +3,7 @@ package com.edu.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
@@ -28,13 +29,16 @@ public class JwtUtils {
      *
      * @return
      */
-    public static String generateToken(String username, int sta) {
+    @NotNull
+    public static String generateToken(String username, int sta, Integer time) {
+
+        int times = time;
         //设置颁布者
         String token = Jwts.builder().setSubject(SUBJECT)
                 //设置token 有效时间的开始
                 .setIssuedAt(new Date())
                 //结束时间
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE * times))
                 .claim("username", username)
                 .claim("state", sta)
                 .signWith(SignatureAlgorithm.HS256, SECRET)
