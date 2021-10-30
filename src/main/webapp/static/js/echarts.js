@@ -1205,7 +1205,7 @@
             for (var j = 0; j < 8; j++) {
                 vh[j] == null && (vh[j] = 0);
                 vh[j] += ((i + j) % 2 ? -1 : 1)
-                    * determinant(mA, 7, i === 0 ? 1 : 0, 1 < < i, 1 < < j, detCache)
+                    * determinant(mA, 7, i === 0 ? 1 : 0, 1 < i, 1 < j, detCache)
                     / det * dest[i];
             }
         }

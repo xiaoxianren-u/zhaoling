@@ -20,8 +20,8 @@
         <ul class="layui-nav layui-layout-left">
 
             <li class="layui-nav-item layadmin-flexible " id="kit-side-fold" lay-unselect>
-                <a layadmin-event="flexible" title="侧边伸缩">
-                    <i class="layui-icon layui-icon-shrink-right" style="color: white"></i>
+                <a id="a_title" layadmin-event="flexible" title="收起">
+                    <i class="layui-icon" id="icon" style="color: white">&#xe668;</i>
                 </a>
             </li>
         </ul>
@@ -63,9 +63,9 @@
     </div>
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style=" height: 890px">
+        <div style=" height: 870px">
             <iframe frameborder="no" id="iframe" src="/sys/welcome.action"
-                    style="width: 100%; height:97%"></iframe>
+                    style="width: 100%; height:99%"></iframe>
         </div>
     </div>
 
@@ -77,9 +77,24 @@
     layui.use(function () {
         var $ = layui.jquery;
         var isShow = true;  //定义一个标志位
+        let bool = true;
         $("#kit-side-fold").click(function () {
             //选择出所有的span，并判断是不是hidden
 
+            // 实现收起按钮的动态显示
+            if (bool) {
+                $("#icon").html("&#xe66b;");
+                $("#a_title").mousemove(function () {
+                    this.title = "展开";
+                })
+                bool = false;
+            } else {
+                $("#icon").html("&#xe668;");
+                $("#a_title").mousemove(function () {
+                    this.title = "收起";
+                })
+                bool = true;
+            }
             // console.log("==============================================")
             $('.layui-nav-item span').each(function () {
                 if ($(this).is(':hidden')) {

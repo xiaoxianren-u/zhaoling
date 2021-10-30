@@ -13,10 +13,10 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
     <link rel="stylesheet" th:href="@{/static/css/public.css}">
     <script th:src="@{/static/js/echarts.js}"></script>
+    <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
 </head>
 <body>
 <div class="layuimini-main">
-
 
     <div class="layui-bg-gray">
         <div class="layui-row layui-col-space15">
@@ -130,7 +130,9 @@
             </div>
             <div class="layui-col-md3">
                 <div class="layui-panel">
-                    <div style="padding: 50px 30px;">一个面板</div>
+                    <div style="padding: 50px 30px;">
+                        <div id="bin" style="width:100%;height:400px;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,15 +141,15 @@
 
     <div class="layui-bg-gray">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md9">
+            <div class="layui-col-md6">
                 <div class="layui-panel">
-                    <div style="padding: 50px 30px;">
+                    <div style="padding: 20px 20px;">
 
                         <div id="main" style="width:100%;height:400px;"></div>
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md3">
+            <div class="layui-col-md6">
                 <div class="layui-panel">
                     <div style="padding: 50px 30px;">一个面板</div>
                 </div>
@@ -158,46 +160,15 @@
 
 </div>
 
-<script>
-    layui.use(function () {
-        var $ = layui.jquery,
-            layer = layui.layer;
-
-
-    });
-</script>
-
 
 <script type="text/javascript">
+
     // 基于准备好的dom，初始化echarts实例
     let myChart = echarts.init(document.getElementById('main'));
     let myChat_tie = echarts.init(document.getElementById('tie'));
+    let myChat_bin = echarts.init(document.getElementById('bin'));
+
     // 指定图表的配置项和数据
-
-
-    // 柱状图
-    let option = {
-        legend: {},
-        tooltip: {},
-        dataset: {
-            source: [
-                ['product', '丢失', '找回', '未找回'],
-                ['电子产品', 43.3, 85.8, 93.7],
-                ['随身物品',],
-                ['书籍', 86.4, 65.2, 82.5],
-                ['钱财', 72.4, 53.9, 39.1],
-                ['贵重物品', 72.4, 53.9, 39.1]
-            ]
-        },
-        xAxis: {type: 'category'},
-        yAxis: {},
-        // Declare several bar series, each will be mapped
-        // to a column of dataset.source by default.
-        series: [{type: 'bar'}, {type: 'bar'}, {type: 'bar'}]
-    };
-    myChart.setOption(option);
-
-
     let data1 = [120, 1000, 101, 134, 90, 230, 210];
 
     //折线图
@@ -215,7 +186,7 @@
             }
         },
         legend: {
-            data: ['电子产品', '随身物品', '书籍', '钱财', '贵重物品']
+            data: ['电子产品', '随身物品', '书籍', '钱财', '贵重物品', '衣物']
         },
         toolbox: {
             feature: {
@@ -294,10 +265,100 @@
                     focus: 'series'
                 },
                 data: [820, 932, 901, 934, 1290, 1330, 1320]
+            },
+            {
+                name: '衣物',
+                type: 'line',
+                stack: 'Total',
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [120, 932, 901, 934, 1290, 1330, 1320]
             }
         ]
     };
     myChat_tie.setOption(option_tie);
+
+    //饼图
+    let option_bin = {
+
+
+        title: {
+            text: '上月物品丢失情况',
+            left: 'left'
+        },
+
+        tooltip: {
+            trigger: 'item',
+            // backgroundColor: 'rgba(0,0,0,1)',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            x: 'center',
+            y: 'bottom',
+            orient: 'horizontal',
+        },
+        series: [
+            {
+                name: 'Access From',
+                type: 'pie',
+                radius: '50%',
+                data: [
+                    {value: 1048, name: '电子产品'},
+                    {value: 735, name: '随身物品'},
+                    {value: 580, name: '书籍'},
+                    {value: 484, name: '钱财'},
+                    {value: 580, name: '贵重物品'},
+                    {value: 484, name: '衣物'}
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    myChat_bin.setOption(option_bin);
+
+    // 柱状图
+    let option = {
+        legend: {},
+        title: {
+            text: '每天物品情况'
+        },
+        tooltip: {},
+        dataset: {
+            source: [
+                ['product', '丢失', '找回', '未找回'],
+                ['电子产品', 43.3, 85.8, 93.7],
+                ['随身物品',],
+                ['书籍', 86.4, 65.2, 82.5],
+                ['钱财', 72.4, 53.9, 39.1],
+                ['贵重物品', 1272.4, 53.9, 39.1]
+            ]
+        },
+        xAxis: {type: 'category'},
+        yAxis: {},
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [{type: 'bar'}, {type: 'bar'}, {type: 'bar'}]
+    };
+    myChart.setOption(option);
+
+    window.onresize = function () {
+
+        myChart.resize();
+        myChat_tie.resize();
+        myChat_bin.resize();
+    }
 </script>
 
 </body>
