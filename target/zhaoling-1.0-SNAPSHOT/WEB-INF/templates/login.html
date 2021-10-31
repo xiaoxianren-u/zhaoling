@@ -95,12 +95,15 @@
             <div class="layui-col-xs10">
                 <div class="grid-demo">
                     <form action="login" id="myForm" method="post">
-                        <i class="iconfont icon-yonghuming" style="font-size: 20px; color:#13c9a3; z-index: 999999;position:absolute;top: 20px;left: 6px; "></i>
+                        <i class="iconfont icon-yonghuming"
+                           style="font-size: 20px; color:#13c9a3; z-index: 999999;position:absolute;top: 20px;left: 6px; "></i>
                         <input class="inp" id="username" name="username" type="text" value=""/>
-                        <i class="iconfont icon-mima" style="font-size: 20px; color: #13c9a3;z-index: 999999;position:absolute;top: 82px;left: 6px; "></i>
+                        <i class="iconfont icon-mima"
+                           style="font-size: 20px; color: #13c9a3;z-index: 999999;position:absolute;top: 82px;left: 6px; "></i>
                         <input class="inp" id="password" name="password" type="password" value=""/>
 
-                        <i class="iconfont icon-yanzhengma" style="font-size: 20px; color: #13c9a3;z-index: 999999;position:absolute;top: 145px;left: 6px; "></i>
+                        <i class="iconfont icon-yanzhengma"
+                           style="font-size: 20px; color: #13c9a3;z-index: 999999;position:absolute;top: 145px;left: 6px; "></i>
                         <input class="inp" id="yzm" placeholder="验证码" type="text"/>
                         <img id="img" onclick="changeImg()" src="getCode">
 
@@ -127,9 +130,11 @@
 
 
     </div>
-    <div style="width: 100%;height: 900px"><canvas id="cas" width="" height="" style="z-index: -1"></canvas></div>
+    <div style="width: 100%;height: 900px">
+        <canvas height="" id="cas" style="z-index: -1" width=""></canvas>
+    </div>
 </div>
-
+<!--验证码实现-->
 <script th:inline="none" type="text/javascript">
 
     //点击更换验证码
@@ -188,15 +193,15 @@
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success: function (src) {
+                sessionStorage.setItem("bool",src.bool);
                 if (src.bool) {
                     document.cookie = src.token;
                     Save(src.token);
-                    window.location = "/sys/index.action";
+                    window.location = "/";
                 } else {
                     alert(src.msg)
                 }
             }
-
         })
     }
 
@@ -280,21 +285,21 @@
         canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     }
 
-    var RAF = (function() {
-        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
+    var RAF = (function () {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };
     })();
 
     // 鼠标活动时，获取鼠标坐标
     var warea = {x: null, y: null, max: 20000};
-    window.onmousemove = function(e) {
+    window.onmousemove = function (e) {
         e = e || window.event;
 
         warea.x = e.clientX;
         warea.y = e.clientY;
     };
-    window.onmouseout = function(e) {
+    window.onmouseout = function (e) {
         warea.x = null;
         warea.y = null;
     };
@@ -318,7 +323,7 @@
     }
 
     // 延迟100秒开始执行动画，如果立即执行有时位置计算会出错
-    setTimeout(function() {
+    setTimeout(function () {
         animate();
     }, 100);
 
@@ -327,7 +332,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // 将鼠标坐标添加进去，产生一个用于比对距离的点数组
         var ndots = [warea].concat(dots);
-        dots.forEach(function(dot) {
+        dots.forEach(function (dot) {
             // 粒子位移
             dot.x += dot.xa;
             dot.y += dot.ya;
@@ -374,17 +379,18 @@
 
 <!--检测Cookie是否打开-->
 <script>
-    function CookieEnable()   {
-        var result=false;
-        if(navigator.cookiesEnabled)  return true;
+    function CookieEnable() {
+        var result = false;
+        if (navigator.cookiesEnabled) return true;
         document.cookie = "testcookie=yes;";
         var cookieSet = document.cookie;
-        if (cookieSet.indexOf("testcookie=yes") > -1)  result=true;
+        if (cookieSet.indexOf("testcookie=yes") > -1) result = true;
         document.cookie = "";
         return result;
     }
-    if(!CookieEnable()){
-       alert("检测您的浏览器Cookie已经关闭，您将可能无法正常使用该网站，请到设置中打开Cookie")
+
+    if (!CookieEnable()) {
+        alert("检测您的浏览器Cookie已经关闭，您将可能无法正常使用该网站，请到设置中打开Cookie")
     }
 </script>
 

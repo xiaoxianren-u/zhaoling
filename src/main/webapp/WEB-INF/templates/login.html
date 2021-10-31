@@ -134,7 +134,7 @@
         <canvas height="" id="cas" style="z-index: -1" width=""></canvas>
     </div>
 </div>
-
+<!--验证码实现-->
 <script th:inline="none" type="text/javascript">
 
     //点击更换验证码
@@ -193,15 +193,15 @@
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success: function (src) {
+                sessionStorage.setItem("bool", src.bool);
                 if (src.bool) {
                     document.cookie = src.token;
                     Save(src.token);
-                    window.location = "/sys/index.action";
+                    window.location = "/";
                 } else {
                     alert(src.msg)
                 }
             }
-
         })
     }
 

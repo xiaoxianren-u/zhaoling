@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.ForLabelDao">
+
+<!--    获取没有被禁的帖子标签-->
+    <select id="forList" resultType="com.edu.pojo.Label">
+        select lab_id, lab_name, lab_status from zhaoling.label_db
+        where lab_status = 0
+    </select>
+
+
+
+</mapper>
