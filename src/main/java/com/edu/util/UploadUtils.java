@@ -15,7 +15,7 @@ import java.util.UUID;
 @Component
 public class UploadUtils {
 
-    private static final String SERVER_PATH = "/static/upload/image/";
+//    private static  String SERVER_PATH = "/static/upload/";
     //访问图片的地址
     /**
      * 上传保存的地址
@@ -23,17 +23,20 @@ public class UploadUtils {
 
     public static String BASE_PATH = null;
 
-    public static String upload(MultipartFile file, HttpServletRequest request) {
-
+    public static String upload(MultipartFile file, HttpServletRequest request, String url) {
+        String SERVER_PATH = "/static/upload/";
 
         request.getSession().setAttribute("file", file);
         MultipartFile file1 = (MultipartFile) request.getSession().getAttribute("file");
 
         BASE_PATH = request.getSession().getServletContext().getRealPath("/");
 
+        SERVER_PATH = SERVER_PATH + url + "/";
+
+
         String[] output = BASE_PATH.split("target");
-        String BASE_PATH_TO = BASE_PATH + "\\static\\upload\\image\\";
-        BASE_PATH = output[0] + "src\\main\\webapp\\static\\upload\\image\\";
+        String BASE_PATH_TO = BASE_PATH + "\\static\\upload\\" + url + "\\";
+        BASE_PATH = output[0] + "src\\main\\webapp\\static\\upload\\" + url + "\\";
         //获取上传文件的名称
         String fileName = file.getOriginalFilename();
 //       用于判断是否只由数字跟字母组成

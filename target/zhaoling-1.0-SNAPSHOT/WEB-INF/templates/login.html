@@ -193,7 +193,7 @@
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success: function (src) {
-                sessionStorage.setItem("bool",src.bool);
+                sessionStorage.setItem("bool", src.bool);
                 if (src.bool) {
                     document.cookie = src.token;
                     Save(src.token);

@@ -103,7 +103,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: '/user/pass',
+                        url: '/for/user/pass',
                         async: true,
                         data: JSON.stringify(
                             {
@@ -114,10 +114,12 @@
                         dataType: 'json',
                         contentType: 'application/json;charset=UTF-8',
                         success: function (src) {
+
+                            console.log(src);
                             if (src.bool === true) {
-                                layer.msg(src.msg, {icon: 1});
+                                layer.msg(src.msg, {icon: 1, offset: ['15%', '40%']});
                             } else {
-                                layer.msg(src.msg, {icon: 2});
+                                layer.msg(src.msg, {icon: 2, offset: ['15%', '40%']});
                             }
                         }
                     })

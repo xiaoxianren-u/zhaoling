@@ -176,36 +176,26 @@ CREATE TABLE `label_db`
 # DROP TABLE IF EXISTS `post_db`;
 CREATE TABLE post_db
 (
-    post_id           INT(11)      NOT NULL AUTO_INCREMENT COMMENT '帖子id （主键）',
-    user_id           INT(11)      NOT NULL DEFAULT -1 COMMENT '用户id  （外键）',
-    post_title        VARCHAR(100) NOT NULL DEFAULT '' COMMENT '帖子标题',
-    post_status       INT(1)       NOT NULL DEFAULT -1 COMMENT '帖子状态(0审核中,1通过，2，已领取，3为审核同)',
-    post_time         DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '帖子发表时间',
-    post_substance    VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '帖子内容',
-    lab_name          VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '帖子标签  （外键）',
-    post_found_link   VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '帖子拾到人联系方式(手机、qq、微信、邮箱)任何一种',
-    post_found_call   VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '帖子拾到人称呼',
-    post_found_time   DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '拾到物品时间',
-    post_found_place  VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '拾到物品地点',
-    post_receive_link VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '领取人联系方式(手机、qq、微信、邮箱)任何一种',
-    post_receive_name VARCHAR(50)  NOT NULL DEFAULT '' COMMENT '领取人名字',
-    post_receive_time DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '领取时间',
+    post_id           INT(11)       NOT NULL AUTO_INCREMENT COMMENT '帖子id （主键）',
+    user_name         varchar(50)   NOT NULL DEFAULT -1 COMMENT '用户id  （外键）',
+    post_title        VARCHAR(300)  NOT NULL DEFAULT '' COMMENT '帖子标题',
+    post_status       INT(1)        NOT NULL DEFAULT 0 COMMENT '帖子状态(-1驳回， 0审核中,1通过，2，待领取，3为已领取)',
+    post_time         DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '帖子发表时间',
+    post_substance    VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '帖子内容',
+    lab_name          VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '帖子标签  （外键）',
+    post_found_link   VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '帖子拾到人联系方式(手机、qq、微信、邮箱)任何一种',
+    post_found_call   VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '帖子拾到人称呼',
+    post_image        VARCHAR(200)  NOT NULL DEFAULT '' COMMENT '物品图片',
+    post_found_time   DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '拾到物品时间',
+    post_found_place  VARCHAR(400)  NOT NULL DEFAULT '' COMMENT '拾到物品地点',
+    post_receive_link VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '领取人联系方式(手机、qq、微信、邮箱)任何一种',
+    post_receive_name VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '领取人名字',
+    post_receive_time DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '领取时间',
     PRIMARY KEY (post_id),
-    constraint fk_user_post foreign key (user_id) references user_db (user_id),
+    constraint fk_user_post foreign key (user_name) references user_db (user_name),
     constraint fk_label foreign key (lab_name) references label_db (lab_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '帖子表';
-
-# DROP TABLE IF EXISTS `picture_db`;
-CREATE TABLE picture_db
-(
-    pic_id    INT(11)      NOT NULL AUTO_INCREMENT COMMENT '图片id',
-    pic_image VARCHAR(100) NOT NULL DEFAULT '' COMMENT '图片链接',
-    post_id   INT(11)      NOT NULL DEFAULT -1 COMMENT '图片对应的帖子号',
-    PRIMARY KEY (pic_id),
-    constraint fk_prict_post foreign key (post_id) references post_db (post_id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT 'picture';
 
 # 日志表
 

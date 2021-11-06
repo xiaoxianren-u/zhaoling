@@ -29,13 +29,13 @@ public class Post {
     /**
      * 用户id  （外键）
      */
-    private Integer user_id;
+    private String user_name;
     /**
      * 帖子标题
      */
     private String post_title;
     /**
-     * 帖子状态(0审核中,1通过，2，已领取，3为审核同)
+     * 帖子状态(-1驳回， 0审核中,1通过，2，待领取，3为已领取)
      */
     private Integer post_status;
 
@@ -57,6 +57,12 @@ public class Post {
      * 帖子拾到人联系方式(手机、qq、微信、邮箱)任何一种
      */
     private String post_found_link;
+
+    /**
+     * 物品图片
+     */
+    private String post_image;
+
     /**
      * 帖子拾到人称呼
      */
@@ -67,9 +73,11 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_found_time;
     /**
-     * 拾到物品地点
+     * 拾到丢失物品地点
      */
     private String post_found_place;
+
+
     /**
      * 领取人联系方式(手机、qq、微信、邮箱)任何一种
      */

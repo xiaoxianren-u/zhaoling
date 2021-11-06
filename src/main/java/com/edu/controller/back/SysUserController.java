@@ -119,7 +119,7 @@ public class SysUserController extends AjaxUtils {
     @ResponseBody
     @UserLoginToken(state = 1)
     public AjaxUtils updateImager(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String imagePath = UploadUtils.upload(file, request);
+        String imagePath = UploadUtils.upload(file, request, "image");
         System.out.println("image = " + imagePath);
         if (imagePath != null) {
             return new AjaxUtils(true, "上传成功", imagePath);

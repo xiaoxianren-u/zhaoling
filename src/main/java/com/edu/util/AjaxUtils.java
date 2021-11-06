@@ -85,6 +85,22 @@ public class AjaxUtils extends HashMap<String, Object> {
         super.put(DATA_TAG, data);
     }
 
+
+    public AjaxUtils(Integer code, Boolean bool, String msg, Object data) {
+        super.put(CODE_TAG, code);
+        super.put(BOOL_TAG, bool);
+        super.put(MSG_TAG, msg);
+        super.put(DATA_TAG, data);
+    }
+
+    public AjaxUtils(Integer code, Boolean bool, String msg) {
+        super.put(CODE_TAG, code);
+        super.put(BOOL_TAG, bool);
+        super.put(MSG_TAG, msg);
+
+    }
+
+
     public AjaxUtils(Integer count, List<?> data) {
         super.put(CODE_TAG, 0);
         super.put(MSG_TAG, "");
@@ -111,6 +127,7 @@ public class AjaxUtils extends HashMap<String, Object> {
         super.put(COUNT_TAG, count);
         super.put(DATA_TAG, data);
     }
+
 
     /**
      * 方便链式调用
