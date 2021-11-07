@@ -55,6 +55,24 @@ public class AjaxUtils extends HashMap<String, Object> {
         super.put(MSG_TAG, msg);
     }
 
+    public AjaxUtils(@NotNull Type type, Boolean bool, String msg) {
+        super.put(CODE_TAG, type.value);
+        super.put(BOOL_TAG, bool);
+        super.put(MSG_TAG, msg);
+    }
+
+    public AjaxUtils(@NotNull Type type, Boolean bool) {
+        super.put(CODE_TAG, type.value);
+        super.put(BOOL_TAG, bool);
+
+    }
+
+    public AjaxUtils(@NotNull Type type, Boolean bool, Object data) {
+        super.put(CODE_TAG, type.value);
+        super.put(BOOL_TAG, bool);
+        super.put(DATA_TAG, data);
+    }
+
     public AjaxUtils(Object data) {
         super.put(DATA_TAG, data);
     }

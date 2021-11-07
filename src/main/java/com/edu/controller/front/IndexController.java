@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
  */
 
 @Controller
-
 public class IndexController {
 
 
@@ -36,25 +35,50 @@ public class IndexController {
     @PassToken
     public String indexAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
+
         return "/index.html";
     }
 
-    //如：修改下面的内容
-    //    这里的url不能跟上面的一样
+    /**
+     * 寻物
+     *
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/lost")
+    public String lostAction(@NotNull ModelMap modelMap) {
+        modelMap.put("lab_list", forLabelService.forList());
+        return "/front/for_lost.html";
+    }
+
+    /**
+     * 招领
+     *
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/find")
+    public String findAction(@NotNull ModelMap modelMap) {
+        modelMap.put("lab_list", forLabelService.forList());
+        return "/front/for_find.html";
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @PassToken
     public String loginAction() {
         return "/login.html";
     }
-//两个登录页面？？有一个是我自己做的，我觉得都差不多，记得调整
-    //先上传 Can't commit changes due to unresolved conflicts. 什么意思啊 等下
+
 
     @RequestMapping("/login1")
     public String login1Action() {
         return "/login1.html";
     }
 
+    /**
+     * @return
+     */
     @PassToken
     @RequestMapping("/zhuce")
     public String zhuceAction() {

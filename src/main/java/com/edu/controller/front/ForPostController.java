@@ -31,7 +31,6 @@ public class ForPostController extends AjaxUtils {
     public AjaxUtils insetImage(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 
         String imagePath = UploadUtils.upload(file, request, "forImage");
-        System.out.println("image = " + imagePath);
         if (imagePath != null) {
             return new AjaxUtils(1, true, "上传成功", imagePath);
         } else {
@@ -48,7 +47,7 @@ public class ForPostController extends AjaxUtils {
      */
     @RequestMapping(value = "/textPost", method = RequestMethod.POST)
     public AjaxUtils insertPost(@RequestBody Post post, HttpServletRequest request) {
-
+        System.out.println("post = " + post);
         return forPostService.insertPost(post, request);
     }
 
@@ -62,5 +61,45 @@ public class ForPostController extends AjaxUtils {
         return forPostService.selectList(status, request);
     }
 
+    /**
+     * 首页帖子数量
+     *
+     * @param status
+     * @return
+     */
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public AjaxUtils selectCountIndex(@RequestParam("status") Integer status,
+                                      @RequestParam("lab_name") String labName,
+                                      @RequestParam("text") String text,
+                                      @RequestParam("time") Integer time,
+                                      @RequestParam("post_status1") Integer postStatus1) {
+
+        System.out.println("labName = " + labName);
+        System.out.println("time = " + time);
+        System.out.println("text = " + text);
+        return forPostService.selectCountIndex(status, labName, text, time, postStatus1);
+    }
+
+
+    /**
+     * 首页内容列表
+     *
+     * @param status
+     * @return
+     */
+    @RequestMapping(value = "/plist", method = RequestMethod.GET)
+    public AjaxUtils selectListIndex(@RequestParam("status") Integer status,
+                                     @RequestParam("page") Integer page,
+                                     @RequestParam("limit") Integer limit,
+                                     @RequestParam("lab_name") String labName,
+                                     @RequestParam("text") String text,
+                                     @RequestParam("time") Integer time,
+                                     @RequestParam("post_status1") Integer postStatus1) {
+        System.out.println("labName = " + labName);
+        System.out.println("time = " + time);
+        System.out.println("text = " + text);
+        page = page > 1 ? limit * (page - 1) : 0;
+        return forPostService.selectListIndex(status, page, limit, labName, text, time, postStatus1);
+    }
 
 }

@@ -31,4 +31,22 @@ public interface ForPostService {
      * @return
      */
     AjaxUtils selectList(Integer status, HttpServletRequest request);
+
+    /**
+     * 首页帖子数量
+     *
+     * @param status
+     * @return
+     */
+    AjaxUtils selectCountIndex(Integer status, String labName, String text, Integer time, Integer postStatus1);
+
+    /**
+     * 首页内容列表
+     *
+     * @param status
+     * @return
+     */
+    AjaxUtils selectListIndex(Integer status, int page, int limit, String labName, String text, Integer time, Integer postStatus1);
+
+
 }

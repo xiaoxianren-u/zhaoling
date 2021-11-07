@@ -40,6 +40,10 @@ public class Post {
     private Integer post_status;
 
     /**
+     * 0捡到，1丢失
+     */
+    private Integer post_status1;
+    /**
      * 帖子发表时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

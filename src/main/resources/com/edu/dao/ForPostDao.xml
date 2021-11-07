@@ -1,68 +1,187 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.edu.dao.ForPostDao">
+    <insert id="insertPost">
+        insert into zhaoling.post_db(
+        <trim suffixOverrides=",">
+            <if test="post_id != null">
+                post_id,
+            </if>
+            <if test="user_name != null and user_name != ''">
+                user_name,
+            </if>
+            <if test="post_title != null and post_title != ''">
+                post_title,
+            </if>
+            <if test="post_status != null">
+                post_status,
+            </if>
+            <if test="post_status1 != null">
+                post_status1,
+            </if>
+            <if test="post_time != null">
+                post_time,
+            </if>
+            <if test="post_substance != null and post_substance != ''">
+                post_substance,
+            </if>
+            <if test="lab_name != null and lab_name != ''">
+                lab_name,
+            </if>
+            <if test="post_found_link != null and post_found_link != ''">
+                post_found_link,
+            </if>
+            <if test="post_found_call != null and post_found_call != ''">
+                post_found_call,
+            </if>
+            <if test="post_image != null and post_image != ''">
+                post_image,
+            </if>
+            <if test="post_found_time != null">
+                post_found_time,
+            </if>
+            <if test="post_found_place != null and post_found_place != ''">
+                post_found_place,
+            </if>
+            <if test="post_receive_link != null and post_receive_link != ''">
+                post_receive_link,
+            </if>
+            <if test="post_receive_name != null and post_receive_name != ''">
+                post_receive_name,
+            </if>
+            <if test="post_receive_time != null">
+                post_receive_time,
+            </if>
+        </trim>
+        )values (
+        <trim suffixOverrides=",">
+            <if test="post_id != null">
+                #{post_id},
+            </if>
+            <if test="user_name != null and user_name != ''">
+                #{user_name},
+            </if>
+            <if test="post_title != null and post_title != ''">
+                #{post_title},
+            </if>
+            <if test="post_status != null">
+                #{post_status},
+            </if>
+            <if test="post_status1 != null">
+                #{post_status1},
+            </if>
+            <if test="post_time != null">
+                #{post_time},
+            </if>
+            <if test="post_substance != null and post_substance != ''">
+                #{post_substance},
+            </if>
+            <if test="lab_name != null and lab_name != ''">
+                #{lab_name},
+            </if>
+            <if test="post_found_link != null and post_found_link != ''">
+                #{post_found_link},
+            </if>
+            <if test="post_found_call != null and post_found_call != ''">
+                #{post_found_call},
+            </if>
+            <if test="post_image != null and post_image != ''">
+                #{post_image},
+            </if>
+            <if test="post_found_time != null">
+                #{post_found_time},
+            </if>
+            <if test="post_found_place != null and post_found_place != ''">
+                #{post_found_place},
+            </if>
+            <if test="post_receive_link != null and post_receive_link != ''">
+                #{post_receive_link},
+            </if>
+            <if test="post_receive_name != null and post_receive_name != ''">
+                #{post_receive_name},
+            </if>
+            <if test="post_receive_time != null">
+                #{post_receive_time},
+            </if>
+        </trim>
 
 
+        )
+    </insert>
+    <!--个人帖子列表-->
+    <select id="selectList" resultType="com.edu.pojo.Post">
+        select *
+        from zhaoling.post_db
+        <where>
+            <if test="status != 4">
+                and post_status = #{status}
+            </if>
+            <if test="tokenUserName != null and tokenUserName != ''">
+                and user_name = #{tokenUserName}
+            </if>
+        </where>
+        order by post_id desc
+    </select>
 
+    <!--        帖子数量-->
+    <select id="selectCountIndex" resultType="int">
+        select COUNT(*)
+        from zhaoling.post_db
+        <where>
+            <if test="status != null">
+                and post_status = #{status}
+            </if>
+            <if test="postStatus1 != 2">
+                and post_status1 = #{postStatus1}
+            </if>
+            <if test="labName != null and labName != ''">
+                and lab_name = #{labName}
+            </if>
+            <if test="text != null and text != ''">
+                and (post_title like concat('%', #{text}, '%')
+                        or post_substance like concat('%', #{text}, '%')
+                        or post_found_place like concat('%', #{text}, '%')
+                        )
+            </if>
+            <if test="time != null and time != 366">
+<!--            小于等于-->
+                and datediff(sysdate(), post_found_time) <![CDATA[< ]]> #{time}
+            </if>
+            <if test="time != null and time == 366">
+                and datediff(sysdate(), post_found_time) <![CDATA[>= ]]> 365
+            </if>
+        </where>
+    </select>
 
+    <!--首页内容列表-->
+    <select id="selectListIndex" resultType="com.edu.pojo.Post">
+        select *
+        from zhaoling.post_db
 
-        <insert id="insertPost">
-            insert into zhaoling.post_db(
-                <trim suffixOverrides=",">
-                    <if test="post_id != null">post_id,</if>
-                    <if test="user_name != null and user_name != ''">user_name, </if>
-                    <if test="post_title != null and post_title != ''">post_title,</if>
-                    <if test="post_status != null">post_status,</if>
-                    <if test="post_time != null">post_time,</if>
-                    <if test="post_substance != null and post_substance != ''">post_substance,</if>
-                    <if test="lab_name != null and lab_name != ''">lab_name,</if>
-                    <if test="post_found_link != null and post_found_link != ''">post_found_link,</if>
-                    <if test="post_found_call != null and post_found_call != ''">post_found_call,</if>
-                    <if test="post_image != null and post_image != ''">post_image,</if>
-                    <if test="post_found_time != null">post_found_time,</if>
-                    <if test="post_found_place != null and post_found_place != ''">post_found_place,</if>
-                    <if test="post_receive_link != null and post_receive_link != ''">post_receive_link,</if>
-                    <if test="post_receive_name != null and post_receive_name != ''">post_receive_name,</if>
-                    <if test="post_receive_time != null ">post_receive_time,</if>
-                </trim>
-            )values (
-                <trim suffixOverrides=",">
-                    <if test="post_id != null">#{post_id},</if>
-                    <if test="user_name != null and user_name != ''">#{user_name}, </if>
-                    <if test="post_title != null and post_title != ''">#{post_title},</if>
-                    <if test="post_status != null">#{post_status},</if>
-                    <if test="post_time != null">#{post_time},</if>
-                    <if test="post_substance != null and post_substance != ''">#{post_substance},</if>
-                    <if test="lab_name != null and lab_name != ''">#{lab_name},</if>
-                    <if test="post_found_link != null and post_found_link != ''">#{post_found_link},</if>
-                    <if test="post_found_call != null and post_found_call != ''">#{post_found_call},</if>
-                    <if test="post_image != null and post_image != ''">#{post_image},</if>
-                    <if test="post_found_time != null">#{post_found_time},</if>
-                    <if test="post_found_place != null and post_found_place != ''">#{post_found_place},</if>
-                    <if test="post_receive_link != null and post_receive_link != ''">#{post_receive_link},</if>
-                    <if test="post_receive_name != null and post_receive_name != ''">#{post_receive_name},</if>
-                    <if test="post_receive_time != null ">#{post_receive_time},</if>
-                </trim>
-
-
-
-            )
-        </insert>
-
-        <select id="selectList" resultType="com.edu.pojo.Post">
-            select * from zhaoling.post_db
-            <where>
-                <if test="status !=4 ">and post_status = #{status}</if>
-                <if test="tokenUserName != null and tokenUserName != ''">and user_name = #{tokenUserName}</if>
-            </where>
-            order by post_id desc
-        </select>
-
-
-
-
-
-
-
-
-
+        <where>
+            <if test="status != null">
+                and post_status = #{status}
+            </if>
+            <if test="postStatus1 != 2">
+                and post_status1 = #{postStatus1}
+            </if>
+            <if test="labName != null and labName != ''">
+                and lab_name = #{labName}
+            </if>
+            <if test="text != null and text != ''">
+                and (post_title like concat('%', #{text}, '%')
+                        or post_substance like concat('%', #{text}, '%')
+                        or post_found_place like concat('%', #{text}, '%')
+                        )
+            </if>
+            <if test="time != null and time != 366">
+<!--            小于等于-->
+                and datediff(sysdate(), post_found_time) <![CDATA[< ]]> #{time}
+            </if>
+            <if test="time != null and time == 366">
+                and datediff(sysdate(), post_found_time) <![CDATA[>= ]]> 365
+            </if>
+        </where>
+        order by post_id desc
+        Limit #{page},#{limit}
+    </select>
 </mapper>

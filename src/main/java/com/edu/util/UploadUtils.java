@@ -49,8 +49,7 @@ public class UploadUtils {
         // 创建一个文件实例对象
         File image = new File(BASE_PATH, newFileName);
         File imageFile = new File(BASE_PATH_TO, newFileName);
-        System.out.println("image = " + image);
-        System.out.println("imageFile = " + imageFile);
+
         //对文件进行上传操作 file 只能使用一次用完后就关闭了
         try {
             file.transferTo(image);

@@ -7,17 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        #ha{
+            border: 1px solid #dfdfdf;
+        }
+        #ha:hover {
+            border: 1px solid #F40;;
+        }
         #inp:hover {
             background-color: #1E9FFF;
-            /*color: white;*/
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
         }
-
         #inp:hover span {
             color: white;
         }
-
         #log_div:hover {
             border: 1px #1E9FFF solid;
             color: #1E9FFF;
@@ -32,13 +35,13 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
 </head>
-<body style="background-color:white;">
+<body  style="background-color: white">
 <div class="layui-row" style="margin-top: 0">
     <div class="layui-col-xs1">
         <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
     </div>
     <div class="layui-col-xs10">
-        <div class="grid-demo" style="background-color: white">
+        <div class="grid-demo"  style="background-color: white">
             <!--            检索栏-->
             <div class="layui-row">
                 <div class="layui-col-xs3">
@@ -50,24 +53,35 @@
                 <div class="layui-col-xs7">
                     <div class="grid-demo">
                         <div class="layui-form-item">
-                            <div class="layui-input-block" style="margin-top: 15px">
-                                <div id="inp" style="z-index: 99;position:absolute; height: 38px; width: 37px;top: 0;left: 395px;border-top-right-radius: 20px;
+                            <div class="layui-input-block" style="margin-top: 15px;margin-left: 70px">
+                                <div id="inp" style="z-index: 99;position:absolute; height: 38px; width: 37px;top: 0;left: 515px;border-top-right-radius: 20px;
                                 border-bottom-right-radius: 20px;color: #1E9FFF;">
                                         <span class="iconfont icon-sousuo" style="width: 100%;height: 100%; font-size: 25px;font-weight: bolder;
                                         display: inline-block;vertical-align: middle;margin-top: 6px;margin-left: 3px; "></span>
                                 </div>
                                 <label>
-                                    <select id="test" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 90px;
+                                    <select id="test" title="类型" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 90px;
                                     border-top-left-radius: 20px; border-bottom-left-radius: 20px;text-align: center;border: 1px solid #dfdfdf;">
                                         <option value="">全部内容</option>
                                         <option th:each="s : ${lab_list}" th:text="${s.lab_name}"
                                                 th:value="${s.lab_name}">
                                         </option>
                                     </select>
-                                    <input id="text" placeholder="请输入标题" style="height: 36px;  background-color: #f3f6f8;
-                                   border: 1px solid #dfdfdf;width: 430px;border-radius: 20px;text-indent: 6.6em;z-index: -1;"
+                                    <select id="time" title="时间" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 80px;left: 90px;
+                                    text-align: center;border: 1px solid #dfdfdf;">
+                                        <option value="">全部</option>
+                                        <option value="1">今天</option>
+                                        <option value="7">7天内</option>
+                                        <option value="15">半月内</option>
+                                        <option value="30">1月内</option>
+                                        <option value="365">1年内</option>
+                                        <option value="366">1年前</option>
+                                    </select>
+                                    <input id="text" placeholder="请输入物品名、地名、姓名，等关键字" style="height: 36px;  background-color: #f3f6f8;
+                                   border: 1px solid #dfdfdf;width: 550px;border-radius: 20px;text-indent: 13em;z-index: -1;"
                                            type="text">
                                 </label>
+
                             </div>
                         </div>
                     </div>
@@ -87,26 +101,20 @@
                 </div>
             </div>
             <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px">
-                <li class="layui-nav-item "><a href="/for/index.html" style="font-size: 18px">首页</a></li>
-                <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">浏览寻物贴</a></li>
-                <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">查看招领贴</a></li>
+                <li class="layui-nav-item "><a href="/" style="font-size: 18px;color: #F40;">首页</a></li>
+                <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
+                <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
                 <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">成功案列</a></li>
                 <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">感谢信</a></li>
             </ul>
             <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
-                <div class="layui-col-xs10">
-                    <div class="grid-demo grid-demo-bg1">
-                        <div style="height: 890px; border: 1px red solid;">
-                            <iframe frameborder="no" id="iframe" src="/for/index.html"
-                                    style="width: 100%; height:100%"></iframe>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-xs2">
-                    <div class="grid-demo">
-                        <div style="height: 890px;border: 1px red solid;">
-                            <iframe allowtransparency="true" frameborder="0" height="100%" scrolling="no"
-                                    src="https://tianqiapi.com/api.php?style=tw&skin=pitaya" width="99%"></iframe>
+                <div class="layui-col-xs12">
+                    <div class="grid-demo grid-demo-bg1" style="text-align: center;">
+
+                        <div style="margin: auto">
+                            <ul style="text-align: center;" class="_li">
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -114,19 +122,34 @@
         </div>
     </div>
     <div class="layui-col-xs1">
-        <div class="grid-demo" style="color: white;">.</iframe></div>
+        <div class="grid-demo" style="color: white;">.</div>
     </div>
 </div>
-<div id="tile"></div>
+<div id="tile" style="width: 100%;height: 70px;">
+    <div style="text-align: center;margin-top: 30px;" id="demo7"></div>
+</div>
 
 <div style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px">
     ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
 </div>
 </body>
+
+<script>
+    function loading(msg) {
+        layer.msg(msg, {
+            icon: 16,
+            shade: [0.3, '#ececee'],//遮罩的颜色与透明度
+            time: 300  //取消自动关闭
+        })
+    }
+</script>
+
 <script>
     layui.use('flow', function () {
         var flow = layui.flow,
-            util = layui.util;
+            laypage = layui.laypage;
+            util = layui.util,
+            $ = layui.jquery;
 
         util.fixbar({
             bar1: true
@@ -136,21 +159,163 @@
             , click: function (type) {
                 if (type === 'bar1') {
                     layer.msg('icon 是可以随便换的');
-                    layui.$("#tile").html('<p>hsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd</p>>');
                 } else if (type === 'bar2') {
                     layer.msg('两个 bar 都可以设定是否开启')
                 }
             }
         });
+
+
+        let count;
+        let text ="";
+        let test ="";
+        let time ='';
+        $("#inp").click(function () {
+            text = $("#text").val();
+            test = $('#test option:selected').val();
+            time = $('#time option:selected').val();
+            console.log({text: text, test: test});
+            coUnt();
+
+            setTimeout(function () {
+                send();
+            },400);
+
+        })
+
+        function coUnt(){
+            console.log({text: text, test: test});
+
+            $.ajax({
+                type: "get",
+                url: '/post/count?status='+2+"&lab_name="+test+"&text="+text+"&time="+time+"&post_status1="+2,
+                async: true,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (res) {
+
+                    count = res.data;
+                    console.log(count);
+                    loading("加载中");    //开始加载
+                }
+            })
+        }
+        setTimeout(coUnt,0)  //延迟0.5秒执行
+
+
+
+
+        function send() {
+
+            console.log({text: text, test: test});
+            laypage.render({
+                elem: 'demo7'
+                , count: count
+                , limits: [25, 50]
+                , limit: 25
+                , layout: ['prev', 'page', 'next', 'skip', 'count', 'limit']
+                , first: '首页' //不显示首页
+                , last: '尾页' //不显示尾页
+                , groups: 3 //显示 3个连续页码
+                , jump: function (obj) {
+                    console.log(obj);
+                    let page = obj.curr;
+                    let limit = obj.limit;
+                    console.log({page: page, limit: limit});
+                    $.ajax({
+                        type: 'get',
+                        url: '/post/plist?status='+2+"&page="+page+"&limit="+limit+"&lab_name="+test+"&text="+text+"&time="+time+"&post_status1="+2,
+                        dataType: 'json',
+                        async: true,
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function (src) {
+                            // console.log(src.data);
+                            let list = src.data;
+                            let html = '';
+                            let st='';
+                            $.each(list, function (index, item) {
+                                if (item.post_status1 === 0){
+                                html += '   <li v-for="site in sites" class="layui-col-space15">\n' +
+                                    '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
+                                    '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
+                                    '           <div class="cmdlist-container">\n' +
+                                    '               <a href="javascript:">\n' +
+                                    '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
+                                    '                   <hr/>\n' +
+                                    '                   <a href="javascript:">\n' +
+                                    '                       <div class="cmdlist-text">\n' +
+                                    '                           <div class="price">\n' +
+                                    '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
+                                    '                                   style="float: right;color: #888;font-size: 9pt">待领取</b>\n' +
+                                    '                           </div>\n' +
+                                    '                       </div>\n' +
+                                    '                   </a>\n' +
+                                    '               </a>\n' +
+                                    '           </div>\n' +
+                                    '           <hr/>\n' +
+                                    '           <div style="height: 30px;width: 100%;">\n' +
+                                    '               <p class="info"\n' +
+                                    '                  style="word-break:break-all;text-overflow:ellipsis;  white-space:nowrap;   overflow:hidden;">\n' +
+                                    '                   ' + item.post_substance + '</p>\n' +
+                                    '           </div>\n' +
+                                    '           <div style="float: left"><span >捡到：</span>\n' + item.post_found_time+
+                                    '           </div>\n' +
+                                    '       </div>\n' +
+                                    '    </li>\n'
+
+                                // console.log(item.lab_name);
+
+
+
+
+                                }else {
+                                    html += '   <li v-for="site in sites" class="layui-col-space15">\n' +
+                                        '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
+                                        '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
+                                        '           <div class="cmdlist-container">\n' +
+                                        '               <a href="javascript:">\n' +
+                                        '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
+                                        '                   <hr/>\n' +
+                                        '                   <a href="javascript:">\n' +
+                                        '                       <div class="cmdlist-text">\n' +
+                                        '                           <div class="price">\n' +
+                                        '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
+                                        '                                   style="float: right;color: #888;font-size: 9pt">待领取</b>\n' +
+                                        '                           </div>\n' +
+                                        '                       </div>\n' +
+                                        '                   </a>\n' +
+                                        '               </a>\n' +
+                                        '           </div>\n' +
+                                        '           <hr/>\n' +
+                                        '           <div style="height: 30px;width: 100%;">\n' +
+                                        '               <p class="info"\n' +
+                                        '                  style="word-break:break-all;text-overflow:ellipsis;  white-space:nowrap;   overflow:hidden;">\n' +
+                                        '                   ' + item.post_substance + '</p>\n' +
+                                        '           </div>\n' +
+                                        '           <div style="float: left"><span >丢失：</span>\n' + item.post_found_time+
+                                        '           </div>\n' +
+                                        '       </div>\n' +
+                                        '    </li>\n'
+
+                                }
+                            })
+                            $('._li').html(html);
+
+                        }
+
+
+                    })
+
+                }
+            });
+        }
+        setTimeout(send,500)  //延迟0.5秒执行
     })
 
 
 </script>
 
-
 <script>
-
-
     function login_Image() {
 
         console.log("登录");
@@ -169,8 +334,8 @@
         $.post("/for/user/name", function (src) {
             $("#image").attr('src', src.data.user_image);
 
-            sessionStorage.setItem("img",src.data.user_image);
-            sessionStorage.setItem("name",src.data.user_name);
+            sessionStorage.setItem("img", src.data.user_image);
+            sessionStorage.setItem("name", src.data.user_name);
         });
         $("#img").html('<ul class="layui-nav" lay-bar="disabled" style="background-color: white;padding: 0;">' +
             '<li class="layui-nav-item" lay-unselect="">\n' +
@@ -189,43 +354,64 @@
             '</div>');
     }
 
-    $("#inp").click(function () {
-        let text = $("#text").val();
-        let test = $('#test option:selected').val();
-        console.log({text: text, test: test});
-    })
+
 
 
 </script>
 
-
-<!--保持刷新还在原来的页面-->
 <script>
-    layui.use(['element', 'layer', 'util'], function () {
-        var $ = layui.$;
-        let href_url = sessionStorage.getItem("url2")
-        if (href_url === null) {
-            href_url = "/for/index.html";
-        }
 
-        if (href_url !== null || href_url === "" || href_url !== undefined && $(this).attr("href") !== "/personal") {
-            $("#iframe").attr('src', href_url);
-        }
-        $(document).ready(function () {
-            $("li a").click(function (e) {
-                e.preventDefault();
+    // $.ajax({
+    //     type:'get',
+    //     url:'/post/plist?status='+2,
+    //     dataType:'json',
+    //     async:true,
+    //     contentType: 'application/json;charset=UTF-8',
+    //     success: function (src) {
+    //         console.log(src.data);
+    //         let list = src.data;
+    //         let html ='';
+    //         $.each(list,function (index,item) {
+    //
+    //             html+='   <li v-for="site in sites" class="layui-col-space15">\n' +
+    //                 '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
+    //                 '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
+    //                 '           <div class="cmdlist-container">\n' +
+    //                 '               <a href="javascript:">\n' +
+    //                 '                   <img src='+item.post_image+' height="220px" width="257px"/>\n' +
+    //                 '                   <hr/>\n' +
+    //                 '                   <a href="javascript:">\n' +
+    //                 '                       <div class="cmdlist-text">\n' +
+    //                 '                           <div class="price">\n' +
+    //                 '                               <b style="float: left;color: #F40">'+item.lab_name+'</b><b\n' +
+    //                 '                                   style="float: right;color: #888;font-size: 9pt">待领取</b>\n' +
+    //                 '                           </div>\n' +
+    //                 '                       </div>\n' +
+    //                 '                   </a>\n' +
+    //                 '               </a>\n' +
+    //                 '           </div>\n' +
+    //                 '           <hr/>\n' +
+    //                 '           <div style="height: 30px;width: 100%;">\n' +
+    //                 '               <p class="info"\n' +
+    //                 '                  style="word-break:break-all;text-overflow:ellipsis;  white-space:nowrap;   overflow:hidden;">\n' +
+    //                 '                   '+item.post_title+'</p>\n' +
+    //                 '           </div>\n' +
+    //                 '           <div style="float: left">\n' +item.post_found_time
+    //                 '           </div>\n' +
+    //                 '\n' +
+    //                 '       </div>\n' +
+    //                 '    /li>\n'
+    //
+    //             console.log(item.lab_name);
+    //
+    //         })
+    //         $('._li').html(html);
+    //     }
+    //
+    //
+    // })
 
-                if ($(this).attr("href") === "/personal"){
-                    window.open("/personal");
-                }
-                if ($(this).attr("href") !== "" && $(this).attr("href") !== undefined && $(this).attr("href") !== "/personal") {
-                    console.log($(this).attr("href"));
-                    sessionStorage.setItem("url2", $(this).attr("href"));
-                    $("#iframe").attr('src', $(this).attr("href"));
-                }
-            })
-        })
-    });
 </script>
+
 
 </html>

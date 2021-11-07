@@ -180,6 +180,7 @@ CREATE TABLE post_db
     user_name         varchar(50)   NOT NULL DEFAULT -1 COMMENT '用户id  （外键）',
     post_title        VARCHAR(300)  NOT NULL DEFAULT '' COMMENT '帖子标题',
     post_status       INT(1)        NOT NULL DEFAULT 0 COMMENT '帖子状态(-1驳回， 0审核中,1通过，2，待领取，3为已领取)',
+    post_status1      INT(11)       NOT NULL DEFAULT 0 COMMENT '0捡到，1丢失',
     post_time         DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '帖子发表时间',
     post_substance    VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '帖子内容',
     lab_name          VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '帖子标签  （外键）',

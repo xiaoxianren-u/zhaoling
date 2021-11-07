@@ -68,4 +68,37 @@ public class ForPostServiceImpl implements ForPostService {
         }
 
     }
+
+    /**
+     * 帖子数量
+     *
+     * @param status
+     * @return
+     */
+    @Override
+    public AjaxUtils selectCountIndex(Integer status, String labName, String text, Integer time, Integer postStatus1) {
+        return new AjaxUtils(forPostDao.selectCountIndex(status, labName, text, time, postStatus1));
+    }
+
+    /**
+     * 帖子列表
+     *
+     * @param status
+     * @return
+     */
+
+    @Override
+    public AjaxUtils selectListIndex(Integer status, int page, int limit, String labName, String text, Integer time, Integer postStatus1) {
+
+
+        try {
+            List<Post> list = forPostDao.selectListIndex(status, page, limit, labName, text, time, postStatus1);
+            return new AjaxUtils(AjaxUtils.Type.SUCCESS, true, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxUtils(AjaxUtils.Type.ERROR, false);
+        }
+
+
+    }
 }

@@ -92,7 +92,13 @@
                 </div>
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>物品状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="post_status1" title="捡到" type="radio" value="0">
+                <input name="post_status1" title="丢失" type="radio" value="1">
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red;">*</span> 描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述</label>
             <div class="layui-input-block">
@@ -484,6 +490,8 @@
                     let post_found_link = $('#post_found_link').val();
                     let post_substance = $('#post_substance').val();
                     let post_image = sessionStorage.getItem("post_im");
+                    let post_status1 = $('input[name="post_status1"]:checked').val();
+
                     console.log({
                         post_title: post_title,
                         post_found_place: post_found_place,
@@ -491,7 +499,8 @@
                         post_found_time: test5,
                         post_found_link: post_found_link,
                         post_substance: post_substance,
-                        post_image: post_image
+                        post_image: post_image,
+                        post_status1: post_status1
                     });
                     $.ajax({
                         type: "post",
@@ -505,7 +514,8 @@
                             post_found_time: test5,
                             post_found_link: post_found_link,
                             post_substance: post_substance,
-                            post_image: post_image
+                            post_image: post_image,
+                            post_status1: post_status1
                         }),
                         contentType: "application/json;charset=UTF-8",
                         success: function (src) {

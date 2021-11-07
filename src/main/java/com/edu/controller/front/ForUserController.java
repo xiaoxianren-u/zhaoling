@@ -56,7 +56,7 @@ public class ForUserController extends AjaxUtils {
 //    @UserLoginToken(state = 0)
     public AjaxUtils updateImager(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         String imagePath = UploadUtils.upload(file, request, "image");
-        System.out.println("image = " + imagePath);
+
         if (imagePath != null) {
             return new AjaxUtils(true, "上传成功", imagePath);
         } else {
