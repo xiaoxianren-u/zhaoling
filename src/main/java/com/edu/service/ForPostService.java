@@ -49,4 +49,11 @@ public interface ForPostService {
     AjaxUtils selectListIndex(Integer status, int page, int limit, String labName, String text, Integer time, Integer postStatus1);
 
 
+    /**
+     * 帖子内容
+     *
+     * @param t
+     * @return
+     */
+    Post selectPo(Integer t);
 }

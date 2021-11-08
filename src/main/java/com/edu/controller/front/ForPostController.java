@@ -47,7 +47,7 @@ public class ForPostController extends AjaxUtils {
      */
     @RequestMapping(value = "/textPost", method = RequestMethod.POST)
     public AjaxUtils insertPost(@RequestBody Post post, HttpServletRequest request) {
-        System.out.println("post = " + post);
+
         return forPostService.insertPost(post, request);
     }
 
@@ -74,9 +74,7 @@ public class ForPostController extends AjaxUtils {
                                       @RequestParam("time") Integer time,
                                       @RequestParam("post_status1") Integer postStatus1) {
 
-        System.out.println("labName = " + labName);
-        System.out.println("time = " + time);
-        System.out.println("text = " + text);
+
         return forPostService.selectCountIndex(status, labName, text, time, postStatus1);
     }
 
@@ -95,9 +93,6 @@ public class ForPostController extends AjaxUtils {
                                      @RequestParam("text") String text,
                                      @RequestParam("time") Integer time,
                                      @RequestParam("post_status1") Integer postStatus1) {
-        System.out.println("labName = " + labName);
-        System.out.println("time = " + time);
-        System.out.println("text = " + text);
         page = page > 1 ? limit * (page - 1) : 0;
         return forPostService.selectListIndex(status, page, limit, labName, text, time, postStatus1);
     }

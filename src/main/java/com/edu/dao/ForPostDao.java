@@ -52,4 +52,11 @@ public interface ForPostDao {
                                @Param("postStatus1") Integer postStatus1);
 
 
+    /**
+     * 帖子内容
+     *
+     * @param t
+     * @return
+     */
+    Post selectPo(@Param("t") Integer t);
 }

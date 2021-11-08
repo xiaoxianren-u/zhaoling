@@ -12,7 +12,7 @@
         }
 
         #ha:hover {
-            border: 1px solid #F40;;
+            border: 1px solid #F40;
         }
 
         #inp:hover {
@@ -32,6 +32,8 @@
     </style>
     <link rel="stylesheet" th:href="@{/static/css/layui.css}">
     <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
+    <script th:src="@{/static/js/jquery.cookie.js}"></script>
+
     <script th:src="@{/static/js/layui.js}"></script>
     <script th:src="@{static/js/md5.js}"></script>
     <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
@@ -100,7 +102,13 @@
                             vertical-align: middle;float: left;margin-top: 26px;margin-left: 192px;"></span>
                         </div>
                         <div id="img" style="float: right;z-index: -1;">
-                            <a href="javascript:" id="dl" onclick="login_Image()"></a>
+                            <a href="javascript:" id="dl" onclick="login_Image()">
+                                <div id="log_div"
+                                     style="width: 40px;height: 40px;border: 1px #dfdfdf solid;text-align: center;background-color:#dfdfdf;margin-top: 14px;margin-right: 3px;">
+                                    <span style="display: inline-block;vertical-align: middle;margin-top: 10px">登录</span>
+                                </div>
+                            </a>
+                            <!--                            <a href="javascript:" id="dl" onclick="login_Image()"></a>-->
                         </div>
                     </div>
                 </div>
@@ -152,8 +160,8 @@
 <script>
     layui.use('flow', function () {
         var flow = layui.flow,
-            laypage = layui.laypage;
-        util = layui.util,
+            laypage = layui.laypage,
+            util = layui.util,
             $ = layui.jquery;
 
         util.fixbar({
@@ -179,7 +187,7 @@
             text = $("#text").val();
             test = $('#test option:selected').val();
             time = $('#time option:selected').val();
-            console.log({text: text, test: test});
+            // console.log({text: text, test: test});
             coUnt();
 
             setTimeout(function () {
@@ -189,7 +197,7 @@
         })
 
         function coUnt() {
-            console.log({text: text, test: test});
+            // console.log({text: text, test: test});
 
             $.ajax({
                 type: "get",
@@ -200,7 +208,6 @@
                 success: function (res) {
 
                     count = res.data;
-                    console.log(count);
                     loading("加载中");    //开始加载
                 }
             })
@@ -211,7 +218,7 @@
 
         function send() {
 
-            console.log({text: text, test: test});
+            // console.log({text: text, test: test});
             laypage.render({
                 elem: 'demo7'
                 , count: count
@@ -222,10 +229,10 @@
                 , last: '尾页' //不显示尾页
                 , groups: 3 //显示 3个连续页码
                 , jump: function (obj) {
-                    console.log(obj);
+                    // console.log(obj);
                     let page = obj.curr;
                     let limit = obj.limit;
-                    console.log({page: page, limit: limit});
+                    // console.log({page: page, limit: limit});
                     $.ajax({
                         type: 'get',
                         url: '/post/plist?status=' + 2 + "&page=" + page + "&limit=" + limit + "&lab_name=" + test + "&text=" + text + "&time=" + time + "&post_status1=" + 2,
@@ -238,15 +245,16 @@
                             let html = '';
                             let st = '';
                             $.each(list, function (index, item) {
+                                // console.log(item);
                                 if (item.post_status1 === 0) {
                                     html += '   <li v-for="site in sites" class="layui-col-space15">\n' +
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
                                         '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
                                         '           <div class="cmdlist-container">\n' +
-                                        '               <a href="javascript:">\n' +
+                                        '               <a href="text?t=' + item.post_id + '"  target="_blank">\n' +
                                         '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
                                         '                   <hr/>\n' +
-                                        '                   <a href="javascript:">\n' +
+                                        '                   <a href="text?t=' + item.post_id + '" target="_blank">\n' +
                                         '                       <div class="cmdlist-text">\n' +
                                         '                           <div class="price">\n' +
                                         '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
@@ -275,10 +283,10 @@
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
                                         '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
                                         '           <div class="cmdlist-container">\n' +
-                                        '               <a href="javascript:">\n' +
+                                        '               <a href="text?t=' + item.post_id + '" target="_blank">\n' +
                                         '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
                                         '                   <hr/>\n' +
-                                        '                   <a href="javascript:">\n' +
+                                        '                   <a href="text?t=' + item.post_id + '" target="_blank">\n' +
                                         '                       <div class="cmdlist-text">\n' +
                                         '                           <div class="price">\n' +
                                         '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
@@ -325,18 +333,10 @@
         window.location = '/login';
     }
 
-    let bool;
-    let boot = sessionStorage.getItem("bool");
-    if (!boot) {
-        bool = false;
-    } else {
-        bool = boot;
-    }
-
-    if (bool) {
+    let bool = sessionStorage.getItem("bool");
+    if (bool === '1') {
         $.post("/for/user/name", function (src) {
             $("#image").attr('src', src.data.user_image);
-
             sessionStorage.setItem("img", src.data.user_image);
             sessionStorage.setItem("name", src.data.user_name);
         });
@@ -345,74 +345,27 @@
             '    <a href="javascript:;" style="padding-right: 0;"><img src="" id="image" height="40" width="40" style="border: 1px #dfdfdf solid;margin-top: 14px;margin-right: 3px;"></a>\n' +
             '    <dl class="layui-nav-child">\n' +
             '        <dd><a href="/personal" target="_blank">个人中心</a></dd>\n' +
-            '        <dd style="text-align: center;"><a href="">退出</a></dd>\n' +
+            '        <dd style="text-align: center;" id="exit"><a href="">退出</a></dd>\n' +
             '    </dl>\n' +
             '</li>' +
             '</ul>'
         );
-    } else {
-        $("#dl").html('<div id="log_div" style="width: 40px;height: 40px;border: 1px #dfdfdf solid;text-align: center;background-color:#dfdfdf;' +
-            'margin-top: 14px;margin-right: 3px;">' +
-            '<span style="display: inline-block;vertical-align: middle;margin-top: 10px">登录</span>' +
-            '</div>');
     }
 
 
 </script>
 
+
 <script>
+    $('#exit').click(function () {
 
-    // $.ajax({
-    //     type:'get',
-    //     url:'/post/plist?status='+2,
-    //     dataType:'json',
-    //     async:true,
-    //     contentType: 'application/json;charset=UTF-8',
-    //     success: function (src) {
-    //         console.log(src.data);
-    //         let list = src.data;
-    //         let html ='';
-    //         $.each(list,function (index,item) {
-    //
-    //             html+='   <li v-for="site in sites" class="layui-col-space15">\n' +
-    //                 '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
-    //                 '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
-    //                 '           <div class="cmdlist-container">\n' +
-    //                 '               <a href="javascript:">\n' +
-    //                 '                   <img src='+item.post_image+' height="220px" width="257px"/>\n' +
-    //                 '                   <hr/>\n' +
-    //                 '                   <a href="javascript:">\n' +
-    //                 '                       <div class="cmdlist-text">\n' +
-    //                 '                           <div class="price">\n' +
-    //                 '                               <b style="float: left;color: #F40">'+item.lab_name+'</b><b\n' +
-    //                 '                                   style="float: right;color: #888;font-size: 9pt">待领取</b>\n' +
-    //                 '                           </div>\n' +
-    //                 '                       </div>\n' +
-    //                 '                   </a>\n' +
-    //                 '               </a>\n' +
-    //                 '           </div>\n' +
-    //                 '           <hr/>\n' +
-    //                 '           <div style="height: 30px;width: 100%;">\n' +
-    //                 '               <p class="info"\n' +
-    //                 '                  style="word-break:break-all;text-overflow:ellipsis;  white-space:nowrap;   overflow:hidden;">\n' +
-    //                 '                   '+item.post_title+'</p>\n' +
-    //                 '           </div>\n' +
-    //                 '           <div style="float: left">\n' +item.post_found_time
-    //                 '           </div>\n' +
-    //                 '\n' +
-    //                 '       </div>\n' +
-    //                 '    /li>\n'
-    //
-    //             console.log(item.lab_name);
-    //
-    //         })
-    //         $('._li').html(html);
-    //     }
-    //
-    //
-    // })
+        sessionStorage.setItem("bool", "0");
+        $.cookie("data", 0);
+        setTimeout(function () {
+            window.location.replace('/');
+        }, 400);
 
+    })
 </script>
-
 
 </html>

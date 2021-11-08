@@ -99,6 +99,16 @@ public class ForPostServiceImpl implements ForPostService {
             return new AjaxUtils(AjaxUtils.Type.ERROR, false);
         }
 
+    }
 
+    /**
+     * 帖子内容
+     *
+     * @param t
+     * @return
+     */
+    @Override
+    public Post selectPo(Integer t) {
+        return forPostDao.selectPo(t);
     }
 }

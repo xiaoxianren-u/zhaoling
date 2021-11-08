@@ -184,4 +184,11 @@
         order by post_id desc
         Limit #{page},#{limit}
     </select>
+
+<!--    帖子内容-->
+    <select id="selectPo" resultType="com.edu.pojo.Post">
+
+        select * from zhaoling.post_db
+        where post_id = #{t}
+    </select>
 </mapper>

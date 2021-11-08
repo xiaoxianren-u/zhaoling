@@ -21,4 +21,12 @@ public interface ForUserDao {
      * @return
      */
     User selectName(@Param("username") String tokenUserName);
+
+    /**
+     * 个人头像用户名
+     *
+     * @param username
+     * @return
+     */
+    User selectImage(String username);
 }

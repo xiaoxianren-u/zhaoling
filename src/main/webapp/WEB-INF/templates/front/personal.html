@@ -18,7 +18,8 @@
 <body style="background-color: #F0F2F5">
 <ul class="layui-nav" lay-bar="disabled">
     <li class="layui-nav-item" lay-unselect="">
-        <img class="layui-nav-img" id="image" src="">
+        <img class="layui-nav-img" id="image" th:src="${image}">
+        <span id="text" th:text="${username}" th:value="${username}"></span>
     </li>
     <!--    <li class="layui-nav-item  layui-icon">-->
     <!--        <a href="/">&#xe68e;首页</a>-->
@@ -29,12 +30,13 @@
         let image = sessionStorage.getItem("img");
 
         $("#image").hover(function () {             //悬停事件
-            const tips = layer.tips(sessionStorage.getItem("name") + "欢迎你", '#image', {
+            // let text = $("#text").val();
+            // console.log(text);
+            const tips = layer.tips("欢迎你", '#image', {
                 tips: [1, '#555555']
                 // 上右下左四个方向，通过1-4进行方向设定
             });
         })
-            .attr('src', image);
     })
 </script>
 <br><br><br><br>

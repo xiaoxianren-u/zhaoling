@@ -2,8 +2,11 @@ package com.edu.controller.front;
 
 import com.edu.config.UserConfig;
 import com.edu.intercept.PassToken;
+import com.edu.pojo.Post;
 import com.edu.pojo.User;
 import com.edu.service.ForLabelService;
+import com.edu.service.ForPostService;
+import com.edu.service.ForUserService;
 import com.edu.service.SysUserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -30,6 +34,12 @@ public class IndexController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private ForUserService forUserService;
+
+    @Autowired
+    private ForPostService forPostService;
 
     @RequestMapping("/")
     @PassToken
@@ -104,7 +114,11 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "/personal")
-    public String personal() {
+    public String personal(@NotNull ModelMap modelMap, HttpServletRequest request) {
+        String username = UserConfig.tokenUserName(request);
+        User user = forUserService.selectImage(username);
+        modelMap.put("username", user.getUser_name());
+        modelMap.put("image", user.getUser_image());
         return "/front/personal.html";
     }
 
@@ -139,9 +153,27 @@ public class IndexController {
     }
 
     @RequestMapping("/for/for_post")
-    public String forPostAction(ModelMap modelMap) {
+    public String forPostAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
         return "/front/for_post.html";
+    }
+
+
+    /**
+     * 显示单个内容
+     *
+     * @param t
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/text", method = RequestMethod.GET)
+    public String textAction(@RequestParam("t") Integer t, @NotNull ModelMap modelMap) {
+        Post post = forPostService.selectPo(t);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        modelMap.put("post", post);
+        modelMap.put("data1", formatter.format(post.getPost_found_time()));
+        modelMap.put("data2", formatter.format(post.getPost_time()));
+        return "/front/text";
     }
 
 

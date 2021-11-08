@@ -23,4 +23,16 @@ public class ForUserServiceImpl implements ForUserService {
     public User selectName(String tokenUserName) {
         return forUserDao.selectName(tokenUserName);
     }
+
+    /**
+     * 个人头像用户名
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public User selectImage(String username) {
+        return forUserDao.selectImage(username);
+    }
+
 }
