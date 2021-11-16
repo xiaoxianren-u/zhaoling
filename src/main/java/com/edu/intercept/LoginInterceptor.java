@@ -52,7 +52,12 @@ public class LoginInterceptor implements HandlerInterceptor {
                     output = cookie.split("[;,=]");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    throw new RuntimeException("无令牌，请重新登录");
+//                    throw  new ModelAndView("redirect:/toList");
+                    response.sendRedirect("/404");
+//                    request.getRequestDispatcher("/login").forward(request,response);
+                    return false;
+//                    throw new RuntimeException("无令牌，请重新登录");
+
 
                 }
                 try {
@@ -64,20 +69,25 @@ public class LoginInterceptor implements HandlerInterceptor {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    throw new RuntimeException("无令牌，请重新登录");
+                    response.sendRedirect("/401");
+
+                    return false;
+//                    throw new RuntimeException("无令牌，请重新登录");
                 }
                 if (token == null) {
-
                     token = request.getParameter("token");
                 }
 
                 // 执行认证
                 if (token == null) {
-                    throw new RuntimeException("无令牌，请重新登录 ");
+                    response.sendRedirect("/404");
+                    return false;
+//                    throw new RuntimeException("无令牌，请重新登录 ");
                 }
                 // 获取 token 中的 username
                 Claims claims = JwtUtils.checkToken(token);
                 if (claims == null) {
+                    response.sendRedirect("/404");
                     throw new RuntimeException("身份错误！！！");
                 } else {
                     String username = (String) claims.get("username");
@@ -87,7 +97,9 @@ public class LoginInterceptor implements HandlerInterceptor {
                     }
                 }
                 if (state != (int) claims.get("state")) {
-                    throw new RuntimeException("该用户无权限访问");
+                    response.sendRedirect("/403");
+//                    throw new RuntimeException("该用户无权限访问");
+
                 }
 
             }

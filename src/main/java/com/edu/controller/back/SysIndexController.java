@@ -5,6 +5,7 @@ import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.ConTents;
 import com.edu.pojo.User;
 import com.edu.service.SysConTentService;
+import com.edu.service.SysLabelService;
 import com.edu.service.SysUserService;
 import com.edu.util.AjaxUtils;
 import org.jetbrains.annotations.NotNull;
@@ -40,10 +41,11 @@ public class SysIndexController extends AjaxUtils {
     @Autowired
     private SysUserService sysUserService;
 
+    @Autowired
+    private SysLabelService sysLabelService;
+
     /**
      * 后台页面目录
-     *
-     * @return
      */
 
     @UserLoginToken(state = 1)
@@ -59,8 +61,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 菜单管理
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/menu.action", method = RequestMethod.GET)
@@ -73,9 +73,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 角色管理
-     *
-     * @param modelMap
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/role.action", method = RequestMethod.GET)
@@ -85,8 +82,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 后台管理员
-     *
-     * @return
      */
 
 
@@ -98,8 +93,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 用户列表
-     *
-     * @return
      */
 
     @UserLoginToken(state = 1)
@@ -110,8 +103,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 用户列表
-     *
-     * @return S
      */
 
     @UserLoginToken(state = 1)
@@ -122,8 +113,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 用户登录日志
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/log.action", method = RequestMethod.GET)
@@ -133,8 +122,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 用户操作日志
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/operate.action", method = RequestMethod.GET)
@@ -145,8 +132,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 基本信息页面
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/basic.action", method = RequestMethod.GET)
@@ -161,8 +146,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 修改密码页面
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/upPass.action", method = RequestMethod.GET)
@@ -173,8 +156,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 公告页面
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/anNoun.action", method = RequestMethod.GET)
@@ -184,8 +165,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 标签页面
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/label.action", method = RequestMethod.GET)
@@ -195,8 +174,6 @@ public class SysIndexController extends AjaxUtils {
 
     /**
      * 了解招物
-     *
-     * @return
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/welcome.action", method = RequestMethod.GET)
@@ -204,5 +181,17 @@ public class SysIndexController extends AjaxUtils {
         return "back/welcome";
     }
 
+
+    /**
+     * 帖子管理
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/postman.action", method = RequestMethod.GET)
+    public String postMan(ModelMap modelMap) {
+
+
+        modelMap.put("lab_list", sysLabelService.list());
+        return "back/post_man";
+    }
 
 }

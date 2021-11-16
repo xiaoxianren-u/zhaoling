@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+</head>
+
+<script type="text/javascript">
+    $(function () {
+        var websocket;
+        if ('WebSocket' in window) {
+            console.log("此浏览器支持websocket");
+            websocket = new WebSocket("ws://127.0.0.1:1012/websocketDemo/88");
+        } else if ('MozWebSocket' in window) {
+            alert("此浏览器只支持MozWebSocket");
+        } else {
+            alert("此浏览器只支持SockJS");
+        }
+        websocket.onopen = function (evnt) {
+
+
+            $("#tou").html("链接服务器成功!")
+        };
+        websocket.onmessage = function (evnt) {
+            $("#msg").html($("#msg").html() + "<br/>" + evnt.data);
+        };
+        websocket.onerror = function (evnt) {
+        };
+        websocket.onclose = function (evnt) {
+            $("#tou").html("与服务器断开了链接!")
+        }
+
+        $('#send').bind('click', function () {
+
+
+            send();
+        });
+
+        function send() {
+            if (websocket != null) {
+
+                const message = "用户B---:" + document.getElementById('message').value;
+                $.ajax({
+                    url: "/message/TestWS?userId=88&message="
+                        + message,
+                    type: "GET",
+                    success: function (result) {
+                    }
+                });
+                $.ajax({
+                    url: "/message/TestWS?userId=66&message="
+                        + message,
+                    type: "GET",
+                    success: function (result) {
+                    }
+                });
+
+            } else {
+                alert('未与服务器链接.');
+            }
+        }
+    });
+</script>
+</head>
+<body>
+<div class="page-header" id="tou">
+    webSocket多终端聊天测试
+</div>
+<div class="well" id="msg"></div>
+<div class="col-lg">
+    <div class="input-group">
+        <input class="form-control" id="message" placeholder="发送信息..." type="text">
+        <span class="input-group-btn">
+           <button class="btn btn-default" id="send" type="button">发送</button>
+        </span>
+    </div>
+</div>
+</body>
+</html>
+

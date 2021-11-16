@@ -161,7 +161,6 @@
     $("#btn").click(function () {
         const yzm = $("#yzm").val();
         $.get("yz?yzm=" + yzm, function (src) {
-            console.log(src);
             if (src.bool) {
                 login();
             } else {
@@ -193,12 +192,15 @@
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success: function (src) {
-                sessionStorage.setItem("bool", src.bool);
+                sessionStorage.setItem("bool", "1");
                 if (src.bool) {
-                    document.cookie = src.token;
+                    // document.cookie = src.token;
+                    $.cookie("to",src.token);
                     Save(src.token);
+                    $.cookie("data", 1);
                     window.location = "/";
                 } else {
+                    // $.cookie("data", 0);
                     alert(src.msg)
                 }
             }

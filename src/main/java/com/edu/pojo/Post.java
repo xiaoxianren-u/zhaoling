@@ -96,4 +96,15 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_receive_time;
 
+
+    public Post(String user_name, String post_title, Integer post_status1, Date post_time, String post_substance, String lab_name, Date post_found_time, String post_found_place) {
+        this.user_name = user_name;
+        this.post_title = post_title;
+        this.post_status1 = post_status1;
+        this.post_time = post_time;
+        this.post_substance = post_substance;
+        this.lab_name = lab_name;
+        this.post_found_time = post_found_time;
+        this.post_found_place = post_found_place;
+    }
 }

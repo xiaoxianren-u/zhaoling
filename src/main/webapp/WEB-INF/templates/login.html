@@ -194,7 +194,8 @@
             success: function (src) {
                 sessionStorage.setItem("bool", "1");
                 if (src.bool) {
-                    document.cookie = src.token;
+                    // document.cookie = src.token;
+                    $.cookie("to", src.token);
                     Save(src.token);
                     $.cookie("data", 1);
                     window.location = "/";

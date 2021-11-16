@@ -55,6 +55,7 @@ public class IndexController {
      * @param modelMap
      * @return
      */
+    @PassToken
     @RequestMapping(value = "/lost")
     public String lostAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
@@ -67,6 +68,7 @@ public class IndexController {
      * @param modelMap
      * @return
      */
+    @PassToken
     @RequestMapping(value = "/find")
     public String findAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
@@ -74,6 +76,11 @@ public class IndexController {
     }
 
 
+    /**
+     * 前台登录页面
+     *
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @PassToken
     public String loginAction() {
@@ -81,12 +88,19 @@ public class IndexController {
     }
 
 
+    /**
+     * 后台登录页面
+     *
+     * @return
+     */
     @RequestMapping("/login1")
     public String login1Action() {
         return "/login1.html";
     }
 
     /**
+     * 注册页面
+     *
      * @return
      */
     @PassToken
@@ -101,7 +115,6 @@ public class IndexController {
      *
      * @return
      */
-
     @RequestMapping("/for/index.html")
     public String forIndexAction() {
         return "/front/for_index.html";
@@ -152,6 +165,13 @@ public class IndexController {
         return "/front/for_pass.html";
     }
 
+
+    /**
+     * 帖子发布页面
+     *
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/for/for_post")
     public String forPostAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
@@ -160,7 +180,7 @@ public class IndexController {
 
 
     /**
-     * 显示单个内容
+     * 帖子详细页面
      *
      * @param t
      * @param modelMap
@@ -176,5 +196,49 @@ public class IndexController {
         return "/front/text";
     }
 
+
+    /**
+     * 在线实时两天
+     *
+     * @return
+     */
+    @RequestMapping(value = "/websocket", method = RequestMethod.GET)
+    public String websocket() {
+        return "/front/websocket";
+    }
+
+
+    /**
+     * 错误页面404
+     *
+     * @return
+     */
+    @PassToken
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public String error404() {
+        return "/404";
+    }
+
+    /**
+     * 错误页面403
+     *
+     * @return
+     */
+    @PassToken
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String error403() {
+        return "/403";
+    }
+
+    /**
+     * 错误页面401
+     *
+     * @return
+     */
+    @PassToken
+    @RequestMapping(value = "/401", method = RequestMethod.GET)
+    public String error401() {
+        return "/401";
+    }
 
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.SysPostDao">
+
+<!--帖子数量-->
+
+    <select id="selectCount" resultType="int">
+        select COUNT(*) from zhaoling.post_db
+        <where>
+            <if test="user_name != null and user_name != ''">
+                 and user_name = #{user_name}
+            </if>
+            <if test="post_title != null and post_title != ''">
+                 and post_title like concat('%', #{post_title}, '%')
+            </if>
+            <if test="post_status1 != null">
+                 and post_status1 = #{post_status1}
+            </if>
+            <if test="post_time != null">
+                 and datediff(#{post_time}, post_time) <![CDATA[<= ]]> 1  and datediff(#{post_time}, post_time) <![CDATA[ >= ]]> 0
+            </if>
+            <if test="post_substance != null and post_substance != ''">
+                 and post_substance like concat('%',#{post_substance},'%')
+            </if>
+            <if test="lab_name != null and lab_name != ''">
+                 and lab_name = #{lab_name}
+            </if>
+            <if test="post_found_time != null">
+                and datediff(#{post_found_time}, post_found_time) <![CDATA[<= ]]> 1 and datediff(#{post_found_time}, post_found_time) <![CDATA[ >= ]]> 0
+            </if>
+            <if test="post_found_place != null and post_found_place != ''">
+                 and post_found_place like concat('%',#{post_found_place},'%')
+            </if>
+        </where>
+    </select>
+
+<!--帖子-->
+    <select id="selectAll" resultType="com.edu.pojo.Post">
+        select * from zhaoling.post_db
+
+        <where>
+            <if test="post.user_name != null and post.user_name != ''">
+                 and user_name = #{post.user_name}
+            </if>
+            <if test="post.post_title != null and post.post_title != ''">
+                 and post_title like concat('%', #{post.post_title}, '%')
+            </if>
+            <if test="post.post_status1 != null">
+                 and post_status1 = #{post.post_status1}
+            </if>
+            <if test="post.post_time != null">
+                 and datediff(#{post.post_time}, post_time) <![CDATA[<= ]]> 1 and datediff(#{post.post_time}, post_time) <![CDATA[ >= ]]> 0
+            </if>
+            <if test="post.post_substance != null and post.post_substance != ''">
+                 and post_substance like concat('%',#{post.post_substance},'%')
+            </if>
+            <if test="post.lab_name != null and post.lab_name != ''">
+                 and lab_name = #{post.lab_name}
+            </if>
+            <if test="post.post_found_time != null">
+                and datediff(#{post.post_found_time}, post_found_time) <![CDATA[<= ]]> 1 and datediff(#{post.post_found_time}, post_found_time) <![CDATA[ >= ]]> 0
+            </if>
+            <if test="post.post_found_place != null and post.post_found_place != ''">
+                 and post_found_place like concat('%',#{post.post_found_place},'%')
+            </if>
+        </where>
+        ORDER BY post_id desc
+        limit #{page},#{limit}
+    </select>
+
+
+
+
+
+</mapper>

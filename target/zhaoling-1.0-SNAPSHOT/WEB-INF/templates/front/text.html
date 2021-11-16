@@ -8,16 +8,17 @@
     <title>Document</title>
 </head>
 <link rel="stylesheet" th:href="@{/static/css/layui.css}">
-<script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
 <script th:src="@{/static/js/layui.js}"></script>
 <script th:src="@{static/js/md5.js}"></script>
 <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
 <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
 <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
 <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+<script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
 <script th:src="@{/static/js/jquery.cookie.js}"></script>
+<script th:src="@{/static/js/cookie.js}"></script>
 <style>
-    #a_t:hover{
+    #a_t:hover {
         color: #1E9FFF;
     }
 </style>
@@ -33,29 +34,33 @@
                         WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong>招领网</strong></div>
             </div>
             <div style="border: 1px solid #dfdfdf;">
-                <h5 style="background:#ddd;height: 25px;" >失物招领详情</h5>
+                <h5 style="background:#ddd;height: 25px;">失物招领详情</h5>
                 <div>
-                    <hr size="3px"  style="font-size: 2px;background-color:#F40;margin: 20px" />
+                    <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
                     <div style="font-size: 18px">&nbsp;&nbsp;&nbsp;物品信息</div>
                     <div style="font-size: 15px;color:#666666;">
                         <div class="layui-row">
                             <div class="layui-col-xs4">
                                 <div class="grid-demo grid-demo-bg1">
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题:</label>
                                         <div class="layui-input-inline" style="top: 8px">
-                                            <p style="font-size: 15px;top:8px;color:#999999;word-break:break-all;" th:text="${post.post_title}"></p>
+                                            <p style="font-size: 15px;top:8px;color:#999999;word-break:break-all;"
+                                               th:text="${post.post_title}"></p>
                                         </div>
                                     </div>
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">信息编号:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 15px;top:12px;color:#999999;" th:text="${post.post_id}"></p>
+                                            <p style="font-size: 15px;top:12px;color:#999999;"
+                                               th:text="${post.post_id}"></p>
                                         </div>
                                     </div>
-                                    <div class="layui-form-item" >
-                                        <label class="layui-form-label" style="width: 150px" th:if="${post.post_status1} == 0" >拾到日期:</label>
-                                        <label class="layui-form-label" style="width: 150px" th:if="${post.post_status1} == 1" >丢失日期:</label>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 150px"
+                                               th:if="${post.post_status1} == 0">拾到日期:</label>
+                                        <label class="layui-form-label" style="width: 150px"
+                                               th:if="${post.post_status1} == 1">丢失日期:</label>
                                         <div class="layui-input-inline" style="top: 12px">
                                             <p style="font-size: 15px;top:12px;color:#999999;" th:text="${data1}"></p>
                                         </div>
@@ -64,46 +69,54 @@
                             </div>
                             <div class="layui-col-xs8">
                                 <div class="grid-demo">
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 14px;top:12px;color:#999999;" th:text="${post.lab_name}">2021-10-12 19:22:12</p>
+                                            <p style="font-size: 14px;top:12px;color:#999999;"
+                                               th:text="${post.lab_name}">2021-10-12 19:22:12</p>
                                         </div>
                                     </div>
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">认领状态:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 14px;top:12px;color:#999999;" th:if="${post.post_status} == 2">待认领</p>
-                                            <p style="font-size: 14px;top:12px;color:#999999;" th:if="${post.post_status} == 3">认领完成</p>
+                                            <p style="font-size: 14px;top:12px;color:#999999;"
+                                               th:if="${post.post_status} == 2">待认领</p>
+                                            <p style="font-size: 14px;top:12px;color:#999999;"
+                                               th:if="${post.post_status} == 3">认领完成</p>
                                         </div>
                                     </div>
-                                    <div class="layui-form-item" >
-                                        <label class="layui-form-label" style="width: 150px" th:if="${post.post_status1} == 0" >拾到地点:</label>
-                                        <label class="layui-form-label" style="width: 150px" th:if="${post.post_status1} == 1" >丢失地点:</label>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 150px"
+                                               th:if="${post.post_status1} == 0">拾到地点:</label>
+                                        <label class="layui-form-label" style="width: 150px"
+                                               th:if="${post.post_status1} == 1">丢失地点:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 14px;top:12px;color:#999999;" th:text="${post.post_found_place}"></p>
+                                            <p style="font-size: 14px;top:12px;color:#999999;"
+                                               th:text="${post.post_found_place}"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item" >
+                        <div class="layui-form-item">
                             <label class="layui-form-label" style="width: 150px">详&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;细:</label>
                             <div class="layui-input-inline" style="top: 8px;width: 50%;">
-                                <p style="font-size: 14px;top:12px;color:#999999; word-break:break-all;" th:text="${post.post_substance}" ></p>
+                                <p style="font-size: 14px;top:12px;color:#999999; word-break:break-all;"
+                                   th:text="${post.post_substance}"></p>
                             </div>
                         </div>
                     </div>
-                    <hr size="3px"  style="font-size: 2px;background-color:#F40;margin: 20px" />
+                    <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
                     <div style="font-size: 18px;margin-bottom: 15px">&nbsp;&nbsp;&nbsp;发布者及发布日期</div>
                     <div style="font-size: 15px;color:#666666;">
                         <div class="layui-row">
                             <div class="layui-col-xs4">
                                 <div class="grid-demo grid-demo-bg1">
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">发&nbsp;&nbsp;布&nbsp;&nbsp;者:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 15px;top:12px;color:#999999;" th:text="${post.user_name}"></p>
+                                            <p style="font-size: 15px;top:12px;color:#999999;"
+                                               th:text="${post.user_name}"></p>
                                         </div>
                                     </div>
 
@@ -111,26 +124,28 @@
                             </div>
                             <div class="layui-col-xs8">
                                 <div class="grid-demo">
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">发布日期：</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 14px;top:12px;color:#999999;" th:text="${data2}">2021-10-12 19:22:12</p>
+                                            <p style="font-size: 14px;top:12px;color:#999999;" th:text="${data2}">
+                                                2021-10-12 19:22:12</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr size="3px"  style="font-size: 2px;background-color:#F40;margin: 20px" />
+                    <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
                     <div style="font-size: 18px">&nbsp;&nbsp;&nbsp;物品图片</div>
                     <div style="font-size: 15px;color:#666666;">
                         <div class="layui-row">
                             <div class="layui-col-xs12">
                                 <div class="grid-demo grid-demo-bg1">
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px;color: white">:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <img th:src="${post.post_image}" style="width: 700px;height: 600px;border: 1px solid #dfdfdf;">
+                                            <img style="width: 700px;height: 600px;border: 1px solid #dfdfdf;"
+                                                 th:src="${post.post_image}">
                                         </div>
                                     </div>
                                 </div>
@@ -138,15 +153,15 @@
 
                         </div>
                     </div>
-                    <hr size="3px"  style="font-size: 2px;background-color:#F40;margin: 20px" />
+                    <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
                     <div style="font-size: 18px">&nbsp;&nbsp;&nbsp;操作</div>
                     <div style="font-size: 15px;color:#666666;">
                         <div class="layui-row">
                             <div class="layui-col-xs12">
                                 <div class="grid-demo grid-demo-bg1">
-                                    <div class="layui-form-item" >
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px;color: white">:</label>
-                                        <div class="layui-input-inline" style="top: 12px;width: 80%" >
+                                        <div class="layui-input-inline" style="top: 12px;width: 80%">
                                             <div class="layui-row">
                                                 <div class="layui-col-xs6">
                                                     <div class="grid-demo grid-demo-bg1" id="te">
@@ -155,7 +170,9 @@
                                                 </div>
                                                 <div class="layui-col-xs6">
                                                     <div class="grid-demo">
-                                                            <span id="sp" style="color:#000;display: none" >联系方式：</span><span id="spa" th:text="${post.post_found_link}" style="color:#000;display: none"></span>
+                                                        <span id="sp" style="color:#000;display: none">联系方式：</span><span
+                                                            id="spa" style="color:#000;display: none"
+                                                            th:text="${post.post_found_link}"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,30 +195,20 @@
         <div class="grid-demo" style="color: white;">6/12</div>
     </div>
 </div>
-
 </body>
-
 <script>
-    // let data = $.click("data");
-    // console.log({data:data});
-    // console.log()
-    if ($.cookie("data") !== '1'){
+
+    if ($.cookie("data") !== '1') {
         $('#te').html('<p><a href="/login" target="_blank" id="a_t">点击登录获取联系方式</a></p>');
     }
-    if($.cookie("data") === '1'){
+    if ($.cookie("data") === '1') {
         $('#te').html('<button type="button" class="layui-btn layui-btn-xs" id="btn">申请归还</button>');
     }
 </script>
-
-
-
 <script>
-        $("#btn").click(function () {
-
-            document.getElementById("sp").style.display = '';
-            document.getElementById("spa").style.display = '';
-
-        })
-
+    $("#btn").click(function () {
+        document.getElementById("sp").style.display = '';
+        document.getElementById("spa").style.display = '';
+    })
 </script>
 </html>

@@ -1,5 +1,6 @@
 package com.edu.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class IpConfig {
      * @param request 传一个request对象下来
      * @return
      */
-    public static String getIpAddress(HttpServletRequest request) {
+    public static String getIpAddress(@NotNull HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
