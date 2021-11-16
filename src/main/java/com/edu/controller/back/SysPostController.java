@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -43,7 +42,7 @@ public class SysPostController extends AjaxUtils {
                              @RequestParam("post_status1") Integer postStatus1,  //捡到0或遗失1
                              @RequestParam("page") Integer page,
                              @RequestParam("limit") Integer limit) {
-        Post post = new Post(userName, postTitle, postStatus1, null, postSubstance, null, null, postFoundPlace);
+        Post post = new Post(userName, postTitle, postStatus1, null, postSubstance, labName, null, postFoundPlace);
 
         //  时间装换
         if (!"".equals(post_time) && post_time != null) {
@@ -60,20 +59,7 @@ public class SysPostController extends AjaxUtils {
                 e.printStackTrace();
             }
         }
-        // 中文乱码
-        if (!"".equals(postTitle) && postTitle != null) {
-            post.setPost_title(new String(postTitle.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-        }
-        if (!"".equals(labName) && labName != null) {
-            post.setLab_name(new String(labName.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-        }
-        if (!"".equals(postFoundPlace) && postFoundPlace != null) {
-            post.setPost_found_place(new String(postFoundPlace.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-        }
-        if (!"".equals(postSubstance) && postSubstance != null) {
-            post.setPost_substance(new String(postSubstance.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-        }
-        page = page > 1 ? limit * (page - 1) : 0;
+
         return sysPostService.selectAll(page, limit, post);
     }
 }

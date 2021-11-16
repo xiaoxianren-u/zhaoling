@@ -99,7 +99,6 @@
                                                     <div class="layui-inline" style="width: 180px">
                                                         <select id="lab_name" lay-verify="" name="lab_name">
                                                             <option value="">全部</option>
-                                                            <option value="">全部内容</option>
                                                             <option th:each="s : ${lab_list}" th:text="${s.lab_name}"
                                                                     th:value="${s.lab_name}">
                                                             </option>
@@ -302,17 +301,6 @@
                 let post_time = $('#test1').val();
                 let post_found_time = $('#test2').val();
                 let post_status1 = $('#post_status1 option:selected').val();
-
-                console.log({
-                    user_name: user_name,
-                    post_title: post_title,
-                    post_substance: post_substance,
-                    post_found_place: post_found_place,
-                    lab_name: lab_name,
-                    post_time: post_time,
-                    post_found_time: post_found_time,
-                    post_status1: post_status1
-                })
 
 
                 //执行重载
