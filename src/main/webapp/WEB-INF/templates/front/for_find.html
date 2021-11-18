@@ -5,7 +5,7 @@
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <title>Document</title>
+    <title>查看招领贴</title>
     <style>
         #ha {
             border: 1px solid #dfdfdf;
@@ -40,6 +40,8 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
+
 </head>
 <body style="background-color: white">
 <div class="layui-row" style="margin-top: 0">
@@ -67,7 +69,8 @@
                                 </div>
                                 <label>
                                     <select id="test" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 90px;
-                                    border-top-left-radius: 20px; border-bottom-left-radius: 20px;text-align: center;border: 1px solid #dfdfdf;"
+                                                border-top-left-radius: 20px; border-bottom-left-radius: 20px;text-align: center;border-top: 1px solid #dfdfdf;
+                                                border-bottom: 1px solid #dfdfdf;border-left: 1px solid #dfdfdf;border-right: 0;"
                                             title="类型">
                                         <option value="">全部内容</option>
                                         <option th:each="s : ${lab_list}" th:text="${s.lab_name}"
