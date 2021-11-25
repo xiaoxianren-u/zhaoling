@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>招领网后台管理系统入口</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/static/css/style.css}">
@@ -13,24 +13,24 @@
     <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
 
 </head>
-<body >
-<div class="container" align="center">
+<body>
+<div align="center" class="container">
     <div class="col-md-6" style="margin-top: 20%;">
         <div class="inset">
-            <form name="login" id="login">
-                <input type="hidden" name="enews" value="login">
+            <form id="login" name="login">
+                <input name="enews" type="hidden" value="login">
                 <div>
                     <h2>招领网后台管理系统</h2>
                     <span style="text-align: left;text-indent: 0.4em;"><label>用户名</label></span>
-                    <span><input type="text" name="username" class="username" value="admin" ></span>
+                    <span><input class="username" name="username" type="text" value="admin"></span>
                 </div>
                 <div>
                     <span style="text-align: left;text-indent: 0.4em;"><label>密码</label></span>
-                    <span><input  name="password" type="password" class="password" value="admin123"></span>
+                    <span><input class="password" name="password" type="password" value="admin123"></span>
                 </div>
                 <div class="sign">
-                    <input type="reset"  class="su" value="重置"/>
-                    <input type="button" value="登录" class="su submit" />
+                    <input class="su" type="reset" value="重置"/>
+                    <input class="su submit" type="button" value="登录"/>
                 </div>
             </form>
         </div>
@@ -40,7 +40,7 @@
 <script>
 
 
-    $('.submit').click(function (){
+    $('.submit').click(function () {
 
         console.log("sddddddddddddd");
 
@@ -49,14 +49,14 @@
 
 
         console.log({
-            user_name:user_name,
-            pass_word:pass_word
+            user_name: user_name,
+            pass_word: pass_word
         })
         const yan = '!a@n%p&';
         let time = 1;    //免登陆时长
         pass_word = md5(yan + pass_word + yan);
-        if (user_name !== ''){
-            if (pass_word !== ''){
+        if (user_name !== '') {
+            if (pass_word !== '') {
                 $.ajax({
                     type: "POST",
                     url: "/login",
@@ -81,7 +81,7 @@
 
 
             }
-        }else {
+        } else {
 
         }
 
@@ -91,10 +91,10 @@
 </script>
 
 <script>
-   let cook = sessionStorage.getItem('cook');
-   if (cook === '1'){
-       $.cookie('to1','');
-   }
+    let cook = sessionStorage.getItem('cook');
+    if (cook === '1') {
+        $.cookie('to1', '');
+    }
 
 </script>
 

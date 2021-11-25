@@ -53,7 +53,6 @@ public class ForUserController extends AjaxUtils {
      * @return
      */
     @RequestMapping(value = "/upload_img", method = RequestMethod.POST)
-//    @UserLoginToken(state = 0)
     public AjaxUtils updateImager(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         String imagePath = UploadUtils.upload(file, request, "image");
 

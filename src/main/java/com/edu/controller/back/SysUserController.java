@@ -136,7 +136,7 @@ public class SysUserController extends AjaxUtils {
     @RequestMapping(value = "/update/basic", method = RequestMethod.POST)
     @UserLoginToken(state = 1)
     @ResponseBody
-    public AjaxUtils updateBasic(@RequestBody User user, HttpServletRequest request) {
+    public AjaxUtils updateBasic(@NotNull @RequestBody User user, HttpServletRequest request) {
         user.setUser_name(UserConfig.tokenUserName(request));
         try {
             sysUserService.updateBasic(user);

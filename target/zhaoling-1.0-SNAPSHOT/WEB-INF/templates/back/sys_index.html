@@ -18,7 +18,9 @@
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo layui-hide-xs" style="font-size: 20px"><img th:src="@{/static/image/zl.png}" height="45" width="45" style="border-radius: 50%"/>&nbsp;系统后台管理</div>
+        <div class="layui-logo layui-hide-xs" style="font-size: 20px"><img height="45" style="border-radius: 50%"
+                                                                           th:src="@{/static/image/zl.png}" width="45"/>&nbsp;系统后台管理
+        </div>
         <!-- 头部区域（可配合layui 已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
 
@@ -42,7 +44,7 @@
                 <dl class="layui-nav-child">
                     <!--                    <dd><a href="">个人中心</a></dd>-->
                     <!--                    <dd><a href="">Settings</a></dd>-->
-                    <dd><a href="javascript:" class="exit">退出</a></dd>
+                    <dd><a class="exit" href="javascript:">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -190,7 +192,7 @@
 <script>
     $('.exit').click(function () {
 
-        sessionStorage.setItem('cook','1');
+        sessionStorage.setItem('cook', '1');
         window.location = "/login1";
 
     })

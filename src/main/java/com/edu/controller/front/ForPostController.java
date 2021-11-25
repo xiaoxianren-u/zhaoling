@@ -31,6 +31,7 @@ public class ForPostController extends AjaxUtils {
     public AjaxUtils insetImage(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 
         String imagePath = UploadUtils.upload(file, request, "forImage");
+        System.out.println("imagePath = " + imagePath);
         if (imagePath != null) {
             return new AjaxUtils(1, true, "上传成功", imagePath);
         } else {

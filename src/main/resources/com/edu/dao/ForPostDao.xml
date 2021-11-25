@@ -137,9 +137,9 @@
                 and lab_name = #{labName}
             </if>
             <if test="text != null and text != ''">
-                and (post_title like concat('%', #{text}, '%')
-                        or post_substance like concat('%', #{text}, '%')
-                        or post_found_place like concat('%', #{text}, '%')
+                and (post_title regexp concat('[', #{text}, ']')
+                        or post_substance regexp concat('[', #{text}, ']')
+                        or post_found_place regexp concat('[', #{text}, ']')
                         )
             </if>
             <if test="time != null and time != 366">
@@ -168,9 +168,9 @@
                 and lab_name = #{labName}
             </if>
             <if test="text != null and text != ''">
-                and (post_title like concat('%', #{text}, '%')
-                        or post_substance like concat('%', #{text}, '%')
-                        or post_found_place like concat('%', #{text}, '%')
+                and (post_title regexp concat('[', #{text}, ']')
+                        or post_substance regexp concat('[', #{text}, ']')
+                        or post_found_place regexp concat('[', #{text}, ']')
                         )
             </if>
             <if test="time != null and time != 366">

@@ -2,6 +2,7 @@ package com.edu.controller.front;
 
 import com.edu.config.UserConfig;
 import com.edu.intercept.PassToken;
+import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.Post;
 import com.edu.pojo.User;
 import com.edu.service.ForLabelService;
@@ -126,6 +127,7 @@ public class IndexController {
      *
      * @return
      */
+    @UserLoginToken(state = 0)
     @RequestMapping(value = "/personal")
     public String personal(@NotNull ModelMap modelMap, HttpServletRequest request) {
         String username = UserConfig.tokenUserName(request);
@@ -142,6 +144,7 @@ public class IndexController {
      * @param request
      * @return
      */
+    @UserLoginToken(state = 0)
     @RequestMapping(value = "/for/information.html")
     public String information(@NotNull ModelMap modelMap, HttpServletRequest request) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -159,6 +162,7 @@ public class IndexController {
      * @param modelMap
      * @return
      */
+    @UserLoginToken(state = 0)
     @RequestMapping("/for/for_pass")
     public String forPassAction(HttpServletRequest request, @NotNull ModelMap modelMap) {
         modelMap.put("username", UserConfig.tokenUserName(request));
@@ -172,6 +176,7 @@ public class IndexController {
      * @param modelMap
      * @return
      */
+    @UserLoginToken(state = 0)
     @RequestMapping("/for/for_post")
     public String forPostAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
@@ -202,10 +207,10 @@ public class IndexController {
      *
      * @return
      */
-    @RequestMapping(value = "/websocket", method = RequestMethod.GET)
-    public String websocket() {
-        return "/front/websocket";
-    }
+//    @RequestMapping(value = "/websocket", method = RequestMethod.GET)
+//    public String websocket() {
+//        return "/front/websocket";
+//    }
 
 
     /**
@@ -240,5 +245,12 @@ public class IndexController {
     public String error401() {
         return "/401";
     }
+
+
+//    @RequestMapping(value = "/st",method = RequestMethod.GET)
+//    public String socket(){
+//
+//    }
+
 
 }

@@ -118,33 +118,32 @@ public class LoginController extends AjaxUtils {
 
     /**
      * POST  注册请求
+     * <p>
+     * user.username 用户名
+     * user.password 密码  MD5加过的
+     * user.home     手机号码
      *
-     * @param username 用户名
-     * @param password 密码  MD5加过的
-     * @param home     手机号码
      * @return
      */
     @ResponseBody
     @PostMapping("/register")
     @PassToken
-    public String registerPost(String username, String password, String home) {
-        HashMap<String, Object> hashMap = new HashMap<>(4);
-        int m = sysUserService.selectRec(username);
+    public AjaxUtils registerPost(@NotNull @RequestBody User user) {
+        System.out.println("user = " + user);
+
+        /*检查是否已有该用户*/
+        int m = sysUserService.selectRec(user.getUser_name());
         if (m == 0) {
-            int n = sysUserService.insertRegister(username, password, new Date(), home);
+            /*当数据表没有该用户时，写入用户数据*/
+            int n = sysUserService.insertRegister(user.getUser_name(), MD5Util.inputPassToFromPass(user.getPass_word()), new Date(), user.getUser_iphone());
             if (n > 0) {
-                hashMap.put("bool", true);
-                hashMap.put("msg", "注册成功");
+                return new AjaxUtils(true, "注册成功");
             } else {
-                hashMap.put("bool", false);
-                hashMap.put("msg", "注册失败");
+                return new AjaxUtils(false, "注册失败");
             }
         } else {
-            hashMap.put("bool", false);
-            hashMap.put("msg", "该用户名已被使用");
+            return new AjaxUtils(false, "该用户名已被占用");
         }
-        System.out.println("hashMap = " + hashMap);
-        return JSON.toJSONString(hashMap);
     }
 
 
@@ -156,7 +155,7 @@ public class LoginController extends AjaxUtils {
      */
     @RequestMapping(value = "/getCode")
     @ResponseBody
-    public void getCode(HttpServletRequest req, HttpServletResponse resp) {
+    public void getCode(@NotNull HttpServletRequest req, @NotNull HttpServletResponse resp) {
         // 调用工具类生成的验证码和验证码图片
         Map<String, Object> codeMap = CodeUtils.generateCodeAndPic();
 
@@ -191,7 +190,7 @@ public class LoginController extends AjaxUtils {
      */
     @RequestMapping(value = "/yz", method = RequestMethod.GET)
     @ResponseBody
-    public Object yz(String yzm, HttpServletRequest request) {
+    public Object yz(String yzm, @NotNull HttpServletRequest request) {
         //字符串全部转为小写
         yzm = yzm.toLowerCase();
         String yzm1 = request.getSession().getAttribute("code").toString().toLowerCase();

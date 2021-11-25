@@ -56,7 +56,11 @@
                 <div class="layui-col-xs3">
                     <div class="grid-demo grid-demo-bg3">
                         <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
-                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img th:src="@{/static/image/zl.png}" height="50" width="50" style="border-radius: 50%"/>招领网</strong></div>
+                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
+                                                                                                        style="border-radius: 50%"
+                                                                                                        th:src="@{/static/image/zl.png}"
+                                                                                                        width="50"/>招领网</strong>
+                        </div>
                     </div>
                 </div>
                 <div class="layui-col-xs7">
@@ -182,7 +186,6 @@
             // }
         });
 
-
         let count;
         let text = "";
         let test = "";
@@ -213,6 +216,8 @@
 
                     count = res.data;
                     loading("加载中");    //开始加载
+                    $("#text").val("");
+
                 }
             })
         }

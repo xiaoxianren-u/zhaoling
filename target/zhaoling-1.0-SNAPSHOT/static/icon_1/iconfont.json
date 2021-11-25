@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17805508",
+      "name": "top_联系方式",
+      "font_class": "top_lianxifangshi",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "8682597",
       "name": "公告",
       "font_class": "gonggao",

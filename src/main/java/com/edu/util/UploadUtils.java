@@ -1,5 +1,6 @@
 package com.edu.util;
 
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +24,10 @@ public class UploadUtils {
 
     public static String BASE_PATH = null;
 
+    @Nullable
     public static String upload(MultipartFile file, HttpServletRequest request, String url) {
         String SERVER_PATH = "/static/upload/";
+
 
         request.getSession().setAttribute("file", file);
         MultipartFile file1 = (MultipartFile) request.getSession().getAttribute("file");
@@ -33,7 +36,9 @@ public class UploadUtils {
 
         SERVER_PATH = SERVER_PATH + url + "/";
 
-
+//        System.out.println("url = " + url);
+//        System.out.println("request = " + request);
+//        System.out.println("file = " + file);
         String[] output = BASE_PATH.split("target");
         String BASE_PATH_TO = BASE_PATH + "\\static\\upload\\" + url + "\\";
         BASE_PATH = output[0] + "src\\main\\webapp\\static\\upload\\" + url + "\\";
@@ -62,7 +67,7 @@ public class UploadUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+//        System.out.println("SERVER_PATH + newFileName = " + SERVER_PATH + newFileName);
         //返回请求路径
         return SERVER_PATH + newFileName;
     }

@@ -187,8 +187,7 @@ public class SysIndexController extends AjaxUtils {
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/postman.action", method = RequestMethod.GET)
-    public String postMan(ModelMap modelMap) {
-
+    public String postMan(@NotNull ModelMap modelMap) {
 
         modelMap.put("lab_list", sysLabelService.list());
         return "back/post_man";
