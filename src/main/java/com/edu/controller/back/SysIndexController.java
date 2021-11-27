@@ -1,17 +1,20 @@
 package com.edu.controller.back;
 
 import com.edu.config.UserConfig;
+import com.edu.intercept.LoginInterceptor;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.ConTents;
 import com.edu.pojo.User;
 import com.edu.service.SysConTentService;
 import com.edu.service.SysLabelService;
+import com.edu.service.SysSticsService;
 import com.edu.service.SysUserService;
 import com.edu.util.AjaxUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,6 +46,20 @@ public class SysIndexController extends AjaxUtils {
 
     @Autowired
     private SysLabelService sysLabelService;
+
+    @Autowired
+    private SysSticsService sysSticsService;
+
+    /**
+     * 记录访问次数
+     *
+     * @ModelAttribute注释的方法会在此controller的每个方法执行前被执行
+     */
+    @ModelAttribute
+    public void countAdd() {
+        LoginInterceptor.count++;
+    }
+
 
     /**
      * 后台页面目录
@@ -177,7 +194,17 @@ public class SysIndexController extends AjaxUtils {
      */
     @UserLoginToken(state = 1)
     @RequestMapping(value = "/welcome.action", method = RequestMethod.GET)
-    public String findAction() {
+    public String findAction(@NotNull ModelMap modelMap) {
+
+        //折线图
+        modelMap.put("pol", sysSticsService.selectPolylines());
+        //柱形图
+        modelMap.put("re", sysSticsService.selectReturnSi());
+        //访问量
+        modelMap.put("stics", sysSticsService.selectStics());
+        //饼图
+        modelMap.put("lo", sysSticsService.selectLose());
+
         return "back/welcome";
     }
 
@@ -191,6 +218,20 @@ public class SysIndexController extends AjaxUtils {
 
         modelMap.put("lab_list", sysLabelService.list());
         return "back/post_man";
+    }
+
+    /**
+     * 帖子领取完成页面
+     *
+     * @param modelMap
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/receive.action", method = RequestMethod.GET)
+    public String receive(@NotNull ModelMap modelMap) {
+
+        modelMap.put("lab_list", sysLabelService.list());
+        return "back/receive";
     }
 
 }

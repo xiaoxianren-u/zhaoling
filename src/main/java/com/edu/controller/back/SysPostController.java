@@ -40,9 +40,10 @@ public class SysPostController extends AjaxUtils {
                              @RequestParam("post_time") String post_time,  //发帖时间
                              @RequestParam("post_found_time") String postFound_time,  //捡到或遗失时间
                              @RequestParam("post_status1") Integer postStatus1,  //捡到0或遗失1
+                             @RequestParam("post_status") Integer postStatus,  //物品状态
                              @RequestParam("page") Integer page,
                              @RequestParam("limit") Integer limit) {
-        Post post = new Post(userName, postTitle, postStatus1, null, postSubstance, labName, null, postFoundPlace);
+        Post post = new Post(userName, postTitle, postStatus1, null, postSubstance, labName, null, postFoundPlace, postStatus);
 
         //  时间装换
         if (!"".equals(post_time) && post_time != null) {
@@ -62,4 +63,33 @@ public class SysPostController extends AjaxUtils {
 
         return sysPostService.selectAll(page, limit, post);
     }
+
+
+    /**
+     * 修改物品状态
+     *
+     * @param postStatus
+     * @param postId
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/up", method = RequestMethod.GET)
+    public AjaxUtils postUp(@RequestParam("post_status") Integer postStatus,
+                            @RequestParam("post_id") Integer postId) {
+        return sysPostService.upPost(postId, postStatus);
+    }
+
+    /**
+     * 删除物品
+     *
+     * @param postId
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/del", method = RequestMethod.GET)
+    public AjaxUtils postDel(@RequestParam("post_id") Integer postId) {
+        return sysPostService.delPost(postId);
+    }
+
+
 }

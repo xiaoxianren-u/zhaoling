@@ -20,12 +20,15 @@ import java.lang.reflect.Method;
  */
 public class LoginInterceptor implements HandlerInterceptor {
 
+    public static int count = 0;
     @Autowired
     private SysUserService sysUserService;
 
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+        /* 记录网站访问查次数*/
+
         String token = null;
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {

@@ -1,0 +1,99 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.SticsDao">
+
+<!--    查询访问量-->
+
+        <select id="selectStics" resultType="com.edu.pojo.Stics">
+            select access, visits from zhaoling.tb_stics
+        </select>
+
+
+<!--   访问数量增加-->
+        <update id="accessAdd">
+            update zhaoling.tb_stics
+            set access = access + #{count},
+                visits = visits + #{count}
+
+            where st_id = 1
+
+        </update>
+<!--        每周星期天 23：59:59-->
+        <update id="accessUp">
+            update zhaoling.tb_stics
+            set access = 0
+            where st_id = 1
+        </update>
+
+<!--        查询所有数据表的数据-->
+        <select id="selectPolylines" resultType="com.edu.pojo.Polyline">
+            select * from zhaoling.tb_polyline
+        </select>
+<!--        每日物品情况-->
+        <select id="selectReturnSi" resultType="com.edu.pojo.ReturnSi">
+                select * from zhaoling.tb_return_si
+        </select>
+<!--        饼图数据-->
+        <select id="selectLose" resultType="com.edu.pojo.Lose">
+            select value, name from zhaoling.tb_lose
+        </select>
+<!--        查询当月的发帖数量 既：丢失和寻找数量-->
+        <select id="selCount" resultType="com.edu.pojo.Count">
+            SELECT lab_name, Count(*) as count FROM zhaoling.post_db
+            WHERE datediff(date_sub(date_sub(date_format(now(),'%y-%m-%d  00:00:00'),interval extract(day from now())-1 day),interval 0 month), post_time) <![CDATA[<= ]]> 0
+			AND  datediff(post_time,date_add(curdate()-day(curdate())+1,interval 1 month)) <![CDATA[< ]]> 0
+			group by lab_name
+        </select>
+        <!--        查询某个月的物品归还量-->
+<!--        <select id="selGetCount" resultType="java.lang.Integer">-->
+<!--            SELECT lab_name, Count(*) as count FROM zhaoling.post_db-->
+
+<!--            WHERE datediff(date_sub(date_sub(date_format(now(),'%y-%m-%d  00:00:00'),interval extract(day from now())-1 day),interval 0 month), post_time) <![CDATA[<= ]]> 0-->
+<!--			AND  datediff(post_time,date_add(curdate()-day(curdate())+1,interval 1 month)) <![CDATA[< ]]> 0-->
+
+<!--			group by lab_name-->
+
+<!--        </select>-->
+
+
+<!--修改饼图数据-->
+        <update id="upLose">
+            update zhaoling.tb_lose
+            set value = #{s.count}
+            where name = #{s.lab_name}
+        </update>
+
+
+<!--获取柱状图需要的数据 丢失-->
+    <select id="selZhu" resultType="com.edu.pojo.Count">
+        select lab_name,COUNT(*) as count from zhaoling.post_db
+        where to_days(post_time) = to_days(now()) and (post_status =3 or post_status =2)
+        group by lab_name
+    </select>
+<!--修改柱状图的丢失数据-->
+    <update id="upReLose">
+        update zhaoling.tb_return_si
+        set re_lose = #{count}
+        where lab_name = #{lab_name}
+    </update>
+
+    <!--获取柱状图找回-->
+    <select id="selRe" resultType="com.edu.pojo.Count">
+        select lab_name,COUNT(*) as count from zhaoling.post_db
+        where to_days(post_time) = to_days(now()) and post_status =3
+        group by lab_name
+    </select>
+<!--修改柱状图的找回数据-->
+    <update id="upRe">
+        update zhaoling.tb_return_si
+        set re_return = #{count}
+        where lab_name = #{lab_name}
+    </update>
+
+<!--    柱状图恢复默认-->
+   <update id="reDefault">
+         update zhaoling.tb_return_si
+         set re_return = 0,
+            re_lose = 0
+        where lab_name != '1'
+   </update>
+</mapper>

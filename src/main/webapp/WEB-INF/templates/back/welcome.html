@@ -33,12 +33,16 @@
                                       style="float: right;margin-top: 12px">周</span>
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
-                                <p class="layuiadmin-big-font" style="font-size: 30px;color: black;margin-bottom: 20px">
-                                    9,999,666</p>
+                                <p class="layuiadmin-big-font" style="font-size: 30px;color: black;margin-bottom: 20px"
+                                   th:text="${stics.access}"></p>
                                 <p>
                                     <span>总计访问量</span>
-                                    <span class="layuiadmin-span-color" style="float: right">88万 <i
-                                            class="layui-inline layui-icon layui-icon-flag"></i></span>
+                                    <span class="layuiadmin-span-color" style="float: right">
+                                        <span th:if="${stics.visits} > 100000"><span
+                                                th:text="${stics.visits}/100"></span>万 </span>
+                                        <span th:if="${stics.visits} < 100000" th:text="${stics.visits}"></span>
+                                        <i class="layui-inline layui-icon layui-icon-flag"></i>
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -164,20 +168,78 @@
 </div>
 
 
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
+
+    let list = [[${pol}]];
+    // console.log(list );
+
+
+    // 指定图表的配置项和数据
+    let name = [];
+    let data = [];
+    for (let i = 0; i < list.length - 1; i++) {
+        name[i] = list[i].lab_name;
+        // console.log(list[i].lab_name);
+        let data0 = [];
+        data0[0] = list[i].monday;
+        data0[1] = list[i].tuesday;
+        data0[2] = list[i].wednesday;
+        data0[3] = list[i].thursday;
+        data0[4] = list[i].friday;
+        data0[5] = list[i].saturday;
+        data0[6] = list[i].sunday;
+
+        data[i] = {
+            name: list[i].lab_name,
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            data: data0
+        }
+    }
+
+    name[list.length - 1] = list[list.length - 1].lab_name;
+    let data0 = [];
+    data0[0] = list[list.length - 1].monday;
+    data0[1] = list[list.length - 1].tuesday;
+    data0[2] = list[list.length - 1].wednesday;
+    data0[3] = list[list.length - 1].thursday;
+    data0[4] = list[list.length - 1].friday;
+    data0[5] = list[list.length - 1].saturday;
+    data0[6] = list[list.length - 1].sunday;
+
+    data[list.length - 1] = {
+        name: list[list.length - 1].lab_name,
+        type: 'line',
+        stack: 'Total',
+        label: {
+            show: true,
+            position: 'top'
+        },
+        areaStyle: {},
+        emphasis: {
+            focus: 'series'
+        },
+        data: data0
+    }
+
+
+    // console.log(name);
+    // console.log(data);
+
 
     // 基于准备好的dom，初始化echarts实例
     let myChart = echarts.init(document.getElementById('main'));
     let myChat_tie = echarts.init(document.getElementById('tie'));
     let myChat_bin = echarts.init(document.getElementById('bin'));
 
-    // 指定图表的配置项和数据
-    let data1 = [120, 1000, 101, 134, 90, 230, 210];
-
     //折线图
     let option_tie = {
         title: {
-            text: '物品丢失-报表'
+            text: '上周物品丢失-报表'
         },
         tooltip: {
             trigger: 'axis',
@@ -189,7 +251,7 @@
             }
         },
         legend: {
-            data: ['电子产品', '随身物品', '书籍', '钱财', '贵重物品', '衣物']
+            data: name
         },
         toolbox: {
             feature: {
@@ -214,88 +276,19 @@
                 type: 'value'
             }
         ],
-        series: [
-            {
-                name: '电子产品',
-                type: 'line',
-                stack: 'Total',
-                areaStyle: {},
-                emphasis: {
-                    focus: 'series'
-                },
-                data: data1
-            },
-            {
-                name: '随身物品',
-                type: 'line',
-                stack: 'Total',
-                areaStyle: {},
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name: '书籍',
-                type: 'line',
-                stack: 'Total',
-                areaStyle: {},
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name: '钱财',
-                type: 'line',
-                stack: 'Total',
-                areaStyle: {},
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name: '贵重物品',
-                type: 'line',
-                stack: 'Total',
-                label: {
-                    show: true,
-                    position: 'top'
-                },
-                areaStyle: {},
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [820, 932, 901, 934, 1290, 1330, 1320]
-            },
-            {
-                name: '衣物',
-                type: 'line',
-                stack: 'Total',
-                label: {
-                    show: true,
-                    position: 'top'
-                },
-                areaStyle: {},
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [120, 932, 901, 934, 1290, 1330, 1320]
-            }
-        ]
+        series: data
     };
     myChat_tie.setOption(option_tie);
 
     //饼图
+
+    let lo = [[${lo}]];
+    // console.log(lo);
     let option_bin = {
-
-
         title: {
-            text: '上月物品丢失情况',
+            text: '当月物品丢失情况',
             left: 'left'
         },
-
         tooltip: {
             trigger: 'item',
             // backgroundColor: 'rgba(0,0,0,1)',
@@ -308,17 +301,20 @@
         },
         series: [
             {
-                name: 'Access From',
+                name: '访问自',
                 type: 'pie',
                 radius: '50%',
-                data: [
-                    {value: 1048, name: '电子产品'},
-                    {value: 735, name: '随身物品'},
-                    {value: 580, name: '书籍'},
-                    {value: 484, name: '钱财'},
-                    {value: 580, name: '贵重物品'},
-                    {value: 484, name: '衣物'}
-                ],
+                data: lo
+
+                //     [
+                //     {value: 1048, name: '电子产品'},
+                //     {value: 735, name: '随身物品'},
+                //     {value: 580, name: '书籍'},
+                //     {value: 484, name: '钱财'},
+                //     {value: 580, name: '贵重物品'},
+                //     {value: 484, name: '衣物'}
+                // ],
+                ,
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,
@@ -332,21 +328,32 @@
     myChat_bin.setOption(option_bin);
 
     // 柱状图
+
+    let re = [[${re}]];
+    let daa = [];
+    let n = 100;
+    daa[0] = ['product', '丢失', '找回', '未找回'];
+    for (let i = 0; i < re.length; i++) {
+        daa[i + 1] = [re[i].lab_name, re[i].re_lose, re[i].re_return, re[i].re_lose - re[i].re_return];
+    }
+    // console.log(daa);
+
     let option = {
         legend: {},
         title: {
-            text: '每天物品情况'
+            text: '当天物品情况'
         },
         tooltip: {},
         dataset: {
-            source: [
-                ['product', '丢失', '找回', '未找回'],
-                ['电子产品', 43.3, 85.8, 93.7],
-                ['随身物品',],
-                ['书籍', 86.4, 65.2, 82.5],
-                ['钱财', 72.4, 53.9, 39.1],
-                ['贵重物品', 1272.4, 53.9, 39.1]
-            ]
+            source: daa
+            //     [
+            //     ['product', '丢失', '找回', '未找回'],
+            //     ['电子产品', 43.3, 85.8, 93.7],
+            //     ['随身物品',],
+            //     ['书籍', 86.4, 65.2, 82.5],
+            //     ['钱财', 72.4, 53.9, 39.1],
+            //     ['贵重物品', 1272.4, 53.9, 39.1]
+            // ]
         },
         xAxis: {type: 'category'},
         yAxis: {},

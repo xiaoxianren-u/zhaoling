@@ -21,4 +21,20 @@ public interface SysPostService {
      */
     AjaxUtils selectAll(Integer page, Integer limit, Post post);
 
+    /**
+     * 修改物品状态
+     *
+     * @param postId
+     * @param postStatus
+     * @return
+     */
+    AjaxUtils upPost(Integer postId, Integer postStatus);
+
+    /**
+     * 删除物品
+     *
+     * @param postId
+     * @return
+     */
+    AjaxUtils delPost(Integer postId);
 }

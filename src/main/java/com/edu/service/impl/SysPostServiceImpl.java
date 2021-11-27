@@ -4,6 +4,7 @@ import com.edu.dao.SysPostDao;
 import com.edu.pojo.Post;
 import com.edu.service.SysPostService;
 import com.edu.util.AjaxUtils;
+import com.edu.util.PageCodeEnum;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,44 @@ public class SysPostServiceImpl implements SysPostService {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * 修改物品状态
+     *
+     * @param postId
+     * @param postStatus
+     * @return
+     */
+    @Override
+    public AjaxUtils upPost(Integer postId, Integer postStatus) {
+
+        try {
+            sysPostDao.upPost(postId, postStatus);
+            return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
+    }
+
+
+    /**
+     * 删除物品
+     *
+     * @param postId
+     * @return
+     */
+    @Override
+    public AjaxUtils delPost(Integer postId) {
+
+        try {
+            sysPostDao.delPost(postId);
+            return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.REMOVE_SUCCESS.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
     }
 }

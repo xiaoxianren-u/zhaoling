@@ -52,16 +52,15 @@ VALUES ('了解招物', '/sys/welcome.action', 1, 'iconfont icon-lejie'),
        ('菜单管理', '/sys/menu.action', 2, 'iconfont icon-caidanguanli'),
        ('用户黑名单', '/sys/black.action', 2, 'iconfont icon-heimingdan'),
        ('帖子管理', '/sys/postman.action', 3, 'iconfont icon-yunyingguanli_tieziguanli'),
-       ('发布帖子', DEFAULT, 3, 'iconfont icon-fabudetiezi'),
-       ('寻物帖子', DEFAULT, 3, 'iconfont icon-0-10'),
+       ('成功案列', '/sys/receive.action', 3, 'iconfont icon-fabudetiezi'),
        ('帖子举报', DEFAULT, 3, 'iconfont icon-jubao'),
-       ('物品状态', DEFAULT, 3, 'iconfont icon-iconfkzt'),
        ('帖子分类', '/sys.label.action', 3, 'iconfont icon-fenlei'),
        ('通知公告', '/sys/anNoun.action', 4, 'iconfont icon-tongzhigonggao'),
        ('意见与反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
        ('发表感谢', DEFAULT, 4, 'iconfont icon-ganxie'),
        ('用户消息', DEFAULT, 4, 'iconfont icon-xiaoxi'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
+       ('登录日志', '/sys/log.action', 5, 'iconfont icon-drxx92'),
        ('登录日志', '/sys/log.action', 5, 'iconfont icon-drxx92'),
        ('基本资料', '/sys/basic.action', 6, 'iconfont icon-jibenziliao'),
        ('修改密码', '/sys/upPass.action', 6, 'iconfont icon-xiugaimima'),
@@ -172,6 +171,13 @@ CREATE TABLE `label_db`
     PRIMARY KEY (lab_id, lab_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '标签表';
+insert into label_db(lab_name)
+values ('电子产品'),
+       ('书籍资料'),
+       ('其他物品'),
+       ('卡类证件'),
+       ('衣物饰品'),
+       ('随身物品');
 # 帖子表
 # DROP TABLE IF EXISTS `post_db`;
 CREATE TABLE post_db
@@ -217,3 +223,81 @@ CREATE TABLE log_book_db
     constraint fk_log_user foreign key (log_user) references user_db (user_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '系统日志表';
+
+# 网站访问量
+CREATE TABLE tb_stics
+(
+    st_id    INT(11)    NOT NULL AUTO_INCREMENT COMMENT 'st_id',
+    `access` INT(11)    NOT NULL DEFAULT 0 COMMENT '周网站访问量',
+    visits   BIGINT(15) NOT NULL DEFAULT 0 COMMENT '网站访问总量',
+    tMonth   INT(11)    NOT NULL DEFAULT 0 COMMENT '这个月活跃用户人数',
+    lMonth   INT(11)    NOT NULL DEFAULT 0 COMMENT '最近一个月活跃用户人数',
+    PRIMARY KEY (st_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '网站访问量';
+
+insert into tb_stics(access) VALUE (0);
+
+CREATE TABLE tb_polyline
+(
+    pol_id    INT(11)     NOT NULL AUTO_INCREMENT COMMENT 'pol_id',
+    lab_name  VARCHAR(50) NOT NULL DEFAULT '' COMMENT '标签名',
+    monday    INT(11)     NOT NULL DEFAULT 0 COMMENT '星期一',
+    tuesday   INT(11)     NOT NULL DEFAULT 0 COMMENT '星期二',
+    wednesday INT(11)     NOT NULL DEFAULT 0 COMMENT '星期三',
+    thursday  INT(11)     NOT NULL DEFAULT 0 COMMENT '星期四',
+    friday    INT(11)     NOT NULL DEFAULT 0 COMMENT '星期五',
+    saturday  INT(11)     NOT NULL DEFAULT 0 COMMENT '星期六',
+    sunday    INT(11)     NOT NULL DEFAULT 0 COMMENT '星期天',
+    PRIMARY KEY (pol_id),
+    constraint fk_pol_lab foreign key (lab_name) references label_db (lab_name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '数据表';
+
+insert into tb_polyline(lab_name)
+values ('电子产品'),
+       ('书籍资料'),
+       ('其他物品'),
+       ('卡类证件'),
+       ('衣物饰品'),
+       ('随身物品');
+
+
+CREATE TABLE tb_return_si
+(
+    re_id     INT(11)     NOT NULL AUTO_INCREMENT COMMENT 're_id',
+    lab_name  VARCHAR(50) NOT NULL DEFAULT '' COMMENT '标签名',
+    re_lose   INT(11)     NOT NULL DEFAULT 0 COMMENT '丢失',
+    re_return INT(11)     NOT NULL DEFAULT 0 COMMENT '找回',
+    PRIMARY KEY (re_id),
+    constraint fk_re_lab foreign key (lab_name) references label_db (lab_name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '每日物品情况表';
+
+insert into tb_return_si(lab_name)
+values ('电子产品'),
+       ('书籍资料'),
+       ('其他物品'),
+       ('卡类证件'),
+       ('衣物饰品'),
+       ('随身物品');
+
+
+CREATE TABLE tb_lose
+(
+    lo_id   INT(11)     NOT NULL AUTO_INCREMENT COMMENT 'lo_id',
+    `value` INT(11)     NOT NULL DEFAULT 0 COMMENT 'value',
+    `name`  VARCHAR(50) NOT NULL DEFAULT '' COMMENT 'name',
+    PRIMARY KEY (lo_id),
+    constraint fk_lo_lab foreign key (name) references label_db (lab_name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '物品丢失情况';
+
+
+insert into tb_lose(name)
+values ('电子产品'),
+       ('书籍资料'),
+       ('其他物品'),
+       ('卡类证件'),
+       ('衣物饰品'),
+       ('随身物品');

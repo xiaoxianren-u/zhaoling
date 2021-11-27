@@ -34,7 +34,9 @@
                     <div class="layui-card-body">
                         <div style="padding-bottom: 10px;">
                             <!--                            <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>-->
-                            <!--                            <button class="layui-btn layuiadmin-btn-admin" data-type="add" id="add"><i class="iconfont icon-zengjia"></i>&nbsp;添加</button>-->
+                            <!--                            <button class="layui-btn layuiadmin-btn-admin" data-type="add" id="add"><i-->
+                            <!--                                    class="iconfont icon-zengjia"></i>&nbsp;添加-->
+                            <!--                            </button>-->
                         </div>
                     </div>
 
@@ -147,31 +149,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="layui-row" style="">
-                                            <div class="layui-col-xs3">
-                                                <div class="grid-demo grid-demo-bg1">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    物品状态
-                                                    <div class="layui-inline" style="width: 180px">
-                                                        <select id="post_status" lay-verify="" name="post_status">
-                                                            <option value="">全部</option>
-                                                            <option value="-1">已被驳回</option>
-                                                            <option value="0">待审核中</option>
-                                                            <option value="2">待领取中</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="layui-col-xs3">
-                                                <div class="grid-demo grid-demo-bg1">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <button class="layui-btn layuiadmin-btn-admin" data-type="add"
-                                                            id="add"><i class="iconfont icon-zengjia"></i>&nbsp;新增
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="layui-col-xs1">
@@ -202,7 +179,7 @@
 
 <script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
     <!--    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>-->
-    <a class="layui-btn layui-btn-xs" lay-event="more">编辑 <i class="layui-icon layui-icon-edit"></i></a>
+    <!--    <a class="layui-btn layui-btn-xs" lay-event="more">编辑 <i class="layui-icon layui-icon-edit"></i></a>-->
 
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
             class="layui-icon layui-icon-delete"></i>删除</a>
@@ -263,12 +240,8 @@
 </div>
 
 <script id="sta" th:inline="none" type="text/html">
-    {{#  if(d.post_status == 0){ }}
-    <p style="color: #1E9FFF">待审核中</p>
-    {{#  } else  if(d.post_status == 2){ }}
-    <p style="color: #c47777">待领取中</p>
-    {{#  } else  if(d.post_status == -1){ }}
-    <p style="color: red">已被驳回</p>
+    {{#  if(d.post_status == 3){ }}
+    <p style="color: #1E9FFF">已领取</p>
     {{#  } }}
 </script>
 
@@ -287,21 +260,26 @@
         });
 
         table.render({
-            elem: '#test',
-            url: '/sys/post/list?user_name=' + "" + "&post_title=" + "" + "&post_substance=" + "" + "&post_found_place=" + "" + "&lab_name=" + "" + "&post_time=" + "" + "&post_found_time=" + "" + "&post_status1=" + "" + "&post_status=" + ""
+            elem: '#test'
+            ,
+            url: '/sys/post/list?user_name=' + "" + "&post_title=" + "" + "&post_substance=" + "" + "&post_found_place=" + "" + "&lab_name=" + "" + "&post_time=" + "" + "&post_found_time=" + "" + "&post_status1=" + "" + "&post_status=" + 3
             ,
             toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,
             title: '用户表'
             // , height: 770
             ,
-            limit: 15,
+            limit: 15
+            ,
             limits: [15, 25, 50]
             ,
             cols: [[
                 {type: 'checkbox', fixed: 'center'}
                 , {field: 'post_id', title: '编号', width: 70,}
                 , {field: 'post_status', title: '物品状态', width: 90, templet: '#sta'}
+                , {field: 'post_receive_link', title: '领取人联系方式', width: 130}
+                , {field: 'post_receive_name', title: '领取人名', width: 90,}
+                , {field: 'post_receive_time', title: '领取时间', width: 160, sort: true}
                 , {field: 'user_name', title: '发布者', width: 120, edit: 'text', sort: true}
                 , {field: 'post_image', title: '图片', width: 70, templet: '#img'}
                 , {field: 'post_status1', title: '状态', width: 75, templet: '#status1', sort: true}
@@ -312,7 +290,7 @@
                 , {field: 'post_found_place', title: '遗失或捡到地点', width: 140}
                 , {field: 'post_time', title: '发布时间', width: 160, sort: true}
                 , {field: 'post_found_time', title: '遗失或捡到时间', width: 160, sort: true}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 90}
             ]]
             ,
             page: {
@@ -335,7 +313,7 @@
                 let post_time = $('#test1').val();
                 let post_found_time = $('#test2').val();
                 let post_status1 = $('#post_status1 option:selected').val();
-                let post_status = $('#post_status option:selected').val();
+
 
                 //执行重载
                 table.reload('testReload', {
@@ -343,7 +321,7 @@
                         curr: 1 //重新从第 1 页开始
                     },
                     url: '/sys/post/list?user_name=' + user_name + "&post_title=" + post_title + "&post_substance=" + post_substance + "&post_found_place=" + post_found_place +
-                        "&lab_name=" + lab_name + "&post_time=" + post_time + "&post_found_time=" + post_found_time + "&post_status1=" + post_status1 + "&post_status=" + post_status
+                        "&lab_name=" + lab_name + "&post_time=" + post_time + "&post_found_time=" + post_found_time + "&post_status1=" + post_status1 + "&post_status=" + 3
                 });
             }
         };
@@ -427,7 +405,6 @@
                 })
             } else if (obj.event === 'more') {
                 //下拉菜单
-                let post_status;
                 dropdown.render({
                     elem: this //触发事件的 DOM 对象
                     , show: true //外部事件触发即显示
@@ -442,35 +419,40 @@
                         , id: 0
                     }]
                     , click: function (menudata) {
-                        post_status = menudata.id;
-                        $.ajax({
-                            type: "get",
-                            url: "/sys/post/up?post_id=" + data.post_id + "&post_status=" + post_status,
-                            async: true,
-                            dataType: "json",
-                            contentType: "application/json;charset=UTF-8",
-                            success: function (data) {
-                                if (data.bool === true) {
-                                    layer.msg(data.msg, {icon: 6});
-                                    // deviceTable.reload()
-                                    //更新状态
-                                    if (menudata.id === 2) {
-                                        layer.msg("通过");
+                        if (menudata.id === 2) {
+                            layer.msg("通过" + data.post_id);
+                            post_status = menudata.id;
+                        } else if (menudata.id === -1) {
+                            layer.msg("已被驳回" + data.post_id);
+                            post_status = menudata.id;
+                        } else if (menudata.id === 0) {
+                            layer.msg("从新审核" + data.post_id);
+                            post_status = menudata.id;
+                        }
 
-                                    } else if (menudata.id === -1) {
-                                        layer.msg("已被驳回");
-
-                                    } else if (menudata.id === 0) {
-                                        layer.msg("从新审核");
-                                    }
-                                    obj.update({
-                                        post_status: post_status,
-                                    });
-                                } else {
-                                    layer.msg(data.msg, {icon: 5});
-                                }
-                            }
+                        obj.update({
+                            post_status: post_status,
                         });
+
+                        // $.ajax({
+                        //     type: "get",
+                        //     // url: "${pageContext.request.contextPath}/sys/houtai/generalList/sta?text_id="+data.text_id+"&text_status="+text_status,
+                        //     async: true,
+                        //     dataType: "json",
+                        //     contentType: "application/json;charset=UTF-8",
+                        //     success: function (data) {
+                        //         if(data === true){
+                        //             layer.msg("成功修改", {icon: 6});
+                        //             // deviceTable.reload()
+                        //             //更新状态
+                        //             obj.update({
+                        //                 post_status:post_status,
+                        //             });
+                        //         }else {
+                        //             layer.msg("修改失败", {icon: 5});
+                        //         }
+                        //     }
+                        // });
                     }
                     , align: 'right' //右对齐弹出（v2.6.8 新增）
                     , style: 'box-shadow: 1px 1px 10px rgb(0 0 0 / 12%);' //设置额外样式

@@ -1,6 +1,7 @@
 package com.edu.controller.front;
 
 import com.edu.config.UserConfig;
+import com.edu.intercept.LoginInterceptor;
 import com.edu.intercept.PassToken;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.Post;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +43,17 @@ public class IndexController {
 
     @Autowired
     private ForPostService forPostService;
+
+    /**
+     * 记录访问次数
+     *
+     * @ModelAttribute注释的方法会在此controller的每个方法执行前被执行
+     */
+    @ModelAttribute
+    public void countAdd() {
+        LoginInterceptor.count++;
+    }
+
 
     @RequestMapping("/")
     @PassToken

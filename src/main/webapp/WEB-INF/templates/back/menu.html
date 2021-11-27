@@ -120,10 +120,10 @@
                                             </div>
                                             <div class="layui-col-xs1">
                                                 <div class="grid-demo">
-                                                    <span class="layui-badge layui-bg-blue"
+                                                    <span class="layui-badge  layui-bg-blue"
                                                           style="border-radius: 10px"
                                                           th:if="${s.m_vital}==0">显示</span>
-                                                    <span class="layui-badge"
+                                                    <span class="layui-badge "
                                                           style="border-radius: 10px"
                                                           th:if="${s.m_vital} == 1">隐藏</span>
 
@@ -211,15 +211,33 @@
                                                                                 <div class="grid-demo">.</div>
                                                                             </div>
                                                                             <div class="layui-col-xs2">
-                                                                                <div class="grid-demo grid-demo-bg1">
-                                                                                    <span class="layui-badge layui-bg-blue"
+                                                                                <div class="grid-demo grid-demo-bg1"
+                                                                                     th:if="${t.con_name == '菜单管理'}">
+                                                                                    <span class="layui-badge layui-bg-blue layui-btn-disabled"
                                                                                           id="con_edit"
                                                                                           th:value="${t.con_id}"><i
-                                                                                            class="iconfont icon-web-icon-"
+                                                                                            class="iconfont icon-web-icon- "
                                                                                             style="color: white"></i>&nbsp;编辑</span>
                                                                                     <!--                                                                                    <span class="layui-badge layui-bg-green"><i></i>新增</span>-->
                                                                                     &nbsp;
-                                                                                    <span class="layui-badge"
+                                                                                    <span class="layui-badge layui-btn-disabled"
+                                                                                          id="con_delete"
+                                                                                          th:value="${t.con_id}"><i
+                                                                                            class="iconfont icon-shanchu"
+                                                                                            style="color: white"></i>&nbsp;删除</span>
+
+                                                                                </div>
+
+                                                                                <div class="grid-demo grid-demo-bg1"
+                                                                                     th:if="${t.con_name != '菜单管理'}">
+                                                                                    <span class="layui-badge layui-bg-blue "
+                                                                                          id="con_edit"
+                                                                                          th:value="${t.con_id}"><i
+                                                                                            class="iconfont icon-web-icon- "
+                                                                                            style="color: white"></i>&nbsp;编辑</span>
+                                                                                    <!--                                                                                    <span class="layui-badge layui-bg-green"><i></i>新增</span>-->
+                                                                                    &nbsp;
+                                                                                    <span class="layui-badge "
                                                                                           id="con_delete"
                                                                                           th:value="${t.con_id}"><i
                                                                                             class="iconfont icon-shanchu"

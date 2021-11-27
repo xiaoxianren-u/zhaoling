@@ -35,7 +35,7 @@ public class Post {
      */
     private String post_title;
     /**
-     * 帖子状态(-1驳回， 0审核中,1通过，2，待领取，3为已领取)
+     * 帖子状态(-1驳回， 0审核中,2，待领取，3为已领取)
      */
     private Integer post_status;
 
@@ -97,10 +97,11 @@ public class Post {
     private Date post_receive_time;
 
 
-    public Post(String user_name, String post_title, Integer post_status1, Date post_time, String post_substance, String lab_name, Date post_found_time, String post_found_place) {
+    public Post(String user_name, String post_title, Integer post_status1, Date post_time, String post_substance, String lab_name, Date post_found_time, String post_found_place, Integer post_status) {
         this.user_name = user_name;
         this.post_title = post_title;
         this.post_status1 = post_status1;
+        this.post_status = post_status;
         this.post_time = post_time;
         this.post_substance = post_substance;
         this.lab_name = lab_name;

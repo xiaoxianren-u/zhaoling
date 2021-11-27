@@ -29,4 +29,18 @@ public interface SysPostDao {
     List<Post> selectAll(@Param("page") Integer page, @Param("limit") Integer limit, @Param("post") Post post);
 
 
+    /**
+     * 修改物品状态
+     *
+     * @param postId
+     * @param postStatus
+     */
+    void upPost(@Param("postId") Integer postId, @Param("postStatus") Integer postStatus);
+
+    /**
+     * 删除物品
+     *
+     * @param postId
+     */
+    void delPost(@Param("postId") Integer postId);
 }
