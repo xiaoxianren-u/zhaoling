@@ -311,7 +311,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @return
      */
     @Override
-    public AjaxUtils dlUser(User user) {
+    public AjaxUtils dlUser(@NotNull User user) {
         if (sysUserDao.selectPassword("admin").equals(user.getPass_word())) {
 
             try {
@@ -323,5 +323,17 @@ public class SysUserServiceImpl implements SysUserService {
             }
         }
         return new AjaxUtils(false, "口令不匹配");
+    }
+
+
+    /**
+     * 获取用户昵称
+     *
+     * @param userName
+     * @return
+     */
+    @Override
+    public User getName(String userName) {
+        return sysUserDao.getName(userName);
     }
 }

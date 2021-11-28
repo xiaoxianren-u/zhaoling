@@ -87,7 +87,7 @@ public class TimedServiceImpl implements TimedService {
     @Scheduled(cron = "0 0/30 6-23 * * ?")
     @Override
     public void upReturn() {
-
+        System.out.println("2222222222222222222222222222222222222");
         /*
           修改丢失数据
          */
@@ -114,9 +114,10 @@ public class TimedServiceImpl implements TimedService {
      * 柱状图恢复默认
      * 每天早上6点触发
      */
-    @Scheduled(cron = "0 0 6 * * ?")
+    @Scheduled(cron = "0 0 11 * * ?")
     @Override
     public void reDefault() {
+        System.out.println("1111111111111111111111111");
         try {
             sticsDao.reDefault();
         } catch (Exception e) {

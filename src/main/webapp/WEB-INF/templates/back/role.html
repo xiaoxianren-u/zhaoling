@@ -129,8 +129,8 @@
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'ro_number', title: 'ID', width: 80,}
                 , {field: 'status', title: '角色', width: 210}
-                , {field: 'ro_have', title: '拥有权限', width: 480}
-                , {field: 'ro_describe', title: '具体描述', width: 480}
+                , {field: 'ro_have', title: '拥有权限', width: '30%'}
+                , {field: 'ro_describe', title: '具体描述', width: '30%'}
                 , {
                     field: 'ro_status', title: '角色状态', width: 150, templet: function (d) {
                         if (d.ro_status === 0) {
@@ -140,7 +140,7 @@
                         }
                     }
                 }
-                , {title: '操作', toolbar: '#barDemo', width: 180}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 160}
             ]]
         });
         table.on('tool(test)', function (obj) {
@@ -192,7 +192,10 @@
                         ro_have = $("#ro_have").val();
                         ro_describe = $("#ro_describe").val();
                         let ro_status = $('input[name="ro_status"]:checked').val();
-                        console.log({ro_status: ro_status, ro_have: ro_have, ro_describe: ro_describe});
+                        if (ro_id === 1) {
+                            ro_status = 0;
+                        }
+                        console.log({ro_status: ro_status, ro_have: ro_have, ro_describe: ro_describe, ro_id: ro_id});
                         $.ajax({
                             type: "GET",
                             url: "/role/edit?ro_id=" + ro_id + "&ro_have=" + ro_have + "&ro_describe=" + ro_describe + "&ro_status=" + ro_status,

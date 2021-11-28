@@ -177,7 +177,7 @@
                                 <div class="layui-col-xs1">
                                     <div class="grid-demo">
                                         <div class="layui-inline">
-                                            <button class="layui-btn" data-type="reload" type="submit"><i
+                                            <button class="layui-btn bt" data-type="reload" type="submit"><i
                                                     class="iconfont icon-sousuo"></i>搜索
                                             </button>
                                         </div>
@@ -277,7 +277,15 @@
         var table = layui.table,
             laydate = layui.laydate,
             dropdown = layui.dropdown,
+            util = layui.util,
             $ = layui.jquery;
+
+        util.fixbar({
+            css: {right: 5, bottom: 10}
+            , bgcolor: '#393D49'
+        });
+
+
         //常规用法
         laydate.render({
             elem: '#test1'
@@ -351,6 +359,13 @@
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+        //回车触发事件
+        $(document).keyup(function (event) {
+            if (event.keyCode === 13) {
+                $('.bt').trigger("click");
+            }
+        });
+
 
         //监听行工具事件
         table.on('tool(test)', function (obj) {

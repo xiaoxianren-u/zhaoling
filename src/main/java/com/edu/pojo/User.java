@@ -47,9 +47,9 @@ public class User {
     @ApiModelProperty("用户电话")
     private String user_iphone;
     /**
-     * 用户姓名
+     * 用户昵称
      */
-    @ApiModelProperty("用户姓名")
+    @ApiModelProperty("用户昵称")
     private String name;
     /**
      * 用户性别

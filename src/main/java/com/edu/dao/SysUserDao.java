@@ -160,4 +160,12 @@ public interface SysUserDao {
      * @param user
      */
     void dlUser(User user);
+
+    /**
+     * 获取用户昵称
+     *
+     * @param userName
+     * @return
+     */
+    User getName(@Param("userName") String userName);
 }

@@ -89,6 +89,19 @@ public class IndexController {
         return "/front/for_find.html";
     }
 
+    /**
+     * 成功页面
+     *
+     * @param modelMap
+     * @return
+     */
+    @PassToken
+    @RequestMapping(value = "/success")
+    public String successAction(@NotNull ModelMap modelMap) {
+        modelMap.put("lab_list", forLabelService.forList());
+        return "/front/success.html";
+    }
+
 
     /**
      * 前台登录页面
@@ -208,6 +221,14 @@ public class IndexController {
     public String textAction(@RequestParam("t") Integer t, @NotNull ModelMap modelMap) {
         Post post = forPostService.selectPo(t);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        User user = sysUserService.getName(post.getUser_name());
+        String name;
+        if ("".equals(user.getName())) {
+            name = "0";
+        } else {
+            name = user.getName();
+        }
+        modelMap.put("name", name);
         modelMap.put("post", post);
         modelMap.put("data1", formatter.format(post.getPost_found_time()));
         modelMap.put("data2", formatter.format(post.getPost_time()));
@@ -216,14 +237,31 @@ public class IndexController {
 
 
     /**
-     * 在线实时两天
+     * 成功归还帖子详细页面
      *
+     * @param t
+     * @param modelMap
      * @return
      */
-//    @RequestMapping(value = "/websocket", method = RequestMethod.GET)
-//    public String websocket() {
-//        return "/front/websocket";
-//    }
+    @RequestMapping(value = "/stext", method = RequestMethod.GET)
+    public String sTextAction(@RequestParam("t") Integer t, @NotNull ModelMap modelMap) {
+        Post post = forPostService.selectPo(t);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        User user = sysUserService.getName(post.getUser_name());
+        String name;
+        if ("".equals(user.getName())) {
+            name = "0";
+        } else {
+            name = user.getName();
+        }
+        modelMap.put("name", name);
+        modelMap.put("post", post);
+        modelMap.put("data1", formatter.format(post.getPost_found_time()));
+        modelMap.put("data2", formatter.format(post.getPost_time()));
+        modelMap.put("data3", formatter.format(post.getPost_receive_time()));
+
+        return "/front/stext";
+    }
 
 
     /**

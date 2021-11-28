@@ -96,6 +96,16 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_receive_time;
 
+    /**
+     * 领取过程的图片
+     */
+    private String post_receive_imga;
+
+    /**
+     * 感谢话语
+     */
+    private String text;
+
 
     public Post(String user_name, String post_title, Integer post_status1, Date post_time, String post_substance, String lab_name, Date post_found_time, String post_found_place, Integer post_status) {
         this.user_name = user_name;

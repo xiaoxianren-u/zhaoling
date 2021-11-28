@@ -128,6 +128,7 @@
                         </div>
                     </div>
                     <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
+
                     <div style="font-size: 18px;margin-bottom: 15px">&nbsp;&nbsp;&nbsp;发布者及发布日期</div>
                     <div style="font-size: 15px;color:#666666;">
                         <div class="layui-row">
@@ -176,8 +177,69 @@
 
                         </div>
                     </div>
+
+
                     <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
-                    <div style="font-size: 18px">&nbsp;&nbsp;&nbsp;操作</div>
+                    <div style="font-size: 18px;margin-bottom: 15px">&nbsp;&nbsp;&nbsp;领取信息</div>
+                    <div style="font-size: 15px;color:#666666;">
+                        <div class="layui-row">
+                            <div class="layui-col-xs4">
+                                <div class="grid-demo grid-demo-bg1">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 150px">领&nbsp;&nbsp;取&nbsp;&nbsp;者:</label>
+                                        <div class="layui-input-inline" style="top: 12px">
+                                            <p style="font-size: 15px;top:12px;color:#999999;"
+                                               th:text="${post.post_receive_name}"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="layui-col-xs4">
+                                <div class="grid-demo">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 150px">领取日期：</label>
+                                        <div class="layui-input-inline" style="top: 12px">
+                                            <p style="font-size: 14px;top:12px;color:#999999;" th:text="${data3}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs4">
+                                <div class="grid-demo">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 150px">联系方式：</label>
+                                        <div class="layui-input-inline" style="top: 12px">
+                                            <p style="font-size: 14px;top:12px;color:#999999;"
+                                               th:text="${post.post_receive_link}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
+                    <div style="font-size: 18px">&nbsp;&nbsp;&nbsp;领取过程图</div>
+                    <div style="font-size: 15px;color:#666666;">
+                        <div class="layui-row">
+                            <div class="layui-col-xs12">
+                                <div class="grid-demo grid-demo-bg1">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 150px;color: white">:</label>
+                                        <div class="layui-input-inline" style="top: 12px">
+                                            <img style="width: 700px;height: 600px;border: 1px solid #dfdfdf;"
+                                                 th:src="${post.post_receive_imga}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <hr size="3px" style="font-size: 2px;background-color:#F40;margin: 20px"/>
+                    <div style="font-size: 18px">领取后的留言：</div>
                     <div style="font-size: 15px;color:#666666;">
                         <div class="layui-row">
                             <div class="layui-col-xs12">
@@ -188,14 +250,7 @@
                                             <div class="layui-row">
                                                 <div class="layui-col-xs6">
                                                     <div class="grid-demo grid-demo-bg1" id="te">
-
-                                                    </div>
-                                                </div>
-                                                <div class="layui-col-xs6">
-                                                    <div class="grid-demo">
-                                                        <span id="sp" style="color:#000;display: none">联系方式：</span><span
-                                                            id="spa" style="color:#000;display: none"
-                                                            th:text="${post.post_found_link}"></span>
+                                                        <p style="word-break:break-all;" th:text="${post.text}"></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,12 +278,12 @@
 </body>
 <script>
 
-    if ($.cookie("data") !== '1') {
-        $('#te').html('<p><a href="/login" target="_blank" id="a_t">点击登录获取联系方式</a></p>');
-    }
-    if ($.cookie("data") === '1') {
-        $('#te').html('<button type="button" class="layui-btn layui-btn-xs" id="btn">申请归还</button>');
-    }
+    // if ($.cookie("data") !== '1') {
+    //     $('#te').html('<p><a href="/login" target="_blank" id="a_t">点击登录获取联系方式</a></p>');
+    // }
+    // if ($.cookie("data") === '1') {
+    //     $('#te').html('<button type="button" class="layui-btn layui-btn-xs" id="btn">申请归还</button>');
+    // }
 </script>
 <script>
     $("#btn").click(function () {

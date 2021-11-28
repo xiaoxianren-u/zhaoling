@@ -6,6 +6,7 @@
           name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>浏览寻物贴</title>
+
     <style>
         #ha {
             border: 1px solid #dfdfdf;
@@ -29,6 +30,14 @@
             border: 1px #1E9FFF solid;
             color: #1E9FFF;
         }
+
+        .footer {
+            height: 100px;
+            width: 100%;
+            background-color: #ddd;
+            position: relative;
+            bottom: 0;
+        }
     </style>
     <link rel="stylesheet" th:href="@{/static/css/layui.css}">
     <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
@@ -46,8 +55,8 @@
     <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
 
 </head>
-<body style="background-color: white">
-<div class="layui-row" style="margin-top: 0">
+<body style="background-color: white;min-width: 1900px">
+<div class="layui-row" style="margin-top: 0;min-height: 810px;">
     <div class="layui-col-xs1">
         <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
     </div>
@@ -58,7 +67,11 @@
                 <div class="layui-col-xs3">
                     <div class="grid-demo grid-demo-bg3">
                         <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
-                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong>招领网</strong></div>
+                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
+                                                                                                        style="border-radius: 50%"
+                                                                                                        th:src="@{/static/image/zl.png}"
+                                                                                                        width="50"/>招领网</strong>
+                        </div>
                     </div>
                 </div>
                 <div class="layui-col-xs7">
@@ -123,7 +136,7 @@
                 <li class="layui-nav-item "><a href="/" style="font-size: 18px;">首页</a></li>
                 <li class="layui-nav-item "><a href="/lost" style="font-size: 18px;color: #F40;">浏览寻物贴</a></li>
                 <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
-                <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">成功案列</a></li>
+                <li class="layui-nav-item "><a href="/success" style="font-size: 18px">成功案列</a></li>
                 <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">感谢信</a></li>
             </ul>
             <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
@@ -145,10 +158,12 @@
     </div>
 </div>
 <div id="tile" style="width: 100%;height: 70px;">
-    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>
+    <!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
 </div>
 
-<div style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px">
+<div class="footer"
+     style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
+    <span style="line-height: 3em; color: #666;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
     ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
 </div>
 </body>
@@ -214,6 +229,9 @@
                 success: function (res) {
 
                     count = res.data;
+                    if (count > 25) {
+                        $('#tile').html('<div id="demo7" style="text-align: center;margin-top: 30px;"></div>');
+                    }
                     loading("加载中");    //开始加载
                     $("#text").val("");
 
@@ -375,5 +393,34 @@
 
     })
 </script>
+
+<script>
+    function hasScrollbar() {
+        return document.body.scrollHeight < (window.innerHeight || document.documentElement.clientHeight);
+    }
+
+    console.log(document.body.scrollHeight)
+    console.log(window.innerHeight)
+    // console.log(hasScrollbar());
+
+    $(function () {
+
+        $("body").scrollTop(10);//控制滚动条下移10px
+
+        if ($("body").scrollTop() > 0) {
+
+            // alert("有滚动条");
+            console.log("有滚动条")
+        } else {
+
+            // alert("没有滚动条");
+            console.log("没有滚动条")
+        }
+
+        $("body").scrollTop(0);//滚动条返回顶部
+
+    });
+</script>
+
 
 </html>

@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>成功案列</title>
     <style>
         #ha {
             border: 1px solid #dfdfdf;
@@ -30,7 +30,7 @@
             color: #1E9FFF;
         }
 
-        .footer{
+        .footer {
             height: 100px;
             width: 100%;
             background-color: #ddd;
@@ -65,7 +65,10 @@
                 <div class="layui-col-xs3">
                     <div class="grid-demo grid-demo-bg3">
                         <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
-                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50" style="border-radius: 50%" th:src="@{/static/image/zl.png}" width="50"/>招领网</strong>
+                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
+                                                                                                        style="border-radius: 50%"
+                                                                                                        th:src="@{/static/image/zl.png}"
+                                                                                                        width="50"/>招领网</strong>
                         </div>
                     </div>
                 </div>
@@ -128,10 +131,10 @@
                 </div>
             </div>
             <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px">
-                <li class="layui-nav-item "><a href="/" style="font-size: 18px;color: #F40;">首页</a></li>
+                <li class="layui-nav-item "><a href="/" style="font-size: 18px;">首页</a></li>
                 <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
                 <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
-                <li class="layui-nav-item "><a href="/success" style="font-size: 18px">成功案列</a></li>
+                <li class="layui-nav-item "><a href="/success" style="font-size: 18px;color: #F40;">成功案列</a></li>
                 <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">感谢信</a></li>
             </ul>
             <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
@@ -155,15 +158,15 @@
 
 
 <div id="tile" style="width: 100%;height: 70px;">
-<!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
+    <!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
 </div>
 
-<div  class="footer" style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
+<div class="footer"
+     style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
     <span style="line-height: 3em; color: #666;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
     ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
 </div>
 </body>
-
 
 
 <script>
@@ -210,14 +213,14 @@
 
             $.ajax({
                 type: "get",
-                url: '/post/count?status=' + 2 + "&lab_name=" + test + "&text=" + text + "&time=" + time + "&post_status1=" + 2,
+                url: '/post/count?status=' + 3 + "&lab_name=" + test + "&text=" + text + "&time=" + time + "&post_status1=" + 2,
                 async: true,
                 dataType: "json",
                 contentType: "application/json;charset=UTF-8",
                 success: function (res) {
 
                     count = res.data;
-                    if(count>25){
+                    if (count > 25) {
                         $('#tile').html('<div id="demo7" style="text-align: center;margin-top: 30px;"></div>');
                     }
                     loading("加载中");    //开始加载
@@ -249,7 +252,7 @@
                     // console.log({page: page, limit: limit});
                     $.ajax({
                         type: 'get',
-                        url: '/post/plist?status=' + 2 + "&page=" + page + "&limit=" + limit + "&lab_name=" + test + "&text=" + text + "&time=" + time + "&post_status1=" + 2,
+                        url: '/post/plist?status=' + 3 + "&page=" + page + "&limit=" + limit + "&lab_name=" + test + "&text=" + text + "&time=" + time + "&post_status1=" + 2,
                         dataType: 'json',
                         async: true,
                         contentType: 'application/json;charset=UTF-8',
@@ -266,14 +269,14 @@
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
                                         '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
                                         '           <div class="cmdlist-container">\n' +
-                                        '               <a href="text?t=' + item.post_id + '"  target="_blank">\n' +
+                                        '               <a href="stext?t=' + item.post_id + '"  target="_blank">\n' +
                                         '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
                                         '                   <hr/>\n' +
-                                        '                   <a href="text?t=' + item.post_id + '" target="_blank">\n' +
+                                        '                   <a href="stext?t=' + item.post_id + '" target="_blank">\n' +
                                         '                       <div class="cmdlist-text">\n' +
                                         '                           <div class="price">\n' +
                                         '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
-                                        '                                   style="float: right;color: #888;font-size: 9pt">待领取</b>\n' +
+                                        '                                   style="float: right;color: #888;font-size: 9pt">已领取</b>\n' +
                                         '                           </div>\n' +
                                         '                       </div>\n' +
                                         '                   </a>\n' +
@@ -376,7 +379,7 @@
         sessionStorage.setItem("bool", "0");
         $.cookie("data", 0);
         setTimeout(function () {
-            window.location.replace('/');
+            window.location.replace('/success');
         }, 400);
 
     })

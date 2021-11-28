@@ -23,6 +23,20 @@
     #a_t:hover {
         color: #1E9FFF;
     }
+    .footer{
+        height: 80px;
+        width: 100%;
+        background-color: #ddd;
+        position: relative;
+        /*bottom: 0;*/
+        text-align: center;
+        font-size: 12px;
+        color: #b6bac3;
+        margin-top: 20px;
+        padding-bottom: 15px;
+        top:20px;
+        padding-top: 20px;
+    }
 </style>
 <body>
 <div class="layui-row">
@@ -121,8 +135,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label" style="width: 150px">发&nbsp;&nbsp;布&nbsp;&nbsp;者:</label>
                                         <div class="layui-input-inline" style="top: 12px">
-                                            <p style="font-size: 15px;top:12px;color:#999999;"
-                                               th:text="${post.user_name}"></p>
+                                            <p style="font-size: 15px;top:12px;color:#999999;" th:if="${name} == '0'" th:text="${post.user_name}"></p>
+                                            <p style="font-size: 15px;top:12px;color:#999999;" th:if="${name} != '0' " th:text="${name}"></p>
                                         </div>
                                     </div>
 
@@ -189,10 +203,6 @@
 
                         </div>
                     </div>
-                    <div style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 40px">
-                        ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -201,6 +211,13 @@
         <div class="grid-demo" style="color: white;">6/12</div>
     </div>
 </div>
+<div  class="footer">
+    <span style="line-height: 3em; color: #666;margin-top: 20px;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
+    ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
+</div>
+
+
+
 </body>
 <script>
 

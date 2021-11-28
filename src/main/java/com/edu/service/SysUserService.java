@@ -175,4 +175,12 @@ public interface SysUserService {
     AjaxUtils dlUser(User user);
 
 
+    /**
+     * 获取用户昵称
+     *
+     * @param userName
+     * @return
+     */
+    User getName(String userName);
+
 }

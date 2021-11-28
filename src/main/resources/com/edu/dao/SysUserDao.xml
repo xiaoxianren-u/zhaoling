@@ -186,5 +186,10 @@
         delete from zhaoling.user_db
         where user_id = #{user_id}
     </delete>
+<!--获取用户昵称-->
+    <select id="getName" resultType="com.edu.pojo.User">
+        select * from zhaoling.user_db
+        where user_name = #{userName}
+    </select>
 
 </mapper>

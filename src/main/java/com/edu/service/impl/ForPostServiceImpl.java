@@ -39,6 +39,9 @@ public class ForPostServiceImpl implements ForPostService {
 
         post.setUser_name(UserConfig.tokenUserName(request));
         post.setPost_time(new Date());
+        if (post.getPost_found_time() == null) {
+            post.setPost_found_time(new Date());
+        }
         try {
             forPostDao.insertPost(post);
             return new AjaxUtils(PageCodeEnum.ADD_SUCCESS.getBool(), PageCodeEnum.ADD_SUCCESS.getMsg());
