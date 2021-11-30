@@ -67,4 +67,14 @@ public class SysNotifyServiceImpl implements SysNotifyService {
         sysNotifyDao.insertT(notiFy);
     }
 
+    /**
+     * 用户通知
+     *
+     * @return
+     */
+
+    @Override
+    public List<NotiFy> userList() {
+        return sysNotifyDao.userList();
+    }
 }

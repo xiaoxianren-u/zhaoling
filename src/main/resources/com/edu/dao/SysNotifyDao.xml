@@ -52,4 +52,13 @@
         <insert id="insert">
             insert into zhaoling.notify_db(user_name,noti_substance) values ('admin',#{noti_substance})
         </insert>
+
+
+<!--        用户通知-->
+        <select id="userList" resultType="com.edu.pojo.NotiFy">
+            select * from zhaoling.notify_db
+            where noti_status != 3
+            order by noti_id desc
+        </select>
+
 </mapper>

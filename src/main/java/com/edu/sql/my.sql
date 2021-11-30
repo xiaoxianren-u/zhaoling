@@ -167,16 +167,17 @@ CREATE TABLE `label_db`
     lab_id     INT(11)            NOT NULL AUTO_INCREMENT COMMENT '标签id',
     lab_name   VARCHAR(50) unique NOT NULL DEFAULT '' COMMENT '标签名',
     lab_status INT(11)            NOT NULL DEFAULT 0 COMMENT '标签状态 0启用，1禁止',
+    lab_image  VARCHAR(200)       NOT NULL DEFAULT '' COMMENT '标签默认图片',
     PRIMARY KEY (lab_id, lab_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '标签表';
-insert into label_db(lab_name)
-values ('电子产品'),
-       ('书籍资料'),
-       ('其他物品'),
-       ('卡类证件'),
-       ('衣物饰品'),
-       ('随身物品');
+insert into label_db(lab_name, lab_image)
+values ('电子产品', ''),
+       ('书籍资料', ''),
+       ('其他物品', ''),
+       ('卡类证件', ''),
+       ('衣物饰品', ''),
+       ('随身物品', '');
 # 帖子表
 # DROP TABLE IF EXISTS `post_db`;
 CREATE TABLE post_db
@@ -197,6 +198,8 @@ CREATE TABLE post_db
     post_receive_link VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '领取人联系方式(手机、qq、微信、邮箱)任何一种',
     post_receive_name VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '领取人名字',
     post_receive_time DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '领取时间',
+    post_receive_imga VARCHAR(200)  NOT NULL DEFAULT '' COMMENT '领取过程的图片',
+    text              VARCHAR(500)  NOT NULL DEFAULT '' COMMENT '感谢话语',
     PRIMARY KEY (post_id),
     constraint fk_user_post foreign key (user_name) references user_db (user_name),
     constraint fk_label foreign key (lab_name) references label_db (lab_name)

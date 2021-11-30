@@ -44,4 +44,12 @@ public interface SysNotifyService {
      * @param notiFy
      */
     void insertT(NotiFy notiFy);
+
+
+    /**
+     * 用户通知
+     *
+     * @return
+     */
+    List<NotiFy> userList();
 }

@@ -4,12 +4,10 @@ import com.edu.config.UserConfig;
 import com.edu.intercept.LoginInterceptor;
 import com.edu.intercept.PassToken;
 import com.edu.intercept.UserLoginToken;
+import com.edu.pojo.NotiFy;
 import com.edu.pojo.Post;
 import com.edu.pojo.User;
-import com.edu.service.ForLabelService;
-import com.edu.service.ForPostService;
-import com.edu.service.ForUserService;
-import com.edu.service.SysUserService;
+import com.edu.service.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * @author yz
@@ -43,6 +42,10 @@ public class IndexController {
 
     @Autowired
     private ForPostService forPostService;
+
+    @Autowired
+    private SysNotifyService sysNotifyService;
+
 
     /**
      * 记录访问次数
@@ -298,10 +301,30 @@ public class IndexController {
     }
 
 
-//    @RequestMapping(value = "/st",method = RequestMethod.GET)
-//    public String socket(){
-//
-//    }
+    /**
+     * 感谢页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/grateful", method = RequestMethod.GET)
+    public String grateful() {
+        return "/front/grateful";
+    }
 
+
+    @UserLoginToken(state = 0)
+    @RequestMapping(value = "/for/inform", method = RequestMethod.GET)
+    public String inForm(ModelMap modelMap) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+
+        List<NotiFy> list = sysNotifyService.userList();
+        for (NotiFy n : list) {
+            n.setDate(formatter.format(n.getNoti_time()));
+        }
+        System.out.println("list = " + list);
+        modelMap.put("no", list);
+
+        return "/front/inform";
+    }
 
 }

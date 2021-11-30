@@ -191,11 +191,11 @@
                     yes: function (index) {
                         ro_have = $("#ro_have").val();
                         ro_describe = $("#ro_describe").val();
-                        let ro_status =  $('input[name="ro_status"]:checked').val();
-                        if(ro_id === 1){
+                        let ro_status = $('input[name="ro_status"]:checked').val();
+                        if (ro_id === 1) {
                             ro_status = 0;
                         }
-                        console.log({ro_status: ro_status, ro_have: ro_have, ro_describe: ro_describe,ro_id:ro_id});
+                        console.log({ro_status: ro_status, ro_have: ro_have, ro_describe: ro_describe, ro_id: ro_id});
                         $.ajax({
                             type: "GET",
                             url: "/role/edit?ro_id=" + ro_id + "&ro_have=" + ro_have + "&ro_describe=" + ro_describe + "&ro_status=" + ro_status,

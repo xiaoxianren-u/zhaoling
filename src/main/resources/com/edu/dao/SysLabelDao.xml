@@ -3,7 +3,7 @@
 
     <!--标签列表-->
     <select id="list" resultType="com.edu.pojo.Label">
-        select lab_id, lab_name, lab_status from zhaoling.label_db
+        select lab_id, lab_name, lab_status,lab_image from zhaoling.label_db
     </select>
 
     <!--删除帖子标签-->

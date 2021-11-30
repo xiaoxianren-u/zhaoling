@@ -48,7 +48,6 @@ public class ForPostController extends AjaxUtils {
      */
     @RequestMapping(value = "/textPost", method = RequestMethod.POST)
     public AjaxUtils insertPost(@RequestBody Post post, HttpServletRequest request) {
-
         return forPostService.insertPost(post, request);
     }
 

@@ -48,4 +48,12 @@ public interface SysNotifyDao {
      */
     void insertT(NotiFy notiFy);
 
+    /**
+     * 用户通知
+     *
+     * @return
+     */
+    List<NotiFy> userList();
+
+
 }

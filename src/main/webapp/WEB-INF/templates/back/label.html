@@ -14,6 +14,13 @@
     <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
     <script th:src="@{/static/js/jquery.cookie.js}"></script>
     <script th:src="@{/static/js/cookie.js}"></script>
+
+    <style>
+        .layui-table-cell {
+            height: 50px;
+            line-height: 50px;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-bg-gray" style="padding: 30px;">
@@ -80,9 +87,14 @@
         </div>
     </form>
 </div>
+
+<script id="img" th:inline="none" type="text/html">
+    <!--    图片-->
+    <div><img style="height:50px;width:80px; " src="{{ d.lab_image}}"></div>
+</script>
+
 <script th:inline="none">
     layui.use(function () {
-
 
         var table = layui.table,
             $ = layui.jquery;
@@ -95,7 +107,8 @@
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'lab_id', title: 'ID', width: '5%'}
-                , {field: 'lab_name', title: '帖子标签', width: '70%'}
+                , {field: 'lab_image', title: '图片', width: '20%', templet: '#img'}
+                , {field: 'lab_name', title: '帖子标签', width: '50%'}
                 , {
                     field: 'lab_status', title: '角色状态', width: 150, templet: function (d) {
                         if (d.lab_status === 0) {

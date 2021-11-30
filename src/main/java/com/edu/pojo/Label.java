@@ -33,5 +33,11 @@ public class Label {
      */
     private Integer lab_status;
 
+    /**
+     * 标签默认图片
+     */
+
+    private String lab_image;
+
 
 }

@@ -1,6 +1,7 @@
 package com.edu.service.impl;
 
 import com.edu.config.UserConfig;
+import com.edu.dao.ForLabelDao;
 import com.edu.dao.ForPostDao;
 import com.edu.pojo.Post;
 import com.edu.service.ForPostService;
@@ -27,6 +28,9 @@ public class ForPostServiceImpl implements ForPostService {
     @Autowired
     private ForPostDao forPostDao;
 
+    @Autowired
+    private ForLabelDao forLabelDao;
+
     /**
      * 新增帖子
      *
@@ -41,6 +45,9 @@ public class ForPostServiceImpl implements ForPostService {
         post.setPost_time(new Date());
         if (post.getPost_found_time() == null) {
             post.setPost_found_time(new Date());
+        }
+        if (post.getPost_image() == null) {
+            post.setPost_image(forLabelDao.getImage(post.getLab_name()));
         }
         try {
             forPostDao.insertPost(post);

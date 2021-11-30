@@ -30,7 +30,7 @@
             color: #1E9FFF;
         }
 
-        .footer{
+        .footer {
             height: 100px;
             width: 100%;
             background-color: #ddd;
@@ -65,7 +65,10 @@
                 <div class="layui-col-xs3">
                     <div class="grid-demo grid-demo-bg3">
                         <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
-                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50" style="border-radius: 50%" th:src="@{/static/image/zl.png}" width="50"/>招领网</strong>
+                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
+                                                style="border-radius: 50%"
+                                                th:src="@{/static/image/zl.png}"
+                                                width="50"/>招领网</strong>
                         </div>
                     </div>
                 </div>
@@ -132,7 +135,7 @@
                 <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
                 <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
                 <li class="layui-nav-item "><a href="/success" style="font-size: 18px">成功案列</a></li>
-                <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">感谢信</a></li>
+                <li class="layui-nav-item "><a href="/grateful" style="font-size: 18px" target="_blank">感谢信</a></li>
             </ul>
             <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
                 <div class="layui-col-xs12">
@@ -155,15 +158,15 @@
 
 
 <div id="tile" style="width: 100%;height: 70px;">
-<!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
+    <!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
 </div>
 
-<div  class="footer" style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
+<div class="footer"
+     style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
     <span style="line-height: 3em; color: #666;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
     ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
 </div>
 </body>
-
 
 
 <script>
@@ -192,6 +195,13 @@
         let text = "";
         let test = "";
         let time = '';
+        $(document).keyup(function (event) {
+            if (event.keyCode === 13) {
+                $('#inp').trigger("click");
+            }
+        });
+
+
         $("#inp").click(function () {
             text = $("#text").val();
             test = $('#test option:selected').val();
@@ -217,7 +227,7 @@
                 success: function (res) {
 
                     count = res.data;
-                    if(count>25){
+                    if (count > 25) {
                         $('#tile').html('<div id="demo7" style="text-align: center;margin-top: 30px;"></div>');
                     }
                     loading("加载中");    //开始加载
@@ -289,10 +299,6 @@
                                         '           </div>\n' +
                                         '       </div>\n' +
                                         '    </li>\n'
-
-                                    // console.log(item.lab_name);
-
-
                                 } else {
                                     html += '   <li v-for="site in sites" class="layui-col-space15">\n' +
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
@@ -321,14 +327,10 @@
                                         '           </div>\n' +
                                         '       </div>\n' +
                                         '    </li>\n'
-
                                 }
                             })
                             $('._li').html(html);
-
                         }
-
-
                     })
 
                 }

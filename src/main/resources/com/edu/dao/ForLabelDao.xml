@@ -7,6 +7,11 @@
         where lab_status = 0
     </select>
 
+    <select id="getImage" resultType="java.lang.String">
+        select  lab_image from zhaoling.label_db
+        where lab_name = #{lab_name}
+    </select>
+
 
 
 </mapper>

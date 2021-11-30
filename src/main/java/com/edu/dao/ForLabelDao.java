@@ -1,6 +1,7 @@
 package com.edu.dao;
 
 import com.edu.pojo.Label;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,4 +22,12 @@ public interface ForLabelDao {
      * @return
      */
     List<Label> forList();
+
+    /**
+     * 获取对应标签的图片
+     *
+     * @param lab_name
+     * @return
+     */
+    String getImage(@Param("lab_name") String lab_name);
 }

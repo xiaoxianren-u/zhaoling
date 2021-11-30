@@ -135,7 +135,7 @@
                 <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
                 <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
                 <li class="layui-nav-item "><a href="/success" style="font-size: 18px">成功案列</a></li>
-                <li class="layui-nav-item "><a href="javascript:" style="font-size: 18px">感谢信</a></li>
+                <li class="layui-nav-item "><a href="/grateful" style="font-size: 18px" target="_blank">感谢信</a></li>
             </ul>
             <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
                 <div class="layui-col-xs12">
@@ -195,6 +195,13 @@
         let text = "";
         let test = "";
         let time = '';
+        $(document).keyup(function (event) {
+            if (event.keyCode === 13) {
+                $('#inp').trigger("click");
+            }
+        });
+
+
         $("#inp").click(function () {
             text = $("#text").val();
             test = $('#test option:selected').val();
@@ -292,10 +299,6 @@
                                         '           </div>\n' +
                                         '       </div>\n' +
                                         '    </li>\n'
-
-                                    // console.log(item.lab_name);
-
-
                                 } else {
                                     html += '   <li v-for="site in sites" class="layui-col-space15">\n' +
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
@@ -324,14 +327,10 @@
                                         '           </div>\n' +
                                         '       </div>\n' +
                                         '    </li>\n'
-
                                 }
                             })
                             $('._li').html(html);
-
                         }
-
-
                     })
 
                 }
