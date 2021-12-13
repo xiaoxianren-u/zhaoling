@@ -142,7 +142,7 @@ public class LoginController extends AjaxUtils {
                 return new AjaxUtils(false, "注册失败");
             }
         } else {
-            return new AjaxUtils(false, "该用户名已被占用");
+            return new AjaxUtils(PageCodeEnum.USERNAME_EXISTS.getBool(), PageCodeEnum.USERNAME_EXISTS.getMsg());
         }
     }
 

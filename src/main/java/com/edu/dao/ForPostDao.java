@@ -4,6 +4,7 @@ import com.edu.pojo.Post;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,13 +22,24 @@ public interface ForPostDao {
     void insertPost(Post post);
 
     /**
-     * 个人帖子列表
+     * 发布帖子列表
      *
      * @param status
      * @param tokenUserName
      * @return
      */
     List<Post> selectList(@Param("status") Integer status, @Param("tokenUserName") String tokenUserName);
+
+
+    /**
+     * 我的物品
+     *
+     * @param status
+     * @param tokenUserName
+     * @return
+     */
+
+    List<Post> selectListApp(@Param("status") Integer status, @Param("tokenUserName") String tokenUserName);
 
 
     /**
@@ -59,4 +71,28 @@ public interface ForPostDao {
      * @return
      */
     Post selectPo(@Param("t") Integer t);
+
+    /**
+     * 申请归还
+     *
+     * @param tokenUserName
+     * @param post_id
+     */
+    void getPost(@Param("tokenUserName") String tokenUserName, @Param("home") String home,
+                 @Param("post_id") Integer post_id, @Param("status") Integer status);
+
+    /**
+     * 拒绝归还
+     *
+     * @param post_id
+     */
+    void getExit(@Param("post_id") Integer post_id);
+
+    /**
+     * 物品归还
+     *
+     * @param postReceiveTime
+     * @param post_image
+     */
+    void setWu(@Param("postReceiveTime") Date postReceiveTime, @Param("post_image") String post_image, @Param("post_id") Integer post_id);
 }

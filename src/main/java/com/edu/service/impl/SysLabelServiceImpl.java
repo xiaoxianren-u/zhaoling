@@ -3,6 +3,7 @@ package com.edu.service.impl;
 import com.edu.dao.SysLabelDao;
 import com.edu.pojo.Label;
 import com.edu.service.SysLabelService;
+import com.edu.service.TimedService;
 import com.edu.util.AjaxUtils;
 import com.edu.util.PageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class SysLabelServiceImpl implements SysLabelService {
 
     @Autowired
     private SysLabelDao sysLabelDao;
+
+    @Autowired
+    private TimedService timedService;
 
     /**
      * 标签列表
@@ -43,11 +47,13 @@ public class SysLabelServiceImpl implements SysLabelService {
     public AjaxUtils del(Integer lab_id) {
 
         try {
+            timedService.dele(sysLabelDao.sel(lab_id));
             sysLabelDao.del(lab_id);
-            return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
+
+            return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.REMOVE_SUCCESS.getMsg());
         } catch (Exception e) {
             e.printStackTrace();
-            return new AjaxUtils(PageCodeEnum.REMOVE_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg() + ",出现异常");
+            return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg() + ",出现异常");
         }
     }
 
@@ -62,6 +68,7 @@ public class SysLabelServiceImpl implements SysLabelService {
     public AjaxUtils up(Label label) {
         try {
             sysLabelDao.up(label);
+            timedService.update(label.getLab_name(), sysLabelDao.sel(label.getLab_id()));
             return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,6 +87,7 @@ public class SysLabelServiceImpl implements SysLabelService {
     public AjaxUtils add(Label label) {
         try {
             sysLabelDao.add(label);
+            timedService.add(label.getLab_name());
             return new AjaxUtils(PageCodeEnum.ADD_SUCCESS.getBool(), PageCodeEnum.ADD_SUCCESS.getMsg());
         } catch (Exception e) {
             e.printStackTrace();

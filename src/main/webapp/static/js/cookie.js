@@ -1,6 +1,6 @@
 let lastTime = new Date().getTime();
 let currentTime = new Date().getTime();
-const timeOut = 25 * 60 * 1000; //设置超时时间： 15分
+const timeOut = 1 * 60 * 1000; //设置超时时间： 15分
 // const timeOut = 20 * 60 * 1000; //设置超时时间： 20分
 
 $(function () {

@@ -50,122 +50,129 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
     <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
 
 
 </head>
-<body style="background-color: white;min-width: 1900px">
-<div class="layui-row" style="margin-top: 0;min-height: 810px;">
-    <div class="layui-col-xs1">
-        <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
-    </div>
-    <div class="layui-col-xs10">
-        <div class="grid-demo" style="background-color: white">
-            <!--            检索栏-->
-            <div class="layui-row">
-                <div class="layui-col-xs3">
-                    <div class="grid-demo grid-demo-bg3">
-                        <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
+<body class="webkit" style="background-color: white;min-width: 1500px;">
+<div style="">
+    <div class="layui-row" style="margin-top: 0;min-height: 810px;">
+        <div class="layui-col-xs1">
+            <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
+        </div>
+        <div class="layui-col-xs10">
+            <div class="grid-demo" style="background-color: white">
+                <!--            检索栏-->
+                <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <div class="grid-demo grid-demo-bg3">
+                            <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
                         WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
                                                                                                         style="border-radius: 50%"
                                                                                                         th:src="@{/static/image/zl.png}"
                                                                                                         width="50"/>招领网</strong>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="layui-col-xs7">
-                    <div class="grid-demo">
-                        <div class="layui-form-item">
-                            <div class="layui-input-block" style="margin-top: 15px;margin-left: 70px">
-                                <div id="inp" style="z-index: 99;position:absolute; height: 38px; width: 37px;top: 0;left: 515px;border-top-right-radius: 20px;
+                    <div class="layui-col-xs7">
+                        <div class="grid-demo">
+                            <div class="layui-form-item">
+                                <div class="layui-input-block" style="margin-top: 15px;margin-left: 70px">
+                                    <div id="inp" style="z-index: 99;position:absolute; height: 38px; width: 37px;top: 0;left: 515px;border-top-right-radius: 20px;
                                 border-bottom-right-radius: 20px;color: #1E9FFF;">
                                         <span class="iconfont icon-sousuo" style="width: 100%;height: 100%; font-size: 25px;font-weight: bolder;
                                         display: inline-block;vertical-align: middle;margin-top: 6px;margin-left: 3px; "></span>
-                                </div>
-                                <label>
-                                    <select id="test" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 90px;
+                                    </div>
+                                    <label>
+                                        <select id="test" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 90px;
                                     border-top-left-radius: 20px; border-bottom-left-radius: 20px;text-align: center;border-top: 1px solid #dfdfdf;
                                     border-bottom: 1px solid #dfdfdf;border-left: 1px solid #dfdfdf;border-right: 0;"
-                                            title="类型">
-                                        <option value="">全部内容</option>
-                                        <option th:each="s : ${lab_list}" th:text="${s.lab_name}"
-                                                th:value="${s.lab_name}">
-                                        </option>
-                                    </select>
-                                    <select id="time" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 80px;left: 90px;
+                                                title="类型">
+                                            <option value="">全部内容</option>
+                                            <option th:each="s : ${lab_list}" th:text="${s.lab_name}"
+                                                    th:value="${s.lab_name}">
+                                            </option>
+                                        </select>
+                                        <select id="time" name="city" style="background-color: #f3f6f8;z-index: 99;position:absolute; height: 38px; width: 80px;left: 90px;
                                     text-align: center;border: 1px solid #dfdfdf;" title="时间">
-                                        <option value="">全部</option>
-                                        <option value="1">今天</option>
-                                        <option value="7">7天内</option>
-                                        <option value="15">半月内</option>
-                                        <option value="30">1月内</option>
-                                        <option value="365">1年内</option>
-                                        <option value="366">1年前</option>
-                                    </select>
-                                    <input id="text" placeholder="请输入物品名、地名、姓名，等关键字" style="height: 36px;  background-color: #f3f6f8;
+                                            <option value="">全部</option>
+                                            <option value="1">今天</option>
+                                            <option value="7">7天内</option>
+                                            <option value="15">半月内</option>
+                                            <option value="30">1月内</option>
+                                            <option value="365">1年内</option>
+                                            <option value="366">1年前</option>
+                                        </select>
+                                        <input id="text" placeholder="请输入物品名、地名、姓名，等关键字" style="height: 36px;  background-color: #f3f6f8;
                                    border: 1px solid #dfdfdf;width: 550px;border-radius: 20px;text-indent: 13em;z-index: -1;"
-                                           type="text">
-                                </label>
+                                               type="text">
+                                    </label>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs2">
+                        <div class="grid-demo">
+                            <div>
+                                <!--                            <span class="iconfont icon-gonggao " style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;vertical-align: middle;float: left;margin-top: 30px;margin-left: 170px;" title="公告"></span>-->
+                                <!--                                <span class="layui-badge-dot" style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block; vertical-align: middle;float: left;margin-top: 26px;margin-left: 192px;"></span>-->
+                            </div>
+                            <div id="img" style="float: right;z-index: -1;">
+                                <a href="javascript:" id="dl" onclick="login_Image()">
+                                    <div id="log_div"
+                                         style="width: 40px;height: 40px;border: 1px #dfdfdf solid;text-align: center;background-color:#dfdfdf;margin-top: 14px;margin-right: 3px;">
+                                        <span style="display: inline-block;vertical-align: middle;margin-top: 10px">登录</span>
+                                    </div>
+                                </a>
+                                <!--                            <a href="javascript:" id="dl" onclick="login_Image()"></a>-->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-xs2">
-                    <div class="grid-demo">
-                        <div>
-                            <span class="iconfont icon-gonggao " style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;
-                            vertical-align: middle;float: left;margin-top: 30px;margin-left: 170px;" title="公告"></span>
-                            <span class="layui-badge-dot" style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;
-                            vertical-align: middle;float: left;margin-top: 26px;margin-left: 192px;"></span>
-                        </div>
-                        <div id="img" style="float: right;z-index: -1;">
-                            <a href="javascript:" id="dl" onclick="login_Image()">
-                                <div id="log_div"
-                                     style="width: 40px;height: 40px;border: 1px #dfdfdf solid;text-align: center;background-color:#dfdfdf;margin-top: 14px;margin-right: 3px;">
-                                    <span style="display: inline-block;vertical-align: middle;margin-top: 10px">登录</span>
-                                </div>
-                            </a>
-                            <!--                            <a href="javascript:" id="dl" onclick="login_Image()"></a>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px">
-                <li class="layui-nav-item "><a href="/" style="font-size: 18px;color: #F40;">首页</a></li>
-                <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
-                <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
-                <li class="layui-nav-item "><a href="/success" style="font-size: 18px">成功案列</a></li>
-                <li class="layui-nav-item "><a href="/grateful" style="font-size: 18px" target="_blank">感谢信</a></li>
-            </ul>
-            <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
-                <div class="layui-col-xs12">
-                    <div class="grid-demo grid-demo-bg1" style="text-align: center;">
+                <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px">
+                    <li class="layui-nav-item "><a style="font-size: 18px;color: #F40;" th:href="@{/}">首页</a></li>
+                    <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/lost}">浏览寻物贴</a></li>
+                    <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/find}">查看招领贴</a></li>
+                    <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/success}">成功案列</a></li>
+                    <li class="layui-nav-item "><a style="font-size: 18px" target="_blank"
+                                                   th:href="@{/grateful}">感谢信</a></li>
+                </ul>
+                <div class="layui-row "
+                     style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
+                    <div class="layui-col-xs12">
+                        <div class="grid-demo grid-demo-bg1" style="text-align: center;">
 
-                        <div style="margin: auto">
-                            <ul class="_li" style="text-align: center;">
+                            <div style="margin: auto">
+                                <ul class="_li" style="text-align: center;">
 
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="layui-col-xs1">
+            <div class="grid-demo" style="color: white;">.</div>
+        </div>
     </div>
-    <div class="layui-col-xs1">
-        <div class="grid-demo" style="color: white;">.</div>
+
+    <div id="tile" style="width: 100%;height: 70px;">
+        <!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
+    </div>
+
+    <div class="footer"
+         style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
+        <span style="line-height: 3em; color: #666;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
+        ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
     </div>
 </div>
 
-
-<div id="tile" style="width: 100%;height: 70px;">
-    <!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
-</div>
-
-<div class="footer"
-     style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
-    <span style="line-height: 3em; color: #666;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
-    ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
-</div>
+<!--<div style="width: 50px;height: 50px;background-color: red;position:absolute; z-index: 999999" >-->
+<!--    sdfiosdhf-->
+<!--</div>-->
+<div style="color: #1E9FFF"></div>
 </body>
 
 
@@ -178,18 +185,84 @@
         })
     }
 </script>
+<!--意见反馈-->
+<div class="site-text" id="window" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" id="book" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <div class="">
+                <textarea autocomplete="off" class="layui-textarea" id="text1" lay-verify="title" name="text1"
+                          placeholder="输入你的意见与建议" style="height: 140px;font-size: 16px" type="text"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <script>
     layui.use('flow', function () {
         var flow = layui.flow,
             laypage = layui.laypage,
-            util = layui.util,
-            $ = layui.jquery;
+            util = layui.util;
+        // $ = layui.jquery;
+
+        // util.fixbar({
+        //     css: {right: 50, bottom: 80}
+        //     , bgcolor: '#1E9FFF'
+        // });
 
         util.fixbar({
-            css: {right: 50, bottom: 80}
-            , bgcolor: '#393D49'
+            bar1: true
+            // , bar2: true
+            , css: {right: 50, bottom: 80}
+            , bgcolor: '#1E9FFF'
+            , click: function (type) {
+                if (type === 'bar1') {
+                    // layer.msg('icon 是可以随便换的');
+                    layer.open({
+                        type: 1,
+                        title: "意见反馈",
+                        area: ["500px", "300px"],
+                        btn: ['提交', '取消'], //可以无限个按钮
+                        Number: 9000000,   //自动关闭的时间
+                        anim: 2,
+                        maxmin: false, // 最大最小化。
+                        resize: false, // 是否允许拉伸
+                        content: $("#window"), //添加表单到弹出层
+                        yes: function (index, layero) {
+
+                            let text = $('#text1').val();
+
+                            $.ajax({
+                                type: "get",
+                                url: '/feed/add?text=' + text,
+                                async: true,
+                                dataType: "json",
+                                contentType: "application/json;charset=UTF-8",
+                                success: function (src) {
+                                    if (src.bool) {
+                                        layer.msg(src.msg + ',感谢你的反馈');
+                                        setTimeout(function () {
+                                            $('#text1').val("");
+                                            layer.closeAll(); //关闭所有弹窗
+                                        }, 800);
+                                    } else {
+                                        layer.msg(src.msg);
+                                    }
+                                }
+                            })
+                            console.log(text);
+                        },
+                        end: function () {
+
+                            $('#text1').val("");
+                        }
+
+                    })
+
+                }
+            }
         });
+
 
         let count;
         let text = "";
@@ -225,10 +298,11 @@
                 dataType: "json",
                 contentType: "application/json;charset=UTF-8",
                 success: function (res) {
-
                     count = res.data;
                     if (count > 25) {
                         $('#tile').html('<div id="demo7" style="text-align: center;margin-top: 30px;"></div>');
+                    } else {
+                        $('#tile').html('<div></div>');
                     }
                     loading("加载中");    //开始加载
                     $("#text").val("");
@@ -338,12 +412,47 @@
         }
 
         setTimeout(send, 500)  //延迟0.5秒执行
+
+
+        //实现超过一定时间去除账号
+//         let lastTime = new Date().getTime();
+//         let currentTime = new Date().getTime();
+//         const timeOut = 1 * 60 * 1000; //设置超时时间： 15分
+// // const timeOut = 20 * 60 * 1000; //设置超时时间： 20分
+//
+//         $(function () {
+//             /* 鼠标移动事件 */
+//             $(document).mouseover(function () {
+//                 lastTime = new Date().getTime(); //更新操作时间
+//
+//             });
+//         });
+//
+//         function toLoginPage() {
+//             currentTime = new Date().getTime(); //更新当前时间
+//             if (currentTime - lastTime > timeOut) { //判断是否超时
+//                 $.cookie("to", '0');
+//                 $.cookie("data", '0');
+//                 // $.cookie("to1", '12','','/');
+//                 document.cookie = 'to1=;path=/';
+//                 sessionStorage.setItem("bool", 0);
+//                 sessionStorage.setItem('cook', '1');
+//                 console.log("===================================");
+//                 console.log("===================================");
+//                 console.log("===================================");
+//             }
+//         }
+//
+//         /* 定时器
+//         * 间隔1秒检测是否长时间未操作页面
+//         */
+//         window.setInterval(toLoginPage, 1000);
+
+
     })
 
 
-</script>
-
-<script>
+    //登录按钮
     function login_Image() {
 
         console.log("登录");
@@ -368,12 +477,6 @@
             '</ul>'
         );
     }
-
-
-</script>
-
-
-<script>
     $('#exit').click(function () {
         sessionStorage.setItem("bool", "0");
         $.cookie("data", 0);
@@ -382,6 +485,8 @@
         }, 400);
 
     })
+
 </script>
+
 
 </html>

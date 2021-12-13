@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.FeedbackDao">
+
+<!--添加意见反馈-->
+        <insert id="feedBackAdd">
+            insert into zhaoling.feedback(fe_content, fe_time) VALUE (#{text},#{date})
+        </insert>
+
+
+
+
+
+</mapper>

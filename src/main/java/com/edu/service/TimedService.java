@@ -36,4 +36,24 @@ public interface TimedService {
      */
     void reDefault();
 
+
+    /**
+     * 添加数据分析表标签
+     */
+
+    void add(String label);
+
+    /**
+     * 删除数据分析表标签
+     */
+
+    void dele(String label);
+
+    /**
+     * 修改数据分析表标签
+     */
+
+    void update(String label, String name);
+
+
 }

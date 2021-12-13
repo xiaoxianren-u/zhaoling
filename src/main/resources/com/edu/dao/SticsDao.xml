@@ -66,7 +66,7 @@
 <!--获取柱状图需要的数据 丢失-->
     <select id="selZhu" resultType="com.edu.pojo.Count">
         select lab_name,COUNT(*) as count from zhaoling.post_db
-        where to_days(post_time) = to_days(now()) and (post_status =3 or post_status =2)
+        where to_days(post_time) = to_days(now()) and (post_status =3 or post_status =2 or post_status = 1)
         group by lab_name
     </select>
 <!--修改柱状图的丢失数据-->
@@ -96,4 +96,56 @@
             re_lose = 0
         where lab_name != '1'
    </update>
+
+<!--   ==========================================================================================-->
+   <insert id="addLo">
+        insert into zhaoling.tb_lose(name)
+        value (#{label})
+   </insert>
+      <insert id="addPo">
+        insert into zhaoling.tb_polyline(lab_name)
+        value (#{label})
+   </insert>
+     <insert id="addRe">
+        insert into zhaoling.tb_return_si(lab_name)
+        value (#{label})
+    </insert>
+
+
+   <delete id="delLo">
+        delete  from zhaoling.tb_lose
+        where name = #{lab_name}
+    </delete>
+
+   <delete id="delRe">
+        delete  from zhaoling.tb_return_si
+        where lab_name = #{lab_name}
+    </delete>
+
+   <delete id="delPo">
+        delete  from zhaoling.tb_polyline
+        where lab_name = #{lab_name}
+   </delete>
+
+
+
+    <update id="upLo">
+        update zhaoling.tb_lose
+        set name = #{lab_name}
+        where name = #{name}
+   </update>
+   <update id="upPo">
+        update zhaoling.tb_polyline
+        set lab_name = #{lab_name}
+        where lab_name = #{name}
+   </update>
+
+   <update id="upre">
+        update zhaoling.tb_return_si
+        set lab_name = #{lab_name}
+        where lab_name = #{name}
+   </update>
+
+
+
 </mapper>

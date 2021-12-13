@@ -6,6 +6,10 @@ package com.edu.pojo;
  * @file : Feedback.java
  */
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 /**
@@ -13,17 +17,14 @@ import java.util.Date;
  *
  * @author yangzhan
  */
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Feedback {
 
     private Integer fe_id;
-    /**
-     * 反馈人
-     */
-    private String fe_name;
-    /**
-     * 联系方式
-     */
-    private String fe_phone;
+
     /**
      * 反馈内容
      */
@@ -32,6 +33,9 @@ public class Feedback {
      * 反馈时间
      */
     private Date fe_time;
+    /**
+     * 时间转换
+     */
     private String date;
 
 }

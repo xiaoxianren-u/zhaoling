@@ -27,12 +27,20 @@
             <trim suffixOverrides=",">
                 <if test="lab_name != null and lab_name != ''">lab_name,</if>
                 <if test="lab_status != null">lab_status,</if>
+                <if test="lab_image != null and lab_image != ''">lab_image,</if>
             </trim>
         )values (
              <trim suffixOverrides=",">
                 <if test="lab_name != null and lab_name != ''">#{lab_name},</if>
                 <if test="lab_status != null">#{lab_status},</if>
+                <if test="lab_image != null and lab_image != ''">#{lab_image},</if>
             </trim>
         )
     </insert>
+<!--    获取标签-->
+    <select id="sel" resultType="java.lang.String">
+        select  lab_name from zhaoling.label_db
+        where lab_id = #{lab_id}
+    </select>
+
 </mapper>

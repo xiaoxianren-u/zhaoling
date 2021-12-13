@@ -124,4 +124,50 @@ public class TimedServiceImpl implements TimedService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 添加数据分析表标签
+     */
+    @Override
+    public void add(String label) {
+        try {
+            sticsDao.addLo(label);
+            sticsDao.addPo(label);
+            sticsDao.addRe(label);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除数据分析表标签
+     */
+
+    @Override
+    public void dele(String label) {
+
+        try {
+            sticsDao.delLo(label);
+            sticsDao.delPo(label);
+            sticsDao.delRe(label);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改数据分析表标签
+     */
+
+    @Override
+    public void update(String label, String name) {
+        try {
+            sticsDao.upLo(label, name);
+            sticsDao.upPo(label, name);
+            sticsDao.upre(label, name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

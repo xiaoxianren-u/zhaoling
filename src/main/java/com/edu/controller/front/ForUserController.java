@@ -40,7 +40,6 @@ public class ForUserController extends AjaxUtils {
      */
     @RequestMapping(value = "/name", method = RequestMethod.POST)
     public AjaxUtils getName(@NotNull HttpServletRequest request) {
-
         return new AjaxUtils(forUserService.selectName(UserConfig.tokenUserName(request)));
     }
 
@@ -55,7 +54,6 @@ public class ForUserController extends AjaxUtils {
     @RequestMapping(value = "/upload_img", method = RequestMethod.POST)
     public AjaxUtils updateImager(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         String imagePath = UploadUtils.upload(file, request, "image");
-
         if (imagePath != null) {
             return new AjaxUtils(true, "上传成功", imagePath);
         } else {
@@ -71,14 +69,11 @@ public class ForUserController extends AjaxUtils {
      */
     @RequestMapping(value = "/update/basic", method = RequestMethod.POST)
     public AjaxUtils updateBasic(@NotNull @RequestBody User user, HttpServletRequest request) {
-
-
         user.setUser_name(UserConfig.tokenUserName(request));
         try {
             sysUserService.updateBasic(user);
             return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
         } catch (Exception e) {
-            e.printStackTrace();
             return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
         }
     }
@@ -96,9 +91,7 @@ public class ForUserController extends AjaxUtils {
     public AjaxUtils passWord(@NotNull @RequestBody User user, HttpServletRequest request) {
 
         user.setUser_name(UserConfig.tokenUserName(request));
-        System.out.println("======================================");
         user.setPass_word(MD5Util.inputPassToFromPass(user.getPass_word()));
-
         user.setName(MD5Util.inputPassToFromPass(user.getName()));
         String password = sysUserService.selectPassword(user.getUser_name());
         if (Objects.equals(password, user.getPass_word())) {
@@ -106,7 +99,6 @@ public class ForUserController extends AjaxUtils {
                 sysUserService.updatePass(user.getUser_name(), user.getName());
                 return new AjaxUtils(PageCodeEnum.MODIFY_SUCCESS.getBool(), PageCodeEnum.MODIFY_SUCCESS.getMsg());
             } catch (Exception e) {
-                e.printStackTrace();
                 return new AjaxUtils(PageCodeEnum.MODIFY_FAIL.getBool(), PageCodeEnum.MODIFY_FAIL.getMsg());
             }
         } else {

@@ -56,7 +56,7 @@ VALUES ('了解招物', '/sys/welcome.action', 1, 'iconfont icon-lejie'),
        ('帖子举报', DEFAULT, 3, 'iconfont icon-jubao'),
        ('帖子分类', '/sys/label.action', 3, 'iconfont icon-fenlei'),
        ('通知公告', '/sys/anNoun.action', 4, 'iconfont icon-tongzhigonggao'),
-       ('意见与反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
+       ('意见反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
        ('发表感谢', DEFAULT, 4, 'iconfont icon-ganxie'),
        ('用户消息', DEFAULT, 4, 'iconfont icon-xiaoxi'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
@@ -137,7 +137,6 @@ BEGIN
     WHERE (datediff(sysdate(), noti_time) >= 3 and noti_status = 0)
        or (datediff(sysdate(), noti_time) >= 5 and noti_status = 1)
        or (datediff(sysdate(), noti_time) >= 7 and noti_status = 2);
-
 END;
 
 # 执行存储过程的事件
@@ -172,12 +171,12 @@ CREATE TABLE `label_db`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '标签表';
 insert into label_db(lab_name, lab_image)
-values ('电子产品', ''),
-       ('书籍资料', ''),
-       ('其他物品', ''),
-       ('卡类证件', ''),
-       ('衣物饰品', ''),
-       ('随身物品', '');
+values ('电子产品', '/static/image/2.jpg'),
+       ('书籍资料', '/static/image/5.jpg'),
+       ('其他物品', '/static/image/6.png'),
+       ('卡类证件', '/static/image/4.jpg'),
+       ('衣物饰品', '/static/image/1.jpg'),
+       ('随身物品', '/static/image/3.jpg');
 # 帖子表
 # DROP TABLE IF EXISTS `post_db`;
 CREATE TABLE post_db
@@ -284,7 +283,7 @@ values ('电子产品'),
        ('衣物饰品'),
        ('随身物品');
 
-
+# 物品丢失情况
 CREATE TABLE tb_lose
 (
     lo_id   INT(11)     NOT NULL AUTO_INCREMENT COMMENT 'lo_id',
@@ -303,3 +302,13 @@ values ('电子产品'),
        ('卡类证件'),
        ('衣物饰品'),
        ('随身物品');
+
+# 意见反馈
+CREATE TABLE feedback
+(
+    fe_id      INT(11)       NOT NULL AUTO_INCREMENT COMMENT 'fe_id',
+    fe_content VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '反馈内容',
+    fe_time    DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '反馈时间',
+    PRIMARY KEY (fe_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '意见反馈';

@@ -13,6 +13,8 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
     <script th:src="@{/static/js/wangEditor.js}"></script>
     <link rel="stylesheet" th:href="@{/static/css/wangEditor.css}">
+    <!--    修改滚动条-->
+    <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
     <!--    <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>-->
     <!--    <script th:src="@{/static/js/jquery.cookie.js}"></script>-->
     <!--    <script th:src="@{/static/js/cookie.js}"></script>-->
@@ -172,9 +174,9 @@
             , url: '/notify/listNot?noti_status=' + -1
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , title: '用户表'
-            , limit: 15
+            , limit: 20
             // , height: 720
-            , limits: [15, 25, 50]
+            , limits: [20, 50]
             , cols: [[
                 {type: 'checkbox', fixed: 'center'}
                 , {field: 'user_name', title: '发布者', width: 80}

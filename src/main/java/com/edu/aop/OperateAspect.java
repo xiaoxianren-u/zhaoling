@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -116,7 +117,7 @@ public class OperateAspect {
 
     /*获取url */
 
-    public String getUrl(Class<?> clazz, Method method) {
+    public String getUrl(@NotNull Class<?> clazz, Method method) {
 
         String url = null;
         //类的链接

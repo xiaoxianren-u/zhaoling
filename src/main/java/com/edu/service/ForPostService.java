@@ -24,13 +24,23 @@ public interface ForPostService {
     AjaxUtils insertPost(Post post, HttpServletRequest request);
 
     /**
-     * 个人帖子表
+     * 发布帖子表
      *
      * @param status
      * @param request
      * @return
      */
     AjaxUtils selectList(Integer status, HttpServletRequest request);
+
+
+    /**
+     * 我的物品表
+     *
+     * @param status
+     * @param request
+     * @return
+     */
+    AjaxUtils selectListApp(Integer status, HttpServletRequest request);
 
     /**
      * 首页帖子数量
@@ -56,4 +66,31 @@ public interface ForPostService {
      * @return
      */
     Post selectPo(Integer t);
+
+    /**
+     * 申请归还至
+     *
+     * @param tokenUserName
+     * @param post_id
+     * @return
+     */
+    AjaxUtils getPost(String tokenUserName, Integer post_id);
+
+    /**
+     * 拒绝归还
+     *
+     * @param post_id
+     * @return
+     */
+    AjaxUtils getExit(Integer post_id);
+
+
+    /**
+     * 归还物品
+     *
+     * @param time
+     * @param post_image
+     * @return
+     */
+    AjaxUtils setWu(String time, String post_image, Integer post_id);
 }

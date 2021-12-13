@@ -19,8 +19,24 @@
 
 
     <title>Document</title>
+    <style>
+
+        .webkit::-webkit-scrollbar {
+            /*滚动条整体样式*/
+            width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+            height: 4px;
+        }
+
+        .webkit::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块样式*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(105, 102, 102, 0.2);
+            background: #535252;
+        }
+
+    </style>
 </head>
-<body style="width: 100%;">
+<body class="webkit" style="width: 100%;">
 
 <div style="position: sticky;top: 0;right: 0;z-index: 999; width: 99.9%;border-radius: 10px">
     <div class="layui-bg-gray">

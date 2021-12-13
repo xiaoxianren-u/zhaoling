@@ -31,7 +31,7 @@
                  and post_found_place regexp concat('[',#{post_found_place},']')
             </if>
             <if test="post_status == null">
-                and (post_status = -1 or post_status = 0 or post_status = 2)
+                and (post_status = -1 or post_status = 0 or post_status = 2 or post_status = 1)
             </if>
             <if test="post_status != null">
                 and post_status = #{post_status}
@@ -69,7 +69,7 @@
                  and post_found_place regexp concat('[',#{post.post_found_place},']')
             </if>
             <if test="post.post_status == null">
-                and (post_status = -1 or post_status = 0 or post_status = 2)
+                and (post_status = -1 or post_status = 0 or post_status = 2 or post_status = 1)
             </if>
             <if test="post.post_status != null">
                 and post_status = #{post.post_status}

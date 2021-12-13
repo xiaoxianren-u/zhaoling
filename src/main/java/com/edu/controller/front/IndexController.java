@@ -62,7 +62,6 @@ public class IndexController {
     @PassToken
     public String indexAction(@NotNull ModelMap modelMap) {
         modelMap.put("lab_list", forLabelService.forList());
-
         return "/index.html";
     }
 
@@ -208,8 +207,23 @@ public class IndexController {
     @UserLoginToken(state = 0)
     @RequestMapping("/for/for_post")
     public String forPostAction(@NotNull ModelMap modelMap) {
+        //获取没有被禁的帖子标签
         modelMap.put("lab_list", forLabelService.forList());
         return "/front/for_post.html";
+    }
+
+
+    /**
+     * 我的物品页面
+     *
+     * @param modelMap
+     * @return
+     */
+    @UserLoginToken(state = 0)
+    @RequestMapping("/for/application")
+    public String forApplicationAction(@NotNull ModelMap modelMap) {
+//        modelMap.put("lab_list", forLabelService.forList());
+        return "/front/application.html";
     }
 
 
@@ -312,18 +326,21 @@ public class IndexController {
     }
 
 
+    /**
+     * 个人通知页面
+     *
+     * @param modelMap
+     * @return
+     */
     @UserLoginToken(state = 0)
     @RequestMapping(value = "/for/inform", method = RequestMethod.GET)
     public String inForm(ModelMap modelMap) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-
         List<NotiFy> list = sysNotifyService.userList();
         for (NotiFy n : list) {
             n.setDate(formatter.format(n.getNoti_time()));
         }
-        System.out.println("list = " + list);
         modelMap.put("no", list);
-
         return "/front/inform";
     }
 

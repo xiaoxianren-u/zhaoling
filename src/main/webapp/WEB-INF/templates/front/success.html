@@ -51,9 +51,25 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
     <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
 
+    <style>
+
+        .webkit::-webkit-scrollbar {
+            /*滚动条整体样式*/
+            width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+            height: 4px;
+        }
+
+        .webkit::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块样式*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #242424;
+        }
+
+    </style>
 
 </head>
-<body style="background-color: white;min-width: 1900px">
+<body class="webkit" style="background-color: white;min-width: 1500px">
 <div class="layui-row" style="margin-top: 0;min-height: 810px;">
     <div class="layui-col-xs1">
         <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
@@ -112,12 +128,12 @@
                 </div>
                 <div class="layui-col-xs2">
                     <div class="grid-demo">
-                        <div>
-                            <span class="iconfont icon-gonggao " style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;
-                            vertical-align: middle;float: left;margin-top: 30px;margin-left: 170px;" title="公告"></span>
-                            <span class="layui-badge-dot" style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;
-                            vertical-align: middle;float: left;margin-top: 26px;margin-left: 192px;"></span>
-                        </div>
+                        <!--                        <div>-->
+                        <!--                            <span class="iconfont icon-gonggao " style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;-->
+                        <!--                            vertical-align: middle;float: left;margin-top: 30px;margin-left: 170px;" title="公告"></span>-->
+                        <!--                            <span class="layui-badge-dot" style=" z-index: 99;position:absolute;font-size: 22px;color: black;display: inline-block;-->
+                        <!--                            vertical-align: middle;float: left;margin-top: 26px;margin-left: 192px;"></span>-->
+                        <!--                        </div>-->
                         <div id="img" style="float: right;z-index: -1;">
                             <a href="javascript:" id="dl" onclick="login_Image()">
                                 <div id="log_div"
@@ -179,16 +195,76 @@
     }
 </script>
 
+<!--意见反馈-->
+<div class="site-text" id="window" style="margin: 5%; display: none" target="test123" th:inline="none">
+    <form class="layui-form" id="book" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <div class="">
+                <textarea autocomplete="off" class="layui-textarea" id="text1" lay-verify="title" name="text1"
+                          placeholder="输入你的意见与建议" style="height: 140px" type="text"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
 <script>
     layui.use('flow', function () {
         var flow = layui.flow,
             laypage = layui.laypage,
-            util = layui.util,
-            $ = layui.jquery;
+            util = layui.util;
+        // $ = layui.jquery;
 
         util.fixbar({
-            css: {right: 50, bottom: 80}
-            , bgcolor: '#393D49'
+            bar1: true
+            // , bar2: true
+            , css: {right: 50, bottom: 80}
+            , bgcolor: '#1E9FFF'
+            , click: function (type) {
+                if (type === 'bar1') {
+                    // layer.msg('icon 是可以随便换的');
+                    layer.open({
+                        type: 1,
+                        title: "意见反馈",
+                        area: ["500px", "300px"],
+                        btn: ['提交', '取消'], //可以无限个按钮
+                        Number: 9000000,   //自动关闭的时间
+                        anim: 2,
+                        maxmin: false, // 最大最小化。
+                        resize: false, // 是否允许拉伸
+                        content: $("#window"), //添加表单到弹出层
+                        yes: function (index, layero) {
+
+                            let text = $('#text1').val();
+
+                            $.ajax({
+                                type: "get",
+                                url: '/feed/add?text=' + text,
+                                async: true,
+                                dataType: "json",
+                                contentType: "application/json;charset=UTF-8",
+                                success: function (src) {
+                                    if (src.bool) {
+                                        layer.msg(src.msg + ',感谢你的反馈');
+                                        setTimeout(function () {
+                                            $('#text1').val("");
+                                            layer.closeAll(); //关闭所有弹窗
+                                        }, 800);
+                                    } else {
+                                        layer.msg(src.msg);
+                                    }
+                                }
+                            })
+                            console.log(text);
+                        },
+                        end: function () {
+
+                            $('#text1').val("");
+                        }
+
+                    })
+
+                }
+            }
         });
 
         $(document).keyup(function (event) {
@@ -274,10 +350,10 @@
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
                                         '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
                                         '           <div class="cmdlist-container">\n' +
-                                        '               <a href="stext?t=' + item.post_id + '"  target="_blank">\n' +
+                                        '               <a href="/stext?t=' + item.post_id + '"  target="_blank">\n' +
                                         '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
                                         '                   <hr/>\n' +
-                                        '                   <a href="stext?t=' + item.post_id + '" target="_blank">\n' +
+                                        '                   <a href="/stext?t=' + item.post_id + '" target="_blank">\n' +
                                         '                       <div class="cmdlist-text">\n' +
                                         '                           <div class="price">\n' +
                                         '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
@@ -306,14 +382,14 @@
                                         '       <div class="layui-col-md2  layui-col-sm4" id="ha"\n' +
                                         '            style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 26px;background-color: white;height: 335px;width: 270px;left: 20px;">\n' +
                                         '           <div class="cmdlist-container">\n' +
-                                        '               <a href="text?t=' + item.post_id + '" target="_blank">\n' +
+                                        '               <a href="/stext?t=' + item.post_id + '" target="_blank">\n' +
                                         '                   <img src=' + item.post_image + ' height="220px" width="257px"/>\n' +
                                         '                   <hr/>\n' +
-                                        '                   <a href="text?t=' + item.post_id + '" target="_blank">\n' +
+                                        '                   <a href="/stext?t=' + item.post_id + '" target="_blank">\n' +
                                         '                       <div class="cmdlist-text">\n' +
                                         '                           <div class="price">\n' +
                                         '                               <b style="float: left;color: #F40">' + item.lab_name + '</b><b\n' +
-                                        '                                   style="float: right;color: #888;font-size: 9pt">待领取</b>\n' +
+                                        '                                   style="float: right;color: #888;font-size: 9pt">已领取</b>\n' +
                                         '                           </div>\n' +
                                         '                       </div>\n' +
                                         '                   </a>\n' +
@@ -344,12 +420,11 @@
         }
 
         setTimeout(send, 500)  //延迟0.5秒执行
+
+
     })
 
-
-</script>
-
-<script>
+    //登录按钮
     function login_Image() {
 
         console.log("登录");
@@ -375,11 +450,6 @@
         );
     }
 
-
-</script>
-
-
-<script>
     $('#exit').click(function () {
         sessionStorage.setItem("bool", "0");
         $.cookie("data", 0);
@@ -389,5 +459,6 @@
 
     })
 </script>
+
 
 </html>

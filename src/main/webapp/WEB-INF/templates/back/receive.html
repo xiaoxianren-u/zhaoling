@@ -14,14 +14,57 @@
     <script th:src="@{/static/js/md5.js}"></script>
     <!--    <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>-->
 
+    <style>
+
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-button,
+        ::-webkit-scrollbar-button:vertical {
+            display: none;
+        }
+
+        ::-webkit-scrollbar-track,
+        ::-webkit-scrollbar-track:vertical {
+            background-color: black;
+        }
+
+        ::-webkit-scrollbar-track-piece {
+            background-color: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb,
+        ::-webkit-scrollbar-thumb:vertical {
+            margin-right: 10px;
+            background-color: #a6a6a6;
+        }
+
+        ::-webkit-scrollbar-thumb:hover,
+        ::-webkit-scrollbar-thumb:vertical:hover {
+            background-color: #aaa;
+        }
+
+        ::-webkit-scrollbar-corner,
+        ::-webkit-scrollbar-corner:vertical {
+            background-color: #535353;
+        }
+
+
+    </style>
+
+
+    <style>
+        .layui-table-cell {
+            height: 45px;
+            line-height: 50px;
+        }
+    </style>
+
 </head>
 
-<style>
-    .layui-table-cell {
-        height: 30px;
-        line-height: 30px;
-    }
-</style>
 
 <body style="background-color: #e3e1e1">
 
@@ -216,11 +259,11 @@
 
 <script id="img" th:inline="none" type="text/html">
     <!--    图片-->
-    <div><img style="height:35px;width:35px; border-radius: 10px" src="{{ d.post_image}}"></div>
+    <div><img style="height:45px;width:55px; border-radius: 10px" src="{{ d.post_image}}"></div>
 </script>
 <script id="img1" th:inline="none" type="text/html">
     <!--    图片-->
-    <div><img style="height:35px;width:35px; border-radius: 10px" src="{{ d.post_receive_imga}}"></div>
+    <div><img style="height:45px;width:55px;" src="{{ d.post_receive_imga}}"></div>
 </script>
 
 <!--物品状态-->
@@ -282,7 +325,7 @@
                 , {field: 'post_id', title: '编号', width: 70,}
                 , {field: 'post_status', title: '物品状态', width: 90, templet: '#sta'}
                 , {field: 'post_receive_link', title: '领取人联系方式', width: 130}
-                , {field: 'post_receive_name', title: '领取人名', width: 90,}
+                , {field: 'post_receive_name', title: '领取人', width: 90,}
                 , {field: 'post_receive_imga', title: '领取图片', width: 90, templet: '#img1'}
                 , {field: 'text', title: '感言', width: 120,}
                 , {field: 'post_receive_time', title: '领取时间', width: 160, sort: true}

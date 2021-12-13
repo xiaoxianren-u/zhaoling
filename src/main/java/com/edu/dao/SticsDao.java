@@ -91,5 +91,57 @@ public interface SticsDao {
      */
     void reDefault();
 
+//--============================================
+
+
+    /**
+     * 添加标签
+     */
+    void addLo(@Param("label") String label);
+
+    /**
+     * 添加标签
+     */
+    void addPo(@Param("label") String label);
+
+    /**
+     * 添加标签
+     */
+    void addRe(@Param("label") String label);
+
+
+    /**
+     * 删除标签
+     */
+    void delLo(@Param("lab_name") String lab_name);
+
+    /**
+     * 删除标签
+     */
+    void delPo(@Param("lab_name") String lab_name);
+
+    /**
+     * 删除标签
+     */
+    void delRe(@Param("lab_name") String lab_name);
+
+
+    /**
+     * 修改标签
+     */
+    void upLo(@Param("lab_name") String lab_name, @Param("name") String name);
+
+
+    /**
+     * 修改标签
+     */
+    void upPo(@Param("lab_name") String lab_name, @Param("name") String name);
+
+
+    /**
+     * 修改标签
+     */
+    void upre(@Param("lab_name") String lab_name, @Param("name") String name);
+
 
 }

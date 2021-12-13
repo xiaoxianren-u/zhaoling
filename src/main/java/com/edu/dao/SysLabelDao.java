@@ -45,4 +45,12 @@ public interface SysLabelDao {
      * @return
      */
     void add(Label label);
+
+    /**
+     * 获取标签
+     *
+     * @param lab_id
+     * @return
+     */
+    String sel(@Param("lab_id") Integer lab_id);
 }

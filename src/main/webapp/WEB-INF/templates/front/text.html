@@ -39,7 +39,7 @@
         padding-top: 20px;
     }
 </style>
-<body>
+<body style="min-width: 1700px;">
 <div class="layui-row">
     <div class="layui-col-xs2">
         <div class="grid-demo grid-demo-bg1" style="color: white;">6/12</div>
@@ -187,8 +187,13 @@
                                         <div class="layui-input-inline" style="top: 12px;width: 80%">
                                             <div class="layui-row">
                                                 <div class="layui-col-xs6">
-                                                    <div class="grid-demo grid-demo-bg1" id="te">
+                                                    <div class="grid-demo grid-demo-bg1" id="te"
+                                                         th:if="${post.post_status != 1}">
 
+                                                    </div>
+                                                    <div class="grid-demo grid-demo-bg1"
+                                                         th:if="${post.post_status == 1}">
+                                                        已被申请领取中
                                                     </div>
                                                 </div>
                                                 <div class="layui-col-xs6">
@@ -222,7 +227,6 @@
 
 </body>
 <script>
-
     if ($.cookie("data") !== '1') {
         $('#te').html('<p><a href="/login" target="_blank" id="a_t">点击登录获取联系方式</a></p>');
     }
@@ -231,9 +235,32 @@
     }
 </script>
 <script>
+    // $("#btn").click(function () {
+    //     // document.getElementById("sp").style.display = '';
+    //     // document.getElementById("spa").style.display = '';
+    // })
+
+    let post_id = [[${post.post_id}]];
+    console.log(post_id);
+
+
     $("#btn").click(function () {
-        document.getElementById("sp").style.display = '';
-        document.getElementById("spa").style.display = '';
+        $.ajax({
+            type: "GET",
+            url: '/post/getPost?post_id=' + post_id,
+            async: true,
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            success: function (src) {
+                if (src.bool) {
+                    layer.msg(src.msg);
+                    $('#te').html('<div>已被申请领取中</div>')
+                } else {
+                    layer.msg(src.msg);
+                }
+            }
+        })
     })
+
 </script>
 </html>

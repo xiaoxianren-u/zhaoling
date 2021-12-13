@@ -12,6 +12,8 @@ import java.util.Objects;
  * @data: 2021/10/21 21:28 星期四
  * @file : UserConfig.java
  */
+
+
 @Component
 public class UserConfig {
 
@@ -28,6 +30,9 @@ public class UserConfig {
                 break;
             }
         }
+        /*
+          返回用户名
+         */
         return (String) Objects.requireNonNull(JwtUtils.checkToken(token)).get("username");
     }
 

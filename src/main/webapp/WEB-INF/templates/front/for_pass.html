@@ -68,7 +68,7 @@
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block">
-                                                        <button class="layui-btn" lay-filter="setmypass" lay-submit>
+                                                        <button class="layui-btn btn" lay-filter="setmypass" lay-submit>
                                                             确认修改
                                                         </button>
                                                     </div>
@@ -88,7 +88,7 @@
 <script>
     layui.use(function () {
         const $ = layui.jquery;
-        $(".layui-btn").click(function () {
+        $(".btn").click(function () {
             let password = $(".password").val();
             let LAY_password = $("#LAY_password").val();
             let LAY_password_L = $("#LAY_password_L").val();
@@ -102,28 +102,24 @@
                     $("#text1").html("*");
                     password = md5(yan + password + yan);
                     LAY_password = md5(yan + LAY_password + yan);
-                    LAY_password_L = md5(yan + LAY_password_L + yan);
-
                     $.ajax({
                         type: 'POST',
                         url: '/for/user/pass',
                         async: true,
-                        data: JSON.stringify(
-                            {
-                                pass_word: password,
-                                name: LAY_password,
-                            }
-                        ),
+                        data: JSON.stringify({
+                            pass_word: password,
+                            name: LAY_password,
+                        }),
                         dataType: 'json',
                         contentType: 'application/json;charset=UTF-8',
                         success: function (src) {
-
-                            console.log(src);
                             if (src.bool === true) {
+                                $('.password').val("");
+                                $('#LAY_password').val("");
+                                $('#LAY_password_L').val("");
                                 layer.msg(src.msg, {icon: 1, offset: ['15%', '40%']});
                             } else {
                                 layer.msg(src.msg, {icon: 2, offset: ['15%', '40%']});
-                                // layer.alert(src.msg);
                             }
                         }
                     })

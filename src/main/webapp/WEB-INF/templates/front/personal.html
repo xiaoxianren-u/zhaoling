@@ -62,7 +62,9 @@
                                         <dd><a href="/for/information.html" style="color: #0C0C0C">个人中心</a></dd>
                                         <dd><a href="/for/for_pass" style="color: #0C0C0C">修改密码</a></dd>
                                         <dd><a href="/for/for_post" style="color: #0C0C0C">发布帖子</a></dd>
+                                        <dd><a href="/for/application" style="color: #0C0C0C">我的物品</a></dd>
                                         <dd><a href="/for/inform" style="color: #0C0C0C">消息通知</a></dd>
+
                                     </dl>
                                 </li>
                             </ul>
@@ -87,7 +89,7 @@
 
 <script>
     layui.use(['element', 'layer', 'util'], function () {
-        var $ = layui.$;
+        // var $ = layui.$;
         let href_url = sessionStorage.getItem("url3")
         if (href_url === null) {
             href_url = "/for/information.html";

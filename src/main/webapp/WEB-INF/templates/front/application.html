@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <!--    <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>-->
+    <!--    <script th:src="@{/static/js/jquery.cookie.js}"></script>-->
+    <!--    <script th:src="@{/static/js/cookie.js}"></script>-->
+    <title></title>
+
+    <style>
+        #ha:hover {
+            border: 1px solid #F40;;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
+
+</head>
+
+<body class="webkit">
+
+
+<!--&#45;&#45;弹出层的表单&#45;&#45;-->
+<div class="site-text" id="window" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" id="book" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">*</span> 标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</label>
+            <div class="layui-input-block">
+                <input class="layui-input" id="post_title" name="post_title" type="text">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">*</span> 地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" id="post_found_place" lay-verify="title"
+                       name="post_found_place"
+                       placeholder="" type="text">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">*</span> 类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
+            <div class="layui-input-block">
+                <select id="lab_name" lay-filter="aihao" name="lab_name">
+                    <option th:each="s : ${lab_list}" th:text="${s.lab_name}"
+                            th:value="${s.lab_name}"></option>
+                </select>
+            </div>
+        </div>
+        <div style="width: 100%;height: 180px;">
+            <div class="layui-row">
+                <div class="layui-col-xs6">
+                    <div class="grid-demo grid-demo-bg1">
+                        <label class="layui-form-label">图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片</label>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="demo1" src="" style="width: 140px;height: 140px;">
+                            <p id="demoText"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="grid-demo">
+                        <br>
+                        <button class="layui-btn" id="test1" type="button">上传自己的</button>
+                        <br> <br> <br> <br>
+                        <div style="width: 95px;">
+                            <div class="layui-progress layui-progress-big" lay-filter="demo" lay-showpercent="yes">
+                                <div class="layui-progress-bar" lay-percent=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="grid-demo grid-demo-bg1">
+                        <span style="padding-top: 40px;color: red;font-size: 18px;">不上传表示使用默认该标签类型图片</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span style="color: red;">*</span>捡到或遗失时间</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" id="test5" placeholder="选择时间或默认当前时间" type="text">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label"><span style="color: red;">*</span> 联&nbsp;系&nbsp;方&nbsp;式</label>
+                <div class="layui-input-block">
+                    <input autocomplete="off" class="layui-input" id="post_found_link" lay-verify="title"
+                           name="post_found_link"
+                           placeholder="" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color:red;">*</span>物品状态：</label>
+            <div class="layui-input-block">
+                <input checked="" name="post_status1" title="捡到" type="radio" value="0">
+                <input name="post_status1" title="丢失" type="radio" value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"> 描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述</label>
+            <div class="layui-input-block">
+                <textarea autocomplete="off" class="layui-textarea" id="post_substance" lay-verify="title"
+                          name="post_substance" type="text"></textarea>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="layui-fluid layadmin-cmdlist-fluid">
+    <div class="layui-row layui-col-space15">
+
+        <form>
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-primary demo1">
+                    <span id="bnt-xl">全&nbsp;&nbsp;&nbsp;&nbsp;部</span>
+                    <i class="layui-icon layui-icon-down layui-font-12"></i>
+                </button>
+            </div>
+
+        </form>
+
+        <div id="view"></div>
+
+
+    </div>
+</div>
+
+</body>
+
+<script id="app" th:inline="none" type="text/html">
+    <ol>
+        {{# layui.each(d.list, function(index, item){ }}
+
+        {{# if(item.post_status === 1){ }}
+
+        <li v-for="site in sites" class="layui-col-space15">
+            <div class="layui-col-md2  layui-col-sm4" id="ha"
+                 style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 10px;background-color: white;height: 335px;width: 270px">
+                <div class="cmdlist-container">
+                    <a href="/text?t={{item.post_id}}" target="_blank">
+                        <img src="{{item.post_image}}" height="220px" width="257px"/>
+                        <hr/>
+                        <a href="/text?t={{item.post_id}}" target="_blank">
+                            <div class="cmdlist-text">
+                                <div class="price">
+                                    <b style="float: left;color: #F40">{{item.lab_name}}</b><b
+                                        style="float: right;color: #c800ff;font-size: 9pt">归还申请中,待对方确认</b>
+                                </div>
+                            </div>
+                        </a>
+                    </a>
+                </div>
+                <hr/>
+                <div style="height: 30px;width: 100%;">
+                    <p class="info"
+                       style="word-break:break-all;text-overflow:ellipsis;  white-space:nowrap;   overflow:hidden;">
+                        {{item.post_substance}}</p>
+                </div>
+                <div>
+                    <span style="float: left">{{item.post_found_time}}</span>
+                    <span style="float: right">电话:{{item.post_found_link}}</span>
+                </div>
+
+            </div>
+        </li>
+
+        {{# } else if(item.post_status === 3){ }}
+
+        <li v-for="site in sites" class="layui-col-space15">
+            <div class="layui-col-md2  layui-col-sm4" id="ha"
+                 style="top: 20px;right: 20px;margin-left: 20px;margin-right: 20px;margin-bottom: 10px;background-color: white;height: 335px;width: 270px">
+                <div class="cmdlist-container">
+                    <a href="/stext?t={{item.post_id}}" target="_blank">
+                        <img src="{{item.post_image}}" height="220px" width="257px"/>
+                        <hr/>
+                        <a href="/stext?t={{item.post_id}}" target="_blank">
+                            <div class="cmdlist-text">
+                                <div class="price">
+                                    <b style="float: left;color: #F40">{{item.lab_name}}</b><b
+                                        style="float: right;color: #888;font-size: 9pt">已领取</b>
+                                </div>
+                            </div>
+                        </a>
+                    </a>
+                </div>
+                <hr/>
+                <div style="height: 30px;width: 100%;">
+                    <p class="info"
+                       style="word-break:break-all;text-overflow:ellipsis;  white-space:nowrap;   overflow:hidden;">
+                        {{item.post_substance}}</p>
+                </div>
+                <div>
+                    <span style="float: left">{{item.post_found_time}}</span>
+                    <span style="float: right">电话:{{item.post_found_link}}</span>
+                </div>
+
+            </div>
+        </li>
+
+        {{# } }}
+
+        {{# }); }}
+        {{# if(d.list.length === 0){ }}
+        无数据
+        {{# } }}
+    </ol>
+</script>
+
+<script>
+
+    layui.use(['upload', 'element', 'layer'], function () {
+        var $ = layui.jquery
+            , upload = layui.upload
+            , element = layui.element
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#test5'
+            , type: 'datetime'
+        });
+
+        //常规使用 - 普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: '/post/image'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+
+                element.progress('demo', '0%'); //进度条复位
+                layer.msg('上传中', {icon: 16, time: 0});
+            }
+            , done: function (res) {
+                console.log(res);
+                //如果上传失败
+                if (res.bool) {
+                    sessionStorage.setItem("post_im", res.data);
+                    $('#demoText').html(''); //置空上传失败的状态
+                    return layer.msg(res.msg);
+                } else {
+                    element.progress('demo', '50%'); //进度条复位
+                    const demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                    return layer.msg(res.msg);
+                }
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+
+            }
+            //进度条
+            , progress: function (n, elem, e) {
+                element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                if (n === 100) {
+                    layer.msg('上传完毕', {icon: 1});
+                }
+            }
+        });
+    })
+
+</script>
+
+
+<script>
+
+
+    layui.use(function () {
+
+        var dropdown = layui.dropdown,
+            $ = layui.jquery,
+            laytpl = layui.laytpl;
+        let list = null;
+
+        $.ajax({
+            type: "get",
+            url: "/post/listApp?status=" + 4,
+            async: true,
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success: function (res) {
+                console.log(res);
+                list = res.data;
+                const data = {"list": list,};
+                const getTpl = app.innerHTML
+                    , view = document.getElementById('view');
+                laytpl(getTpl).render(data, function (html) {
+                    view.innerHTML = html;
+                })
+            }
+
+
+        })
+
+        dropdown.render({
+            elem: '.demo1'
+            , data: [{
+                title: '全&nbsp;&nbsp;&nbsp;&nbsp;部'
+                , id: 4
+            }, {
+                title: '我的申请'
+                , id: 1
+            }, {
+                title: '已归还'
+                , id: 3
+            }]
+            , click: function (obj) {
+                $("#bnt-xl").html(obj.title);
+                // layer.tips(obj.title, this.elem, {tips: [1, '#5FB878']})
+                let post_status = obj.id;
+                $.ajax({
+                    type: "get",
+                    url: '/post/listApp?status=' + post_status,
+                    async: true,
+                    dataType: "json",
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (res) {
+                        console.log(res);
+                        list = res.data;
+                        const data = {"list": list,};
+                        const getTpl = app.innerHTML
+                            , view = document.getElementById('view');
+                        laytpl(getTpl).render(data, function (html) {
+                            view.innerHTML = html;
+                        })
+                    }
+                })
+            }
+        });
+
+
+    })
+
+
+</script>
+<!--弹出层-->
+<script>
+
+
+</script>
+</html>

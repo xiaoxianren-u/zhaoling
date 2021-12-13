@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="zhaoling:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/zhaoling_war2</output-path>
+    <root id="archive" name="zhaoling_war.war">
+      <element id="artifact" artifact-name="zhaoling:war exploded" />
+    </root>
+  </artifact>
+</component>

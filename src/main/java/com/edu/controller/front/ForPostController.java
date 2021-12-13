@@ -1,5 +1,7 @@
 package com.edu.controller.front;
 
+import com.edu.config.UserConfig;
+import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.Post;
 import com.edu.service.ForPostService;
 import com.edu.util.AjaxUtils;
@@ -27,6 +29,13 @@ public class ForPostController extends AjaxUtils {
     private ForPostService forPostService;
 
 
+    /**
+     * 图片上传
+     *
+     * @param file
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/image", method = RequestMethod.POST)
     public AjaxUtils insetImage(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 
@@ -53,13 +62,24 @@ public class ForPostController extends AjaxUtils {
 
 
     /**
-     * 个人帖子表
+     * 发布帖子表
      */
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public AjaxUtils selectList(@RequestParam("status") Integer status, HttpServletRequest request) {
         return forPostService.selectList(status, request);
     }
+
+
+    /**
+     * 我的物品表
+     */
+
+    @RequestMapping(value = "/listApp", method = RequestMethod.GET)
+    public AjaxUtils selectListApp(@RequestParam("status") Integer status, HttpServletRequest request) {
+        return forPostService.selectListApp(status, request);
+    }
+
 
     /**
      * 首页帖子数量
@@ -95,6 +115,49 @@ public class ForPostController extends AjaxUtils {
                                      @RequestParam("post_status1") Integer postStatus1) {
         page = page > 1 ? limit * (page - 1) : 0;
         return forPostService.selectListIndex(status, page, limit, labName, text, time, postStatus1);
+    }
+
+
+    /**
+     * 申请归还
+     *
+     * @param post_id
+     * @param request
+     * @return
+     */
+
+    @UserLoginToken(state = 0)
+    @RequestMapping(value = "/getPost")
+    public AjaxUtils getPost(@RequestParam("post_id") Integer post_id, HttpServletRequest request) {
+        return forPostService.getPost(UserConfig.tokenUserName(request), post_id);
+    }
+
+    /**
+     * 拒绝归还
+     *
+     * @param post_id
+     * @return
+     */
+    @UserLoginToken(state = 0)
+    @RequestMapping(value = "/getExit")
+    public AjaxUtils getExit(@RequestParam("post_id") Integer post_id) {
+        return forPostService.getExit(post_id);
+    }
+
+
+    /**
+     * 归还物品
+     *
+     * @param time
+     * @param post_image
+     * @return
+     */
+    @UserLoginToken(state = 0)
+    @RequestMapping(value = "/upWu")
+    public AjaxUtils setWu(@RequestParam("time") String time,
+                           @RequestParam("post_image") String post_image,
+                           @RequestParam("post_id") Integer post_id) {
+        return forPostService.setWu(time, post_image, post_id);
     }
 
 }

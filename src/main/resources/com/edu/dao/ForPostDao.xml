@@ -107,7 +107,7 @@
 
         )
     </insert>
-    <!--个人帖子列表-->
+    <!--发布帖子列表-->
     <select id="selectList" resultType="com.edu.pojo.Post">
         select *
         from zhaoling.post_db
@@ -121,15 +121,35 @@
         </where>
         order by post_id desc
     </select>
-
+<!--    我的物品-->
+    <select id="selectListApp" resultType="com.edu.pojo.Post">
+        select * from zhaoling.post_db
+        <where>
+            <if test="status == 4">
+                and (post_status = 3 or post_status =1)
+            </if>
+            <if test="status != 4">
+                and post_status = #{status}
+            </if>
+            <if test="tokenUserName != null and tokenUserName != ''">
+                and post_receive_name = #{tokenUserName}
+            </if>
+        </where>
+        order by post_id desc
+    </select>
     <!--        帖子数量-->
     <select id="selectCountIndex" resultType="int">
         select COUNT(*)
         from zhaoling.post_db
         <where>
-            <if test="status != null">
+
+            <if test="status != null and status != 3">
+                and (post_status = #{status} or post_status = 1)
+            </if>
+            <if test="status == 3">
                 and post_status = #{status}
             </if>
+
             <if test="postStatus1 != 2">
                 and post_status1 = #{postStatus1}
             </if>
@@ -158,9 +178,13 @@
         from zhaoling.post_db
 
         <where>
-            <if test="status != null">
+            <if test="status != null and status != 3">
+                and (post_status = #{status} or post_status = 1)
+            </if>
+            <if test="status == 3">
                 and post_status = #{status}
             </if>
+
             <if test="postStatus1 != 2">
                 and post_status1 = #{postStatus1}
             </if>
@@ -187,8 +211,38 @@
 
 <!--    帖子内容-->
     <select id="selectPo" resultType="com.edu.pojo.Post">
-
         select * from zhaoling.post_db
         where post_id = #{t}
     </select>
+
+<!--  s申请归还-->
+    <update id="getPost">
+        update zhaoling.post_db
+        <set>
+            <if test="tokenUserName != null and tokenUserName != ''">post_receive_name=#{tokenUserName},</if>
+            <if test="home != null and home != ''">post_receive_link=#{home},</if>
+            <if test="status != null">post_status = #{status}</if>
+        </set>
+        where post_id = #{post_id}
+    </update>
+
+<!--    拒绝归还-->
+    <update id="getExit">
+        update zhaoling.post_db
+        set post_status = 2,
+            post_receive_name = '',
+            post_receive_link = ''
+        where post_id = #{post_id}
+    </update>
+<!--    归还成功-->
+    <update id="setWu">
+        update zhaoling.post_db
+        <set>
+                <if test="post_image != null and post_image != ''">post_receive_imga = #{post_image},</if>
+                <if test="postReceiveTime != null">post_receive_time = #{postReceiveTime},</if>
+                post_status = 3
+        </set>
+        where post_id = #{post_id}
+    </update>
+
 </mapper>
