@@ -234,4 +234,16 @@ public class SysIndexController extends AjaxUtils {
         return "back/receive";
     }
 
+    /**
+     * 意见反馈页面
+     *
+     * @return
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping("/feedback")
+    public String feedBack() {
+        return "back/feedback";
+    }
+
+
 }

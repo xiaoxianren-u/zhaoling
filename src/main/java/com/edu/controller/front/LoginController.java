@@ -6,6 +6,7 @@ import com.edu.pojo.User;
 import com.edu.service.SysRoleService;
 import com.edu.service.SysUserService;
 import com.edu.util.*;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -129,8 +130,19 @@ public class LoginController extends AjaxUtils {
     @PostMapping("/register")
     @PassToken
     public AjaxUtils registerPost(@NotNull @RequestBody User user) {
-        System.out.println("user = " + user);
-
+        //判断是否有空格
+        char[] use = user.getUser_name().toCharArray();
+        for (char s : use) {
+            if (StringUtils.isBlank(String.valueOf(s))) {
+                return new AjaxUtils(false, "用户名不能有空格!!");
+            }
+        }
+        char[] hone = user.getUser_iphone().toCharArray();
+        for (char s : hone) {
+            if (StringUtils.isBlank(String.valueOf(s))) {
+                return new AjaxUtils(false, "联系不能有空格!!");
+            }
+        }
         /*检查是否已有该用户*/
         int m = sysUserService.selectRec(user.getUser_name());
         if (m == 0) {

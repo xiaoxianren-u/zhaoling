@@ -24,4 +24,21 @@ public interface FeedbackService {
      * @return
      */
     AjaxUtils feedBackAdd(String text);
+
+    /**
+     * 意见反馈表
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    AjaxUtils sel(Integer page, Integer limit);
+
+    /**
+     * 删除意见反馈
+     *
+     * @param id
+     * @return
+     */
+    AjaxUtils del(Integer id);
 }

@@ -6,6 +6,23 @@
             insert into zhaoling.feedback(fe_content, fe_time) VALUE (#{text},#{date})
         </insert>
 
+        <select id="count" resultType="java.lang.Integer">
+            select count(*) from zhaoling.feedback
+        </select>
+
+<!--      意见反馈表-->
+        <select id="sel" resultType="com.edu.pojo.Feedback">
+            select * from zhaoling.feedback
+            order by fe_id desc
+            limit #{page},#{limit}
+        </select>
+
+<!--        删除意见反馈-->
+        <delete id="del">
+            delete from zhaoling.feedback
+            where fe_id = #{id}
+        </delete>
+
 
 
 

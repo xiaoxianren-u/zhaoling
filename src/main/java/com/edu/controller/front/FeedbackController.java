@@ -1,5 +1,6 @@
 package com.edu.controller.front;
 
+import com.edu.intercept.UserLoginToken;
 import com.edu.service.FeedbackService;
 import com.edu.util.AjaxUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,30 @@ public class FeedbackController {
         return feedbackService.feedBackAdd(text);
     }
 
+
+    /**
+     * 意见反馈列表
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping(value = "/list")
+    @UserLoginToken(state = 1)
+    public AjaxUtils sel(@RequestParam("page") Integer page,
+                         @RequestParam("limit") Integer limit) {
+        return feedbackService.sel(page, limit);
+    }
+
+    /**
+     * 删除意见反馈
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/del")
+    public AjaxUtils del(@RequestParam("id") Integer id) {
+        return feedbackService.del(id);
+    }
 
 }

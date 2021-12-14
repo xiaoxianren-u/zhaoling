@@ -1,6 +1,6 @@
 let lastTime = new Date().getTime();
 let currentTime = new Date().getTime();
-const timeOut = 1 * 60 * 1000; //设置超时时间： 15分
+const timeOut = 50 * 60 * 1000; //设置超时时间： 15分
 // const timeOut = 20 * 60 * 1000; //设置超时时间： 20分
 
 $(function () {
@@ -20,8 +20,6 @@ function toLoginPage() {
         document.cookie = 'to1=;path=/';
         sessionStorage.setItem("bool", 0);
         sessionStorage.setItem('cook', '1');
-        console.log("===================================");
-        console.log("===================================");
         console.log("===================================");
     }
 }

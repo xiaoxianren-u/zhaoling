@@ -128,6 +128,8 @@ public class ForPostServiceImpl implements ForPostService {
     public AjaxUtils selectListIndex(Integer status, int page, int limit, String labName, String text, Integer time, Integer postStatus1) {
         try {
             List<Post> list = forPostDao.selectListIndex(status, page, limit, labName, text, time, postStatus1);
+
+
             return new AjaxUtils(AjaxUtils.Type.SUCCESS, true, list);
         } catch (Exception e) {
             e.printStackTrace();

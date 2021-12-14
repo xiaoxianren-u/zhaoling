@@ -342,7 +342,12 @@
                 layer.msg('密码不能少于8位！！');
                 return false;
             }
-            b = 1;
+            if (password.indexOf(" ") === -1){
+                b = 1;
+            }else {
+                layer.msg('密码不能有空格！！');
+                return false;
+            }
         })
         let c = 0;
         $("#hone").blur(function () {
@@ -381,17 +386,23 @@
                     contentType: "application/json;charset=UTF-8",
                     success: function (src) {
 
-                        if (src.bool === true) {
+                        if (src.bool) {
+                            a=0;
+                            b=0;
+                            c=0;
                             $("#username").val('');
                             $("#password").val('');
                             $("#hone").val('');
                             layer.msg(src.msg);
+
                         } else {
                             layer.msg(src.msg, {icon: 5});
                         }
                         console.log(src);
                     }
                 })
+            }else {
+                layer.msg('请按要求填写！！');
             }
 
 

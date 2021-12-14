@@ -15,6 +15,8 @@
     <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
     <script th:src="@{/static/js/jquery.cookie.js}"></script>
     <script th:src="@{/static/js/cookie.js}"></script>
+    <!--    修改滚动条-->
+    <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
 </head>
 <body style="background-color: #e3e1e1">
 
@@ -157,9 +159,9 @@
             , url: '/log/list?t=' + 0 + "&log_user=" + "" + "&log_time=" + "" + "&log_start=" + ""
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , title: '用户表'
-            , limit: 15
+            , limit: 20
             // , height: 740
-            , limits: [15, 50, 100]
+            , limits: [20, 50, 100]
             , cols: [[
                 {type: 'checkbox', fixed: 'center'}
                 , {field: 'log_user', title: '用户名', width: 110, edit: 'text'}
