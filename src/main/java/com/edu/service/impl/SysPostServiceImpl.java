@@ -109,4 +109,16 @@ public class SysPostServiceImpl implements SysPostService {
         }
         return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
     }
+
+
+    /**
+     * 待审帖子
+     *
+     * @param status
+     * @return
+     */
+    @Override
+    public int countDai(int status) {
+        return sysPostDao.countDai(status);
+    }
 }

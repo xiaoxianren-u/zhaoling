@@ -90,7 +90,10 @@
         delete from zhaoling.post_db
         where post_id = #{postId}
     </delete>
-
+        <!-- 待审帖子-->
+        <select id="countDai" resultType="java.lang.Integer">
+            select count(*) from zhaoling.post_db where post_status = #{status}
+        </select>
 
 
 </mapper>

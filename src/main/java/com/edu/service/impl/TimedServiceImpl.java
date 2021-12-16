@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,6 +18,12 @@ import java.util.List;
  * @data: 2021/11/25 22:30 星期四
  * @file : TimedServiceImpl.java
  */
+
+/**
+ * 定时任务主要是处理后台
+ * 首页的数据分析
+ */
+
 @Component
 public class TimedServiceImpl implements TimedService {
 
@@ -168,6 +176,91 @@ public class TimedServiceImpl implements TimedService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 用户数量
+     * 从早上6点到晚上23点之间每30分钟执行一次
+     */
+    @Scheduled(cron = "0 0/10 6-23 * * ?")
+    @Override
+    public void selUserCount() {
+        try {
+            //用户数量
+            int n = sticsDao.selUserCount();
+            //当月注册用户量
+            int m = sticsDao.selUserCountNe();
+            //用户量的统计
+            sticsDao.insertMonth(m, n);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("11111111111111111111111111111111111111111111");
+    }
+
+    /**
+     * 上月物品量
+     * 从早上6点到晚上23点之间每30分钟执行一次
+     */
+    @Scheduled(cron = "0 0/10 6-23 * * ?")
+    @Override
+    public void selPostCount() {
+        try {
+            //上月归还量
+            int n = sticsDao.selpostCount();
+            //上月总的帖子量
+            int m = sticsDao.selPostCountNe();
+            //帖子量的统计
+            sticsDao.updatePostMonth(m, n);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("------------------------------");
+    }
+
+    /**
+     * 上周物品丢失情况
+     */
+
+    @Scheduled(cron = "0 0 6 * * ?")
+    @Override
+    public void selXinqi() {
+
+        Date date = new Date();
+        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+        String currSun = dateFm.format(date);
+
+        try {
+            List<Count> list = sticsDao.selXinqi();
+
+            if (list != null) {
+                for (Count c : list) {
+                    sticsDao.insXinqi(c.getCount(), c.getLab_name(), currSun);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        System.out.println("+++++++++++++");
+    }
+
+    /**
+     * 反馈量
+     */
+    @Scheduled(cron = "0 0/20 6-23 * * ?")
+    @Override
+    public void selFanKui() {
+        try {
+            //本周反馈量
+            int n = sticsDao.getFeedCount();
+            //全部反馈量
+            int m = sticsDao.getFeeCount();
+            //数据写入
+            sticsDao.insFeed(n, m);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        System.out.println("+++++++++++++++++++++++++++++++++___________");
     }
 }

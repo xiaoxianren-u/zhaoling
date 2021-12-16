@@ -13,6 +13,8 @@ import java.util.Date;
 
 /**
  * 感谢类
+ *
+ * @author yangzhan
  */
 
 @ToString
@@ -36,8 +38,14 @@ public class GrateFul {
      */
     public String gra_substance;
     /**
-     * 感谢对象
+     * 发表感谢者
      */
-    public Integer gra_bean;
+    public String username;
+
+    /**
+     * 发表感谢人的头像
+     */
+
+    public String user_image;
 
 }

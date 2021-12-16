@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,12 +58,9 @@ public class SysLogBookController extends AjaxUtils {
             }
         }
         if (!"".equals(log_start)) {
-            try {
-                log_start = new String(log_start.getBytes("ISO8859-1"), StandardCharsets.UTF_8);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            log_start = new String(log_start.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         }
+        System.out.println("log_start = " + log_start);
         page = page > 1 ? limit * (page - 1) : 0;
         List<LogBook> list = sysLogBookService.selectList(t, page, limit, log_user, time, log_start);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

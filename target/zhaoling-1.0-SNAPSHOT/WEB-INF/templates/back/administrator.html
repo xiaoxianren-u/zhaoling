@@ -13,7 +13,12 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
     <script th:src="@{/static/js/md5.js}"></script>
     <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
-
+    <style>
+        .layui-table-cell {
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,13 +32,13 @@
                         <div style="padding-bottom: 10px;">
                             <!--                            <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>-->
                             <div class="layui-row">
-                                <div class="layui-col-xs1">
-                                    <div class="grid-demo grid-demo-bg1">
-                                        <button class="layui-btn " data-type="add" id="add"><i
-                                                class="iconfont icon-zengjia" style="float: left"></i>&nbsp;添加
-                                        </button>
-                                    </div>
-                                </div>
+<!--                                <div class="layui-col-xs1">-->
+<!--                                    <div class="grid-demo grid-demo-bg1">-->
+<!--                                        <button class="layui-btn " data-type="add" id="add"><i-->
+<!--                                                class="iconfont icon-zengjia" style="float: left"></i>&nbsp;添加-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="layui-col-xs11">
                                     <div class="grid-demo">
                                         <form onsubmit="return false" style="">
@@ -125,9 +130,9 @@
 
     <!--    头像-->
 
-    <div><img style="height:35px;width:35px; border-radius: 10px" th:src="@{/static/image/img.png}"></div>
+    <div><img style="height:50px;width:60px;" th:src="@{/static/image/img.png}"></div>
 
-    <div><img style="height:35px;width:35px; border-radius: 10px" src="{{ d.user_image}}"></div>
+    <div><img style="height:50px;width:60px;"  src="{{ d.user_image}}"></div>
 </script>
 <script th:inline="none">
     layui.use('table', function () {

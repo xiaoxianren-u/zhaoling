@@ -29,9 +29,16 @@ public class Feedback {
      * 反馈内容
      */
     private String fe_content;
+
+    /**
+     * 0为待处理，1已处理
+     */
+    private Integer status;
+
     /**
      * 反馈时间
      */
+
     private Date fe_time;
     /**
      * 时间转换

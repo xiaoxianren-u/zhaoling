@@ -55,5 +55,25 @@ public interface TimedService {
 
     void update(String label, String name);
 
+    /**
+     * 用户数量
+     */
+
+    void selUserCount();
+
+    /**
+     * 上月物品量
+     */
+    void selPostCount();
+
+    /**
+     * 上周物品丢失情况
+     */
+    void selXinqi();
+
+    /**
+     * 反馈量
+     */
+    void selFanKui();
 
 }

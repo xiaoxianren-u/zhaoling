@@ -23,7 +23,12 @@
         }
     </style>
     <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
-
+    <style>
+        .layui-table-cell {
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
 
 </head>
 
@@ -111,9 +116,9 @@
 
     <!--    头像-->
 
-    <div><img style="height:35px;width:35px; border-radius: 10px" th:src="@{/static/image/img.png}"></div>
+    <div><img style="height:50px;width:60px;" th:src="@{/static/image/img.png}"></div>
 
-    <div><img style="height:35px;width:35px; border-radius: 10px" src="{{ d.user_image}}"></div>
+    <div><img style="height:50px;width:60px;" src="{{ d.user_image}}"></div>
 </script>
 
 

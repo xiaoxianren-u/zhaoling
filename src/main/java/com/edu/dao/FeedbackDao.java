@@ -45,7 +45,7 @@ public interface FeedbackDao {
      * @param limit
      * @return
      */
-    List<Feedback> sel(@Param("page") Integer page, @Param("limit") Integer limit);
+    List<Feedback> sel(@Param("page") Integer page, @Param("limit") Integer limit, @Param("status") Integer status);
 
 
     /**
@@ -54,4 +54,19 @@ public interface FeedbackDao {
      * @param id
      */
     void del(Integer id);
+
+    /**
+     * 处理意见反馈
+     *
+     * @param id
+     * @return
+     */
+    void up(Integer id);
+
+    /**
+     * 待办数量
+     *
+     * @return
+     */
+    int countDai(Integer status);
 }

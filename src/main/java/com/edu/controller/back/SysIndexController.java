@@ -5,10 +5,7 @@ import com.edu.intercept.LoginInterceptor;
 import com.edu.intercept.UserLoginToken;
 import com.edu.pojo.ConTents;
 import com.edu.pojo.User;
-import com.edu.service.SysConTentService;
-import com.edu.service.SysLabelService;
-import com.edu.service.SysSticsService;
-import com.edu.service.SysUserService;
+import com.edu.service.*;
 import com.edu.util.AjaxUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +46,13 @@ public class SysIndexController extends AjaxUtils {
 
     @Autowired
     private SysSticsService sysSticsService;
+
+    @Autowired
+    private FeedbackService feedbackService;
+
+    @Autowired
+    private SysPostService sysPostService;
+
 
     /**
      * 记录访问次数
@@ -204,6 +208,10 @@ public class SysIndexController extends AjaxUtils {
         modelMap.put("stics", sysSticsService.selectStics());
         //饼图
         modelMap.put("lo", sysSticsService.selectLose());
+        //待处理反馈
+        modelMap.put("f", feedbackService.countDai(0));
+        //待审帖子
+        modelMap.put("p", sysPostService.countDai(0));
 
         return "back/welcome";
     }
@@ -243,6 +251,16 @@ public class SysIndexController extends AjaxUtils {
     @RequestMapping("/feedback")
     public String feedBack() {
         return "back/feedback";
+    }
+
+
+    /**
+     * 感谢信页面
+     */
+    @UserLoginToken(state = 1)
+    @RequestMapping(value = "/grateful")
+    public String grateful() {
+        return "back/grateful";
     }
 
 

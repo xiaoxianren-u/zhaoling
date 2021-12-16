@@ -61,9 +61,9 @@ public class FeedbackServiceImpl implements FeedbackService {
      * @return
      */
     @Override
-    public AjaxUtils sel(Integer page, Integer limit) {
+    public AjaxUtils sel(Integer page, Integer limit, Integer status) {
         page = page > 1 ? limit * (page - 1) : 0;
-        List<Feedback> list = feedbackDao.sel(page, limit);
+        List<Feedback> list = feedbackDao.sel(page, limit, status);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         for (Feedback f : list) {
             f.setDate(formatter.format(f.getFe_time()));
@@ -92,5 +92,34 @@ public class FeedbackServiceImpl implements FeedbackService {
             e.printStackTrace();
         }
         return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
+    }
+
+    /**
+     * 处理意见反馈
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public AjaxUtils up(Integer id) {
+
+        try {
+            feedbackDao.up(id);
+            return new AjaxUtils(true, "已成功处理!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxUtils(false, "处理失败!");
+    }
+
+    /**
+     * 待办数量
+     *
+     * @return
+     */
+
+    @Override
+    public int countDai(Integer status) {
+        return feedbackDao.countDai(status);
     }
 }

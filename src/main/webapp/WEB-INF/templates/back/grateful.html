@@ -54,22 +54,51 @@
                         <div class="layui-col-xs11">
                             <div class="grid-demo">
                                 <form action="" class="layui-form" onsubmit="return false">
-                                    <div class="layui-form-item" style="width: 200px;float: left">
-                                        <label class="layui-form-label">反馈状态</label>
-                                        <div class="layui-input-block" style="width: 100px">
-                                            <select id="noti_status">
-                                                <option selected value=""></option>
-                                                <option value="0">待处理</option>
-                                                <option value="1">已处理</option>
-                                            </select>
+
+
+                                    <div class="layui-row">
+                                        <div class="layui-col-xs3">
+                                            <div class="grid-demo grid-demo-bg1">
+                                                <div class="grid-demo grid-demo-bg1">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    发布者：
+                                                    <div class="layui-inline">
+                                                        <input autocomplete="off" class="layui-input" id="username"
+                                                               name="username"
+                                                               placeholder="输入用户名">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs3">
+                                            <div class="grid-demo">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <label class="layui-form-label"
+                                                               style="padding-left: 0;padding-right: 4px;">发布时间：</label>
+                                                        <div class="layui-input-inline" style="width: 183px">
+                                                            <input class="layui-input" id="test1" placeholder="选择时间"
+                                                                   type="text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-col-xs3">
+                                            <div class="grid-demo">
+                                                <button class="layui-btn" data-type="reload" id="btn"
+                                                        style="margin-left: 30px"><i
+                                                        class="iconfont icon-sousuo"></i>搜索
+                                                </button>
+                                                <button class="layui-btn layui-btn-warm" type="reset"><i
+                                                        class="iconfont icon-zhongzhi"></i>重置
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button class="layui-btn" data-type="reload" id="btn" style="margin-left: 30px"><i
-                                            class="iconfont icon-sousuo"></i>搜索
-                                    </button>
-                                    <button class="layui-btn layui-btn-warm" type="reset"><i
-                                            class="iconfont icon-zhongzhi"></i>重置
-                                    </button>
+
+
                                 </form>
                             </div>
                         </div>
@@ -84,12 +113,12 @@
 <!--侧边按钮-->
 <script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
 
-    {{#  if(d.status == 1){ }}
-    <a class="layui-btn  layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-edit"></i>确认</a>
-    <!--    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>-->
-    {{#  } else { }}
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>确认</a>
-    {{#  } }}
+    <!--    {{#  if(d.status == 1){ }}-->
+    <!--    <a class="layui-btn  layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-edit"></i>确认</a>-->
+    <!--    &lt;!&ndash;    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>&ndash;&gt;-->
+    <!--    {{#  } else { }}-->
+    <!--    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>确认</a>-->
+    <!--    {{#  } }}-->
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
             class="layui-icon layui-icon-delete"></i>删除</a>
 
@@ -98,23 +127,24 @@
     <!--        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>-->
 </script>
 
-<script id="sta" th:inline="none" type="text/html">
-    {{#  if(d.status == 0){ }}
-    <p style="color: red">待处理</p>
-    {{#  } }}
-    {{#  if(d.status == 1){ }}
-    <p style="color: #1e9fff">已处理</p>
-    {{#  } }}
+<script id="img" th:inline="none" type="text/html">
+    <div><img style="height:40px;width:55px;" src="{{ d.user_image}}"></div>
 </script>
 
 
 <script th:inline="none">
     layui.use('table', function () {
         var table = layui.table,
+            laydate = layui.laydate,
             $ = layui.jquery;
+
+
+        laydate.render({
+            elem: '#test1'
+        });
         table.render({
             elem: '#test'
-            , url: '/feed/list?status=' + ""
+            , url: '/gre/list?username=' + "" + "&date=" + ""
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , title: '用户表'
             , limit: 20
@@ -122,11 +152,11 @@
             , limits: [20, 50]
             , cols: [[
                 {type: 'checkbox', fixed: 'center'}
-                , {field: 'date', title: '反馈时间', width: 180}
-                , {field: 'fe_content', title: '反馈内容', width: '70%'}
-                , {field: 'status', title: '状态', width: 90, templet: '#sta'}
-
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                , {field: 'username', title: '发布者', width: 180}
+                , {field: 'user_image', title: '头像', width: 90, templet: '#img'}
+                , {field: 'gra_substance', title: '发布内容', width: '60%'}
+                , {field: 'gra_time', title: '发布时间', width: 160,}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 100}
             ]]
             , page: {
                 layout: ['prev', 'page', 'next', 'refresh', 'skip', 'count', 'limit']
@@ -141,15 +171,15 @@
         var active = {
             reload: function () {
 
-                var obj = $("#noti_status option:selected");
-                var status = obj.val();
-                console.log({status: status});
+                let date = $('#test1').val();
+                let username = $('#username').val();
+                console.log({date: date, username: username})
                 //执行重载
                 table.reload('testReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     },
-                    url: '/feed/list?status=' + status
+                    url: '/gre/list?username=' + username + '&date=' + date
                 });
             }
         };
@@ -167,10 +197,9 @@
 
                 layer.confirm('确定删除吗？', function (index) {
                     // table.reload('LAY-user-back-manage');
-
                     $.ajax({
                         type: "GET",
-                        url: '/feed/del?id=' + data.fe_id,
+                        url: '/gre/del?id=' + data.gra_id,
                         async: true,
                         dataType: 'json',
                         contentType: 'application/json;charset=UTF-8',
@@ -211,49 +240,6 @@
             }
         });
 
-        //新增
-        // $("#add").click(function () {
-        //     console.log("000000000000000")
-        //     layer.open({
-        //         type: 1,
-        //         title: "页面新增",
-        //         area: ["900px", "800px"],
-        //         btn: ['提交', '取消'], //可以无限个按钮
-        //         Number: 9000000,   //自动关闭的时间
-        //         anim: 2,
-        //         maxmin: true, // 最大最小化。
-        //         resize: true, // 是否允许拉伸
-        //         content: $('#window'), //添加表单到弹出层
-        //         yes: function (index) {
-        //             // let text = editor.txt.text();
-        //             let text = editor.txt.html();
-        //             let vital = $('input[name="vital"]:checked').val();              //可见
-        //             let name = $("#name").val();                //名字
-        //             console.log({text: text, name: name, vital: vital});
-        //             $.ajax({
-        //                 type: "POST",
-        //                 url: "/notify/insertTex",
-        //                 async: true,
-        //                 data: JSON.stringify({
-        //                     noti_substance: text,
-        //                     noti_name: name,
-        //                     noti_status: vital
-        //                 }),
-        //                 dataType: "json",
-        //                 contentType: "application/json;charset=UTF-8",
-        //                 success: function (src) {
-        //                     console.log(src);
-        //                     layer.msg(src.msg);
-        //                     if (src.bool === true) {
-        //                         setTimeout(function () {
-        //                             window.location.reload();  //刷新页面
-        //                         }, 800);
-        //                     }
-        //                 }
-        //             })
-        //         },
-        //     });
-        // });
     })
 
 </script>

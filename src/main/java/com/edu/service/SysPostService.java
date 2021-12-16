@@ -37,4 +37,12 @@ public interface SysPostService {
      * @return
      */
     AjaxUtils delPost(Integer postId);
+
+    /**
+     * 待审帖子
+     *
+     * @param status
+     * @return
+     */
+    int countDai(int status);
 }

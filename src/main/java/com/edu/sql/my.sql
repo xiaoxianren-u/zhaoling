@@ -56,8 +56,8 @@ VALUES ('了解招物', '/sys/welcome.action', 1, 'iconfont icon-lejie'),
        ('帖子举报', DEFAULT, 3, 'iconfont icon-jubao'),
        ('帖子分类', '/sys/label.action', 3, 'iconfont icon-fenlei'),
        ('通知公告', '/sys/anNoun.action', 4, 'iconfont icon-tongzhigonggao'),
-       ('意见反馈', DEFAULT, 4, 'iconfont icon-yijianfankui'),
-       ('发表感谢', DEFAULT, 4, 'iconfont icon-ganxie'),
+       ('意见反馈', '/sys/feedback', 4, 'iconfont icon-yijianfankui'),
+       ('发表感谢', '/sys/grateful', 4, 'iconfont icon-ganxie'),
        ('用户消息', DEFAULT, 4, 'iconfont icon-xiaoxi'),
        ('操作日志', '/sys/operate.action', 5, 'iconfont icon-caozuorizhi'),
        ('登录日志', '/sys/log.action', 5, 'iconfont icon-drxx92'),
@@ -149,13 +149,15 @@ CREATE EVENT `zhaoling`.`test`
 
 # 感谢表
 # DROP TABLE IF EXISTS `grate_ful_db`;
-CREATE TABLE grate_ful_db
+CREATE TABLE tb_grate_ful
 (
-    gra_id        INT(11)      NOT NULL AUTO_INCREMENT COMMENT '感谢id',
-    gra_time      DATETIME     NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '发表感谢时间',
-    gra_substance VARCHAR(400) NOT NULL DEFAULT '' COMMENT '感谢内容',
-    gra_bean      INT(11)      NOT NULL DEFAULT -1 COMMENT '感谢对象',
-    PRIMARY KEY (gra_id)
+    gra_id        INT(11)       NOT NULL AUTO_INCREMENT COMMENT '感谢id',
+    gra_time      DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '发表感谢时间',
+    gra_substance VARCHAR(4000) NOT NULL DEFAULT '' COMMENT '感谢内容',
+    username      VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '发表感谢者',
+    user_image    VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '发表感谢人的头像',
+    PRIMARY KEY (gra_id),
+    constraint gr_no_user foreign key (username) references user_db (user_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '感谢表';
 
@@ -228,11 +230,15 @@ CREATE TABLE log_book_db
 # 网站访问量
 CREATE TABLE tb_stics
 (
-    st_id    INT(11)    NOT NULL AUTO_INCREMENT COMMENT 'st_id',
-    `access` INT(11)    NOT NULL DEFAULT 0 COMMENT '周网站访问量',
-    visits   BIGINT(15) NOT NULL DEFAULT 0 COMMENT '网站访问总量',
-    tMonth   INT(11)    NOT NULL DEFAULT 0 COMMENT '这个月活跃用户人数',
-    lMonth   INT(11)    NOT NULL DEFAULT 0 COMMENT '最近一个月活跃用户人数',
+    st_id  INT(11)    NOT NULL AUTO_INCREMENT COMMENT 'st_id',
+    access INT(11)    NOT NULL DEFAULT 0 COMMENT '周网站访问量',
+    visits BIGINT(15) NOT NULL DEFAULT 0 COMMENT '网站访问总量',
+    tMonth INT(11)    NOT NULL DEFAULT 0 COMMENT '这个月活跃用户人数',
+    lMonth INT(11)    NOT NULL DEFAULT 0 COMMENT '最近一个月活跃用户人数',
+    tPost  INT(11)    NOT NULL DEFAULT 0 COMMENT '上月归还的总量',
+    lPost  INT(11)    NOT NULL DEFAULT 0 COMMENT '上月发布的总量',
+    tCount INT(11)    NOT NULL DEFAULT 0 COMMENT '',
+    lCount INT(11)    NOT NULL DEFAULT 0 COMMENT '',
     PRIMARY KEY (st_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT '网站访问量';
@@ -308,6 +314,7 @@ CREATE TABLE feedback
 (
     fe_id      INT(11)       NOT NULL AUTO_INCREMENT COMMENT 'fe_id',
     fe_content VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '反馈内容',
+    status     INT(11)       NOT NULL DEFAULT 0 COMMENT '0为待处理，1已处理',
     fe_time    DATETIME      NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '反馈时间',
     PRIMARY KEY (fe_id)
 ) ENGINE = InnoDB

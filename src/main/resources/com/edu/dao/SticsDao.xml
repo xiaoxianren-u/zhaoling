@@ -4,7 +4,7 @@
 <!--    查询访问量-->
 
         <select id="selectStics" resultType="com.edu.pojo.Stics">
-            select access, visits from zhaoling.tb_stics
+            select * from zhaoling.tb_stics
         </select>
 
 
@@ -145,7 +145,87 @@
         set lab_name = #{lab_name}
         where lab_name = #{name}
    </update>
+<!--    用户数量-->
+    <select id="selUserCount" resultType="java.lang.Integer">
+        select count(*) from zhaoling.user_db
+    </select>
+<!--    当月注册用户量-->
+    <select id="selUserCountNe" resultType="java.lang.Integer">
+     select count(*) from zhaoling.user_db
+     where datediff(date_sub(date_sub(date_format(now(),'%y-%m-%d  00:00:00'),interval extract(day from now())-1 day),interval 0 month), register_time) <![CDATA[<= ]]> 0
+			AND  datediff(register_time,date_add(curdate()-day(curdate())+1,interval 1 month)) <![CDATA[< ]]> 0
 
+    </select>
+
+<!--    用户量的统计-->
+    <update id="insertMonth">
+<!--        insert into zhaoling.tb_stics(TMONTH, LMONTH) value (#{tMonth},#{lMonth});-->
+        update zhaoling.tb_stics
+        set tMonth = #{tMonth},
+            lMonth = #{lMonth}
+
+        where st_id = 1
+
+    </update>
+
+
+
+<!--    上月归还量-->
+    <select id="selpostCount" resultType="java.lang.Integer">
+        SELECT  COUNT(*)   FROM zhaoling.post_db
+        WHERE date_format(post_time, '%Y %m') = date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y %m')  AND post_status = 3
+    </select>
+<!--    上月总的帖子量-->
+    <select id="selPostCountNe" resultType="java.lang.Integer">
+        SELECT  COUNT(*)  FROM zhaoling.post_db
+        WHERE date_format(post_time, '%Y %m') = date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y %m') AND  (post_status = 2 OR post_status = 3)
+    </select>
+
+<!--    帖子量的统计-->
+    <update id="updatePostMonth">
+        update zhaoling.tb_stics
+        set tPost= #{tPost},
+            lPost = #{lPost}
+        where st_id = 1
+    </update>
+<!--上周物品丢失情况-->
+
+    <select id="selXinqi" resultType="com.edu.pojo.Count">
+            SELECT lab_name, COUNT(*)  as count FROM zhaoling.post_db where DATE_SUB(CURDATE(), INTERVAL 7 DAY)  = date(post_time)  group by lab_name ;
+    </select>
+
+<!--   上周物品丢失情况数据写入 -->
+        <update id="insXinqi">
+            update zhaoling.tb_polyline
+                <set>
+                    <if test="currSun == '星期一' and  currSun != null"> monday = #{count}, </if>
+                    <if test="currSun == '星期二' and  currSun != null"> tuesday = #{count},</if>
+                    <if test="currSun == '星期三' and  currSun != null"> wednesday = #{count}, </if>
+                    <if test="currSun == '星期四' and  currSun != null"> thursday = #{count}, </if>
+                    <if test="currSun == '星期五' and  currSun != null"> friday = #{count}, </if>
+                    <if test="currSun == '星期六' and  currSun != null"> saturday = #{count}, </if>
+                    <if test="currSun == '星期日' and  currSun != null"> sunday = #{count} </if>
+                </set>
+
+            where lab_name = #{lab_name}
+        </update>
+
+<!--        本周反馈量-->
+        <select id="getFeedCount" resultType="java.lang.Integer">
+            SELECT Count(*) FROM zhaoling.feedback WHERE YEARWEEK(DATE_FORMAT(fe_time,'%Y-%m-%d')) = YEARWEEK(NOW());
+        </select>
+<!--        全部反馈量-->
+        <select id="getFeeCount" resultType="java.lang.Integer">
+            select count(*) from zhaoling.feedback
+        </select>
+<!--        数据写入-->
+
+        <update id="insFeed">
+            update zhaoling.tb_stics
+            set tCount= #{n},
+                lCount = #{m}
+            where st_id = 1
+        </update>
 
 
 </mapper>

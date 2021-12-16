@@ -13,6 +13,9 @@
 <!--      意见反馈表-->
         <select id="sel" resultType="com.edu.pojo.Feedback">
             select * from zhaoling.feedback
+            <where>
+                <if test="status != null">and status = #{status}</if>
+            </where>
             order by fe_id desc
             limit #{page},#{limit}
         </select>
@@ -22,9 +25,16 @@
             delete from zhaoling.feedback
             where fe_id = #{id}
         </delete>
+<!--     处理意见反馈-->
 
-
-
-
+    <update id="up">
+        update zhaoling.feedback
+        set status = 1
+        where fe_id = #{id}
+    </update>
+<!--        待办数量-->
+    <select id="countDai" resultType="java.lang.Integer">
+        select COUNT(*) from zhaoling.feedback where status = #{status};
+    </select>
 
 </mapper>

@@ -1,0 +1,38 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.ong//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.GrateFulDao">
+
+
+        <select id="count" resultType="java.lang.Integer">
+            select count(*) from zhaoling.tb_grate_ful
+            <where>
+                <if test="username != null and username != ''">and username = #{username}</if>
+                <if test="gra_time != null">and datediff(#{gra_time}, gra_time) <![CDATA[< ]]> 1 and datediff(#{gra_time}, gra_time) <![CDATA[ >= ]]> 0 </if>
+            </where>
+        </select>
+
+
+        <select id="list" resultType="com.edu.pojo.GrateFul">
+
+            select g.gra_id, g.gra_time,g.gra_substance,g.username,u.user_image from zhaoling.tb_grate_ful as g
+            join zhaoling.user_db as u on u.user_name = g.username
+
+
+            <where>
+                <if test="g.username != null and g.username != ''">and username = #{g.username}</if>
+                <if test="g.gra_time != null">and datediff(#{g.gra_time}, gra_time) <![CDATA[< ]]> 1 and datediff(#{g.gra_time}, gra_time) <![CDATA[ >= ]]> 0 </if>
+            </where>
+            order by gra_id desc
+            limit #{page},#{limit}
+        </select>
+
+<!--        删除感谢信-->
+        <delete id="del">
+            delete from zhaoling.tb_grate_ful
+            where gra_id = #{id}
+        </delete>
+
+
+
+
+
+</mapper>

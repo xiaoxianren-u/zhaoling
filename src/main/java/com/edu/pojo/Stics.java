@@ -36,12 +36,34 @@ public class Stics {
     private Long visits;
 
     /**
-     * 这个月活跃用户人数
+     * 当月注册用户人数
      */
     private Integer tMonth;
     /**
-     * 最近一个月活跃用户人数
+     * 总人数
      */
     private Integer lMonth;
+
+    /**
+     * 上月归还的总量
+     */
+    private Integer tPost;
+
+    /**
+     * 上月发布的总量
+     */
+    private Integer lPost;
+
+
+    /**
+     *
+     */
+    private Integer tCount;
+
+    /**
+     *
+     */
+    private Integer lCount;
+
 
 }

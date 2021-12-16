@@ -50,8 +50,9 @@ public class FeedbackController {
     @RequestMapping(value = "/list")
     @UserLoginToken(state = 1)
     public AjaxUtils sel(@RequestParam("page") Integer page,
-                         @RequestParam("limit") Integer limit) {
-        return feedbackService.sel(page, limit);
+                         @RequestParam("limit") Integer limit,
+                         @RequestParam("status") Integer status) {
+        return feedbackService.sel(page, limit, status);
     }
 
     /**
@@ -63,6 +64,18 @@ public class FeedbackController {
     @RequestMapping(value = "/del")
     public AjaxUtils del(@RequestParam("id") Integer id) {
         return feedbackService.del(id);
+    }
+
+
+    /**
+     * 处理意见反馈
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/up")
+    public AjaxUtils up(@RequestParam("id") Integer id) {
+        return feedbackService.up(id);
     }
 
 }

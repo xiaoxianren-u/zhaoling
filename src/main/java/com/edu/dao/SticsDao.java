@@ -144,4 +144,84 @@ public interface SticsDao {
     void upre(@Param("lab_name") String lab_name, @Param("name") String name);
 
 
+    /**
+     * 用户数量
+     */
+    int selUserCount();
+
+    /**
+     * 当月注册用户量
+     *
+     * @return
+     */
+    int selUserCountNe();
+
+    /**
+     * 用户量的统计
+     *
+     * @param tMonth
+     * @param lMonth
+     */
+    void insertMonth(@Param("tMonth") Integer tMonth, @Param("lMonth") Integer lMonth);
+
+
+    /**
+     * 上月归还量
+     */
+    int selpostCount();
+
+    /**
+     * 上月总的帖子量
+     *
+     * @return
+     */
+    int selPostCountNe();
+
+    /**
+     * 帖子量的统计
+     *
+     * @param tPost
+     * @param lPost
+     */
+    void updatePostMonth(@Param("tPost") Integer tPost, @Param("lPost") Integer lPost);
+
+
+    /**
+     * 上周物品丢失情况
+     *
+     * @return
+     */
+    List<Count> selXinqi();
+
+    /**
+     * 上周物品丢失情况
+     *
+     * @param count
+     * @param lab_name
+     * @param currSun
+     */
+    void insXinqi(@Param("count") int count, @Param("lab_name") String lab_name, @Param("currSun") String currSun);
+
+
+    /**
+     * 本周反馈量
+     *
+     * @return
+     */
+    int getFeedCount();
+
+    /**
+     * 全部反馈量
+     *
+     * @return
+     */
+    int getFeeCount();
+
+    /**
+     * 数据写入
+     *
+     * @param n
+     * @param m
+     */
+    void insFeed(@Param("n") int n, @Param("m") int m);
 }

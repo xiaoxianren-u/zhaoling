@@ -32,7 +32,7 @@ public interface FeedbackService {
      * @param limit
      * @return
      */
-    AjaxUtils sel(Integer page, Integer limit);
+    AjaxUtils sel(Integer page, Integer limit, Integer status);
 
     /**
      * 删除意见反馈
@@ -41,4 +41,20 @@ public interface FeedbackService {
      * @return
      */
     AjaxUtils del(Integer id);
+
+    /**
+     * 处理意见反馈
+     *
+     * @param id
+     * @return
+     */
+    AjaxUtils up(Integer id);
+
+    /**
+     * 待办数量
+     *
+     * @return
+     */
+    int countDai(Integer status);
+
 }

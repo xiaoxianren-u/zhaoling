@@ -43,4 +43,12 @@ public interface SysPostDao {
      * @param postId
      */
     void delPost(@Param("postId") Integer postId);
+
+    /**
+     * 待审帖子
+     *
+     * @param status
+     * @return
+     */
+    int countDai(int status);
 }
