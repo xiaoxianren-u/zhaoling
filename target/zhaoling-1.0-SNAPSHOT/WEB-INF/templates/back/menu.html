@@ -149,16 +149,24 @@
 
 
                                             <div class="layui-col-xs2">
-                                                <div class="grid-demo grid-demo-bg1" style="color: white">
+                                                <div class="grid-demo grid-demo-bg1" style="color: white"
+                                                     th:if="${s.m_name == '系统管理'}">
+                                                    <span class="layui-badge layui-bg-blue layui-btn-disabled"
+                                                          th:value="${s.m_id}"><i class="iconfont icon-web-icon-"
+                                                                                  style="color: white"></i>&nbsp;编辑</span>&nbsp;&nbsp;
+                                                    <span class="layui-badge layui-btn-disabled"
+                                                          th:value="${s.m_number}"><i class="iconfont icon-shanchu"
+                                                                                      style="color: white"></i>&nbsp;删除</span>&nbsp;&nbsp;
+                                                </div>
+                                                <div class="grid-demo grid-demo-bg1" style="color: white"
+                                                     th:if="${s.m_name != '系统管理'}">
                                                     <span class="layui-badge layui-bg-blue" id="m_edit"
                                                           th:value="${s.m_id}"><i class="iconfont icon-web-icon-"
                                                                                   style="color: white"></i>&nbsp;编辑</span>&nbsp;&nbsp;
-                                                    <!--                                                    <span class="layui-badge layui-bg-green" id="m_inset"-->
-                                                    <!--                                                          th:value="${s.m_id}"><i class="iconfont icon-zengjia"-->
-                                                    <!--                                                                                  style="color: white"></i>&nbsp;新增</span>&nbsp;&nbsp;-->
                                                     <span class="layui-badge" id="m_delete" th:value="${s.m_number}"><i
                                                             class="iconfont icon-shanchu" style="color: white"></i>&nbsp;删除</span>&nbsp;&nbsp;
                                                 </div>
+
                                             </div>
                                         </div>
 
@@ -225,14 +233,14 @@
                                                                                 <div class="grid-demo grid-demo-bg1"
                                                                                      th:if="${t.con_name == '菜单管理'}">
                                                                                     <span class="layui-badge layui-bg-blue layui-btn-disabled"
-                                                                                          id="con_edit"
+
                                                                                           th:value="${t.con_id}"><i
                                                                                             class="iconfont icon-web-icon- "
                                                                                             style="color: white"></i>&nbsp;编辑</span>
                                                                                     <!--                                                                                    <span class="layui-badge layui-bg-green"><i></i>新增</span>-->
                                                                                     &nbsp;
                                                                                     <span class="layui-badge layui-btn-disabled"
-                                                                                          id="con_delete"
+
                                                                                           th:value="${t.con_id}"><i
                                                                                             class="iconfont icon-shanchu"
                                                                                             style="color: white"></i>&nbsp;删除</span>

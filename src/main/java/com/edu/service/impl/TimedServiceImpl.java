@@ -223,6 +223,7 @@ public class TimedServiceImpl implements TimedService {
      */
 
     @Scheduled(cron = "0 0 6 * * ?")
+//    @Scheduled(cron = "0 0/4 6-23 * * ?")
     @Override
     public void selXinqi() {
 
@@ -242,7 +243,7 @@ public class TimedServiceImpl implements TimedService {
             e.printStackTrace();
         }
 
-//        System.out.println("+++++++++++++");
+        System.out.println("+++++++++++++");
     }
 
     /**

@@ -22,14 +22,14 @@
 <body style="background-color: #F0F2F5;min-width: 1500px;background-image: url('/static/image/bili.jpg')">
 <ul class="layui-nav" lay-bar="disabled">
     <li class="layui-nav-item" lay-unselect="">
-        <img class="layui-nav-img" id="image" th:src="${image}">
-        <span id="text" th:text="${username}" th:value="${username}"></span>
+        <span style="float: left;"><a href="/" id="url" style="font-size: 13px">首页</a></span> <span> <img
+            class="layui-nav-img" id="image" th:src="${image}"><span id="text" th:text="${username}"
+                                                                     th:value="${username}"></span></span>
     </li>
-    <!--    <li class="layui-nav-item  layui-icon">-->
-    <!--        <a href="/">&#xe68e;首页</a>-->
-    <!--    </li>-->
 </ul>
 <script>
+
+
     $(function () {
         let image = sessionStorage.getItem("img");
 
@@ -100,10 +100,13 @@
         $(document).ready(function () {
             $("li a").click(function (e) {
                 e.preventDefault();
-                if ($(this).attr("href") !== "" && $(this).attr("href") !== undefined) {
+                if ($(this).attr("href") !== "" && $(this).attr("href") !== undefined && $(this).attr("href") !== "/") {
                     console.log($(this).attr("href"));
                     sessionStorage.setItem("url3", $(this).attr("href"));
                     $("#iframe").attr('src', $(this).attr("href"));
+                }
+                if ($(this).attr("href") === "/") {
+                    window.location = "/";
                 }
             })
         })
