@@ -118,6 +118,7 @@
                 <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
                 <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
                 <li class="layui-nav-item "><a href="/success" style="font-size: 18px;">成功案例</a></li>
+                <li class="layui-nav-item "><a style="font-size: 18px;" th:href="@{/ganXie}">感谢信</a></li>
                 <li class="layui-nav-item "><a href="/grateful" style="font-size: 18px;color: #F40;">联系我们</a></li>
             </ul>
             <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
@@ -125,12 +126,14 @@
                     <div class="grid-demo grid-demo-bg1" style="text-align: center;">
 
                         <div style="margin: auto">
-
-
                             <h1 style="font-weight: bold;margin-top: 40px">联系我们</h1>
                             <p style="margin-top: 20px">联系方式： 400-629-9999</p>
                             <p style="margin-top: 20px">电子邮箱： 12345555@qq.com</p>
-                            <!--                            <p style="margin-top: 20px">联系方式：  </p>-->
+                            <p style="margin-top: 20px">扫一扫获取本网站源码：<br/> <img height="200px"
+                                                                              src="/static/image/zhaoling.png"
+                                                                              width="200px"></p>
+                            <p style="margin-top: 20px"><a href="https://gitee.com/yang_siri/zhaoling"
+                                                           style="color: #1e9fff">点一点获取本网站源码</a></p>
                         </div>
                     </div>
                 </div>
@@ -224,7 +227,7 @@
                                 contentType: "application/json;charset=UTF-8",
                                 success: function (src) {
                                     if (src.bool) {
-                                        layer.msg(src.msg + ',感谢你的反馈');
+                                        layer.msg('感谢你的反馈');
                                         setTimeout(function () {
                                             $('#text1').val("");
                                             layer.closeAll(); //关闭所有弹窗

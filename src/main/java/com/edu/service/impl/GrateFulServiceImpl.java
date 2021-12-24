@@ -5,11 +5,13 @@ import com.edu.pojo.GrateFul;
 import com.edu.service.GrateFulService;
 import com.edu.util.AjaxUtils;
 import com.edu.util.PageCodeEnum;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public class GrateFulServiceImpl implements GrateFulService {
      */
     @Override
     public AjaxUtils list(Integer page, Integer limit, String username, String date) {
-        GrateFul g = new GrateFul(null, null, null, username, null);
+        GrateFul g = new GrateFul(null, null, null, username, null, null, null);
         if (date != null && !"".equals(date)) {
             try {
                 g.setGra_time(new SimpleDateFormat("yyyy-MM-dd").parse(date));
@@ -71,5 +73,57 @@ public class GrateFulServiceImpl implements GrateFulService {
             e.printStackTrace();
         }
         return new AjaxUtils(PageCodeEnum.REMOVE_FAIL.getBool(), PageCodeEnum.REMOVE_FAIL.getMsg());
+    }
+
+    /**
+     * 添加感谢信
+     *
+     * @param grateFul
+     * @return
+     */
+    @Override
+    public AjaxUtils insert(@NotNull GrateFul grateFul) {
+        grateFul.setGra_time(new Date());
+        try {
+            grateFulDao.insert(grateFul);
+            return new AjaxUtils(PageCodeEnum.ADD_SUCCESS.getBool(), PageCodeEnum.ADD_SUCCESS.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxUtils(PageCodeEnum.ADD_FAIL.getBool(), PageCodeEnum.ADD_FAIL.getMsg());
+        }
+    }
+
+    /**
+     * 审核通过
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public AjaxUtils update(Integer id) {
+
+        try {
+            grateFulDao.update(id);
+            return new AjaxUtils(true, "审核通过!!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxUtils(false, "审核未通过!!");
+        }
+
+    }
+
+    /**
+     * 感谢页面的内容
+     *
+     * @return
+     */
+    @Override
+    public AjaxUtils ganXieList() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        List<GrateFul> list = grateFulDao.ganXieList();
+        for (GrateFul grateFul : list) {
+            grateFul.setData(formatter.format(grateFul.getGra_time()));
+        }
+        return new AjaxUtils(list);
     }
 }

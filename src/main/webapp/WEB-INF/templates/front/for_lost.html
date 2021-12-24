@@ -70,8 +70,8 @@
     <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
 
 </head>
-<body class="webkit" style="background-color: white;min-width: 1500px">
-<div class="layui-row" style="margin-top: 0;min-height: 810px;">
+<body class="webkit" style="background-color: #f6f4f4;min-width: 1500px">
+<div class="layui-row" style="margin-top: 0;min-height: 910px;">
     <div class="layui-col-xs1">
         <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
     </div>
@@ -85,7 +85,7 @@
             </div>
 
             <!--            检索栏-->
-            <div class="layui-row">
+            <div class="layui-row" style="background-color: #f6f4f4;">
                 <div class="layui-col-xs3">
                     <div class="grid-demo grid-demo-bg3">
                         <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
@@ -154,14 +154,18 @@
                     </div>
                 </div>
             </div>
-            <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px">
+            <ul class="layui-nav layui-bg-blue" lay-bar="disabled"
+                style="border-radius: 4px;background-color: #f6f4f4;">
                 <li class="layui-nav-item "><a href="/" style="font-size: 18px;">首页</a></li>
                 <li class="layui-nav-item "><a href="/lost" style="font-size: 18px;color: #F40;">浏览寻物贴</a></li>
                 <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
                 <li class="layui-nav-item "><a href="/success" style="font-size: 18px">成功案例</a></li>
+                <li class="layui-nav-item "><a style="font-size: 18px;" th:href="@{/ganXie}">感谢信</a></li>
+
                 <li class="layui-nav-item "><a href="/grateful" style="font-size: 18px">联系我们</a></li>
             </ul>
-            <div class="layui-row " style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
+            <div class="layui-row "
+                 style="border-top-right-radius: 4px;border-top-left-radius:4px; background-color: #f6f4f4;">
                 <div class="layui-col-xs12">
                     <div class="grid-demo grid-demo-bg1" style="text-align: center;">
 
@@ -258,7 +262,7 @@
                                 contentType: "application/json;charset=UTF-8",
                                 success: function (src) {
                                     if (src.bool) {
-                                        layer.msg(src.msg + ',感谢你的反馈');
+                                        layer.msg('感谢你的反馈');
                                         setTimeout(function () {
                                             $('#text1').val("");
                                             layer.closeAll(); //关闭所有弹窗
@@ -462,7 +466,7 @@
             sessionStorage.setItem("img", src.data.user_image);
             sessionStorage.setItem("name", src.data.user_name);
         });
-        $("#img").html('<ul class="layui-nav" lay-bar="disabled" style="background-color: white;padding: 0;">' +
+        $("#img").html('<ul class="layui-nav" lay-bar="disabled" style="background-color: #f6f4f4;padding: 0;">' +
             '<li class="layui-nav-item" lay-unselect="">\n' +
             '    <a href="javascript:;" style="padding-right: 0;"><img src="" id="image" height="40" width="40" style="border: 1px #dfdfdf solid;margin-top: 14px;margin-right: 3px;"></a>\n' +
             '    <dl class="layui-nav-child">\n' +

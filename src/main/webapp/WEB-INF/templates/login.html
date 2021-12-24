@@ -16,6 +16,8 @@
     <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
     <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
     <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/static/css/scroll.css}">
+
     <style type="text/css">
         body {
             background-size: cover;
@@ -208,7 +210,7 @@
             if (src.bool) {
                 login();
             } else {
-                alert("验证码输入正确！")
+                layer.msg('验证码错误！');
             }
         })
     })
@@ -242,7 +244,11 @@
                     $.cookie("to1", src.token);
                     Save(src.token);
                     $.cookie("data", 1);
-                    window.location = "/";
+
+                    layer.msg('登录成功', {icon: 6, time: 2000}, function () {
+                        window.location = "/";
+                    })
+
                 } else {
                     layer.msg(src.msg, {icon: 0});
                 }

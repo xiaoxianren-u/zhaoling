@@ -48,4 +48,14 @@ public class GrateFul {
 
     public String user_image;
 
+    /**
+     * 0审核中，1通过
+     */
+    public Integer status;
+
+    /**
+     * 时间装换
+     */
+    private String data;
+
 }

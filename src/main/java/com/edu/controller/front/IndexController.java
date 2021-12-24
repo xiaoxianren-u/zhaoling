@@ -316,7 +316,7 @@ public class IndexController {
 
 
     /**
-     * 感谢页面
+     * 联系我们页面
      *
      * @return
      */
@@ -325,6 +325,15 @@ public class IndexController {
         return "/front/grateful";
     }
 
+    /**
+     * 感谢页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/ganXie", method = RequestMethod.GET)
+    public String ganXie() {
+        return "/front/ganxie";
+    }
 
     /**
      * 个人通知页面

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Component
 public class UploadUtils {
 
-//    private static  String SERVER_PATH = "/static/upload/";
+    private static final String SERVER_PATH = "/static/upload/";
     //访问图片的地址
     /**
      * 上传保存的地址
@@ -29,56 +29,56 @@ public class UploadUtils {
         String SERVER_PATH = "/static/upload/";
 
         //服务器使用该方法
-        return UploadUtils.uploadImage(file, request, url, SERVER_PATH);
+//        return UploadUtils.uploadImage(file, request, url, SERVER_PATH);
 
 
-//        request.getSession().setAttribute("file", file);
-//        MultipartFile file1 = (MultipartFile) request.getSession().getAttribute("file");
-//
-//        BASE_PATH = request.getSession().getServletContext().getRealPath("/");
-//
-//        SERVER_PATH = SERVER_PATH + url + "/";
-//
-////        System.out.println("url = " + url);
-////        System.out.println("request = " + request);
-////        System.out.println("file = " + file);
-//        String[] output = BASE_PATH.split("target");
-//        String BASE_PATH_TO = BASE_PATH + "\\static\\upload\\" + url + "\\";
-//        BASE_PATH = output[0] + "src\\main\\webapp\\static\\upload\\" + url + "\\";
-//        //获取上传文件的名称
-//        String fileName = file.getOriginalFilename();
-////       用于判断是否只由数字跟字母组成
-//        String pattern = "[\\w]+[.]+[\\w]+";
-//        if (!fileName.matches(pattern)) {
-//            return null;
-//        }
-//        String uuid = UUID.randomUUID().toString().replace("-", "");
-//
-//        String newFileName = uuid + "-" + fileName;
-//        System.out.println("BASE_PATH = " + BASE_PATH);
-//        System.out.println("BASE_PATH_TO = " + BASE_PATH_TO);
-//
-//        // 创建一个文件实例对象
-//        File image = new File(BASE_PATH, newFileName);
+        request.getSession().setAttribute("file", file);
+        MultipartFile file1 = (MultipartFile) request.getSession().getAttribute("file");
 
-//        File imageFile = new File(BASE_PATH_TO, newFileName);
-//
-//        //对文件进行上传操作 file 只能使用一次用完后就关闭了
-//        try {
-//            file.transferTo(image);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//        //对图片进行复制
-//        try {
-//            copyImage(image, imageFile);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-////        System.out.println("SERVER_PATH + newFileName = " + SERVER_PATH + newFileName);
-//        //返回请求路径
-//        return SERVER_PATH + newFileName;
+        BASE_PATH = request.getSession().getServletContext().getRealPath("/");
+
+        SERVER_PATH = SERVER_PATH + url + "/";
+
+//        System.out.println("url = " + url);
+//        System.out.println("request = " + request);
+//        System.out.println("file = " + file);
+        String[] output = BASE_PATH.split("target");
+        String BASE_PATH_TO = BASE_PATH + "\\static\\upload\\" + url + "\\";
+        BASE_PATH = output[0] + "src\\main\\webapp\\static\\upload\\" + url + "\\";
+        //获取上传文件的名称
+        String fileName = file.getOriginalFilename();
+//       用于判断是否只由数字跟字母组成
+        String pattern = "[\\w]+[.]+[\\w]+";
+        if (!fileName.matches(pattern)) {
+            return null;
+        }
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+
+        String newFileName = uuid + "-" + fileName;
+        System.out.println("BASE_PATH = " + BASE_PATH);
+        System.out.println("BASE_PATH_TO = " + BASE_PATH_TO);
+
+        // 创建一个文件实例对象
+        File image = new File(BASE_PATH, newFileName);
+
+        File imageFile = new File(BASE_PATH_TO, newFileName);
+
+        //对文件进行上传操作 file 只能使用一次用完后就关闭了
+        try {
+            file.transferTo(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        //对图片进行复制
+        try {
+            copyImage(image, imageFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        System.out.println("SERVER_PATH + newFileName = " + SERVER_PATH + newFileName);
+        //返回请求路径
+        return SERVER_PATH + newFileName;
     }
 
     /**
@@ -104,7 +104,7 @@ public class UploadUtils {
     }
 
     /**
-     * 用户服务器
+     * 用与服务器
      *
      * @param file
      * @param request

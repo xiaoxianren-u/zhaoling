@@ -115,10 +115,14 @@
 <script id="img" th:inline="none" type="text/html">
 
     <!--    头像-->
-
+    {{#  if(d.user_image == ''){ }}
     <div><img style="height:50px;width:60px;" th:src="@{/static/image/img.png}"></div>
-
+    {{#  } else { }}
     <div><img style="height:50px;width:60px;" src="{{ d.user_image}}"></div>
+    {{#  } }}
+    <!--    -->
+
+
 </script>
 
 

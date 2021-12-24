@@ -1,12 +1,16 @@
 package com.edu.controller.back;
 
+import com.edu.config.UserConfig;
+import com.edu.intercept.PassToken;
 import com.edu.intercept.UserLoginToken;
+import com.edu.pojo.GrateFul;
 import com.edu.service.GrateFulService;
 import com.edu.util.AjaxUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author yz
@@ -31,7 +35,7 @@ public class GrateFulController {
      * @param date
      * @return
      */
-    @UserLoginToken(state = 1)
+    @PassToken
     @RequestMapping(value = "/list")
     public AjaxUtils list(@RequestParam("page") Integer page,
                           @RequestParam("limit") Integer limit,
@@ -51,5 +55,38 @@ public class GrateFulController {
     public AjaxUtils del(@RequestParam("id") Integer id) {
         return grateFulService.del(id);
     }
+
+
+    /**
+     * 添加感谢信
+     */
+    @UserLoginToken(state = 0)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public AjaxUtils insert(@NotNull @RequestBody GrateFul grateFul, HttpServletRequest request) {
+        grateFul.setUsername(UserConfig.tokenUserName(request));
+        AjaxUtils ajaxUtils = grateFulService.insert(grateFul);
+        System.out.println("ajaxUtils = " + ajaxUtils);
+        return ajaxUtils;
+    }
+
+    /**
+     * 审核通过
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/up")
+    @UserLoginToken(state = 1)
+    public AjaxUtils update(@NotNull @RequestParam("id") Integer id) {
+        System.out.println("id = " + id);
+        return grateFulService.update(id);
+    }
+
+    @PassToken
+    @RequestMapping(value = "/ganXieList")
+    public AjaxUtils ganXieList() {
+        return grateFulService.ganXieList();
+    }
+
 
 }

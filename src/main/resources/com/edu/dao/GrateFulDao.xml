@@ -13,7 +13,7 @@
 
         <select id="list" resultType="com.edu.pojo.GrateFul">
 
-            select g.gra_id, g.gra_time,g.gra_substance,g.username,u.user_image from zhaoling.tb_grate_ful as g
+            select g.gra_id, g.gra_time,g.gra_substance,g.username,u.user_image,g.status from zhaoling.tb_grate_ful as g
             join zhaoling.user_db as u on u.user_name = g.username
 
 
@@ -30,6 +30,26 @@
             delete from zhaoling.tb_grate_ful
             where gra_id = #{id}
         </delete>
+<!--        新增-->
+        <insert id="insert">
+            insert into zhaoling.tb_grate_ful(gra_time, gra_substance, username)
+            value (#{gra_time},#{gra_substance},#{username})
+        </insert>
+<!--        审核通过-->
+        <update id="update">
+            update zhaoling.tb_grate_ful
+            set status = 1
+            where gra_id = #{id}
+        </update>
+
+<!--        感谢页面的内容-->
+        <select id="ganXieList" resultType="com.edu.pojo.GrateFul">
+                select g.gra_id, g.gra_time,g.gra_substance,g.username,u.user_image,g.status from zhaoling.tb_grate_ful as g
+                join zhaoling.user_db as u on u.user_name = g.username
+                order by gra_id desc
+        </select>
+
+
 
 
 

@@ -113,25 +113,23 @@
 <!--侧边按钮-->
 <script id="barDemo" style="text-align: center" th:inline="none" type="text/html">
 
-    <!--    {{#  if(d.status == 1){ }}-->
-    <!--    <a class="layui-btn  layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-edit"></i>确认</a>-->
-    <!--    &lt;!&ndash;    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>&ndash;&gt;-->
-    <!--    {{#  } else { }}-->
-    <!--    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>确认</a>-->
-    <!--    {{#  } }}-->
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>确认</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
             class="layui-icon layui-icon-delete"></i>删除</a>
 
-
-    <!--    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>确定</a>-->
-    <!--        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>-->
 </script>
 
 <script id="img" th:inline="none" type="text/html">
     <div><img style="height:40px;width:55px;" src="{{ d.user_image}}"></div>
 </script>
 
-
+<script id="sta" th:inline="none" type="text/html">
+    {{#  if(d.status == 0){ }}
+    <p style="color: #1E9FFF">待审核中</p>
+    {{#  } else  { }}
+    <p style="color: #c800ff">通过</p>
+    {{#  } }}
+</script>
 <script th:inline="none">
     layui.use('table', function () {
         var table = layui.table,
@@ -154,9 +152,10 @@
                 {type: 'checkbox', fixed: 'center'}
                 , {field: 'username', title: '发布者', width: 180}
                 , {field: 'user_image', title: '头像', width: 90, templet: '#img'}
-                , {field: 'gra_substance', title: '发布内容', width: '60%'}
+                , {field: 'gra_substance', title: '发布内容', width: '50%'}
                 , {field: 'gra_time', title: '发布时间', width: 160,}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 100}
+                , {field: 'status', title: '状态', width: 140, templet: '#sta'}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 160}
             ]]
             , page: {
                 layout: ['prev', 'page', 'next', 'refresh', 'skip', 'count', 'limit']
@@ -216,12 +215,12 @@
                     })
                 });
             } else if (obj.event === 'edit') {
-                console.log("=================" + data.fe_id);
+                console.log("=================" + data.gra_id);
                 let status = 1;
 
                 $.ajax({
                     type: "GET",
-                    url: '/feed/up?id=' + data.fe_id,
+                    url: '/gre/up?id=' + data.gra_id,
                     async: true,
                     dataType: 'json',
                     contentType: 'application/json;charset=UTF-8',

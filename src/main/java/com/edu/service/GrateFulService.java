@@ -1,5 +1,6 @@
 package com.edu.service;
 
+import com.edu.pojo.GrateFul;
 import com.edu.util.AjaxUtils;
 
 /**
@@ -30,4 +31,27 @@ public interface GrateFulService {
      * @return
      */
     AjaxUtils del(Integer id);
+
+    /**
+     * 添加感谢信
+     *
+     * @param grateFul
+     * @return
+     */
+    AjaxUtils insert(GrateFul grateFul);
+
+    /**
+     * 审核通过
+     *
+     * @param id
+     * @return
+     */
+    AjaxUtils update(Integer id);
+
+    /**
+     * 感谢页面的内容
+     *
+     * @return
+     */
+    AjaxUtils ganXieList();
 }

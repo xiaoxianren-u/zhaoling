@@ -38,4 +38,26 @@ public interface GrateFulDao {
      * @param id
      */
     void del(Integer id);
+
+    /**
+     * 新增
+     *
+     * @param grateFul
+     */
+    void insert(GrateFul grateFul);
+
+    /**
+     * 审核通过
+     *
+     * @param id
+     * @return
+     */
+    void update(Integer id);
+
+    /**
+     * 感谢页面的内容
+     *
+     * @return
+     */
+    List<GrateFul> ganXieList();
 }

@@ -10,21 +10,26 @@
         #ha {
             border: 1px solid #dfdfdf;
         }
+
         #ha:hover {
             border: 1px solid #F40;
         }
+
         #inp:hover {
             background-color: #1E9FFF;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
         }
+
         #inp:hover span {
             color: white;
         }
+
         #log_div:hover {
             border: 1px #1E9FFF solid;
             color: #1E9FFF;
         }
+
         .footer {
             height: 100px;
             width: 100%;
@@ -49,12 +54,11 @@
 
 
 </head>
-<body class="webkit" style="background-color: white;min-width: 1500px;">
-
+<body class="webkit" style="background-color: #f6f4f4;min-width: 1500px;">
 
 
 <div style="">
-    <div class="layui-row" style="margin-top: 0;min-height: 810px;">
+    <div class="layui-row" style="margin-top: 0;min-height: 910px;">
         <div class="layui-col-xs1">
             <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
         </div>
@@ -62,21 +66,18 @@
             <div class="grid-demo" style="background-color: white">
                 <div class="layui-carousel" id="test2" style="">
                     <div carousel-item="">
-                        <div><img th:src="@{/static/image/s1.jpg}" width="100%" height="100%"></div>
-                        <div><img th:src="@{/static/image/s2.jpg}" width="100%" height="100%"></div>
+                        <div><img height="100%" th:src="@{/static/image/s1.jpg}" width="100%"></div>
+                        <div><img height="100%" th:src="@{/static/image/s2.jpg}" width="100%"></div>
                     </div>
                 </div>
 
 
                 <!--            检索栏-->
-                <div class="layui-row">
+                <div class="layui-row" style="background-color: #f6f4f4;">
                     <div class="layui-col-xs3">
                         <div class="grid-demo grid-demo-bg3">
                             <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
-                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
-                                                                                                        style="border-radius: 50%"
-                                                                                                        th:src="@{/static/image/zl.png}"
-                                                                                                        width="50"/>招领网</strong>
+                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50" style="border-radius: 50%" th:src="@{/static/image/zl.png}" width="50"/>招领网</strong>
                             </div>
                         </div>
                     </div>
@@ -136,15 +137,15 @@
                         </div>
                     </div>
                 </div>
-                <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px">
+                <ul class="layui-nav layui-bg-blue" lay-bar="disabled" style="border-radius: 4px;background-color: #f6f4f4" >
                     <li class="layui-nav-item "><a style="font-size: 18px;color: #F40;" th:href="@{/}">首页</a></li>
                     <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/lost}">浏览寻物贴</a></li>
                     <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/find}">查看招领贴</a></li>
                     <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/success}">成功案例</a></li>
+                    <li class="layui-nav-item "><a style="font-size: 18px;" th:href="@{/ganXie}">感谢信</a></li>
                     <li class="layui-nav-item "><a style="font-size: 18px" th:href="@{/grateful}">联系我们</a></li>
                 </ul>
-                <div class="layui-row "
-                     style="margin-top: 5px;border-top-right-radius: 4px;border-top-left-radius:4px; ">
+                <div class="layui-row " style="border-top-right-radius: 4px;border-top-left-radius:4px; background-color: #f6f4f4">
                     <div class="layui-col-xs12">
                         <div class="grid-demo grid-demo-bg1" style="text-align: center;">
 
@@ -206,7 +207,7 @@
 <script>
     layui.use('flow', function () {
         var flow = layui.flow,
-            carousel = layui.carousel ,
+            carousel = layui.carousel,
             laypage = layui.laypage,
             util = layui.util;
         // $ = layui.jquery;
@@ -217,14 +218,12 @@
         // });
 
 
-
-
         carousel.render({
             elem: '#test2'
-            ,interval: 3000
-            ,width: '100%'
-            ,anim: 'fade'
-            ,height: '300px'
+            , interval: 3000
+            , width: '100%'
+            , anim: 'fade'
+            , height: '300px'
         });
 
 
@@ -258,7 +257,7 @@
                                 contentType: "application/json;charset=UTF-8",
                                 success: function (src) {
                                     if (src.bool) {
-                                        layer.msg(src.msg + ',感谢你的反馈');
+                                        layer.msg('感谢你的反馈');
                                         setTimeout(function () {
                                             $('#text1').val("");
                                             layer.closeAll(); //关闭所有弹窗
@@ -484,7 +483,7 @@
             sessionStorage.setItem("img", src.data.user_image);
             sessionStorage.setItem("name", src.data.user_name);
         });
-        $("#img").html('<ul class="layui-nav" lay-bar="disabled" style="background-color: white;padding: 0;">' +
+        $("#img").html('<ul class="layui-nav" lay-bar="disabled" style="background-color: #f6f4f4;padding: 0;">' +
             '<li class="layui-nav-item" lay-unselect="">\n' +
             '    <a href="javascript:;" style="padding-right: 0;"><img src="" id="image" height="40" width="40" style="border: 1px #dfdfdf solid;margin-top: 14px;margin-right: 3px;"></a>\n' +
             '    <dl class="layui-nav-child">\n' +

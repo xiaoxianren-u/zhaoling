@@ -1,5 +1,4 @@
 import com.edu.dao.GrateFulDao;
-import com.edu.pojo.GrateFul;
 import com.edu.service.GrateFulService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class Test1 {
     public void test() {
 //        System.out.println("grateFulService.list(0,10,null,null) = " + grateFulService.list(0, 10,null,null));
 
-        System.out.println("grateFulDao.count(new GrateFul(null,null,null,null,null)) = " + grateFulDao.count(new GrateFul(null, null, null, null, null)));
+//        System.out.println("grateFulDao.count(new GrateFul(null,null,null,null,null)) = " + grateFulDao.count(new GrateFul(null, null, null, null, null,null)));
     }
 
 }

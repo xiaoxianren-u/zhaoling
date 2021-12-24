@@ -156,6 +156,7 @@ CREATE TABLE tb_grate_ful
     gra_substance VARCHAR(4000) NOT NULL DEFAULT '' COMMENT '感谢内容',
     username      VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '发表感谢者',
     user_image    VARCHAR(50)   NOT NULL DEFAULT '' COMMENT '发表感谢人的头像',
+    status        INT(11)       NOT NULL DEFAULT 0 COMMENT '0审核中，1通过',
     PRIMARY KEY (gra_id),
     constraint gr_no_user foreign key (username) references user_db (user_name)
 ) ENGINE = InnoDB

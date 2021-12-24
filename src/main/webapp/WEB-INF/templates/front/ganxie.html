@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>感谢信</title>
+    <style>
+        #ha {
+            border: 1px solid #dfdfdf;
+        }
+
+        #ha:hover {
+            border: 1px solid #F40;
+        }
+
+        #inp:hover {
+            background-color: #1E9FFF;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        #inp:hover span {
+            color: white;
+        }
+
+        #log_div:hover {
+            border: 1px #1E9FFF solid;
+            color: #1E9FFF;
+        }
+
+        .footer {
+            height: 100px;
+            width: 100%;
+            background-color: #ddd;
+            position: relative;
+            bottom: 0;
+        }
+
+    </style>
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+    <script th:src="@{/static/js/jquery-3.5.1.min_2.js}"></script>
+    <script th:src="@{/static/js/jquery.cookie.js}"></script>
+    <script th:src="@{/static/js/cookie.js}"></script>
+    <script th:src="@{/static/js/layui.js}"></script>
+    <script th:src="@{/static/js/md5.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/icon_1/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/layer/default/layer.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/code.css}">
+    <link rel="stylesheet" th:href="@{/static/css/modules/laydate/default/laydate.css}">
+    <link rel="icon" th:href="@{/static/image/zl.png}" type="image/x-icon"/>
+    <script th:src="@{/static/js/wangEditor.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/css/wangEditor.css}">
+
+    <style>
+
+        .webkit::-webkit-scrollbar {
+            /*滚动条整体样式*/
+            width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+            height: 4px;
+        }
+
+        .webkit::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块样式*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #242424;
+        }
+
+        .add-news-text-field {
+            background-color: #F0F2F5;
+            cursor: pointer;
+            height: 30px;
+            border-radius: 50px;
+            padding: 18px 10px 10px 15px;
+            font-size: 20px;
+            color: #656768;
+        }
+
+        #text-container {
+            height: 300px;
+            max-height: 300px;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+</head>
+<body class="webkit" style="background-color: #f6f4f4;min-width: 1500px;">
+<div class="layui-row" style="margin-top: 0;min-height: 810px;">
+    <div class="layui-col-xs1">
+        <div class="grid-demo grid-demo-bg1" style="color: white;">.</div>
+    </div>
+    <div class="layui-col-xs10">
+        <div class="grid-demo" style="background-color: white">
+            <!--            <div class="layui-carousel" id="test2" style="">-->
+            <!--                <div carousel-item="">-->
+            <!--                    <div><img th:src="@{/static/image/s1.jpg}" width="100%" height="100%"></div>-->
+            <!--                    <div><img th:src="@{/static/image/s2.jpg}" width="100%" height="100%"></div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            检索栏-->
+            <div class="layui-row" style="background-color: #f6f4f4;">
+                <div class="layui-col-xs3">
+                    <div class="grid-demo grid-demo-bg3">
+                        <div style="FONT-SIZE: 30pt; FILTER: dropshadow(color=#228B22,offX=5,offY=3,Positive=1);
+                        WIDTH: 100%; color: #1E9FFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷"><strong><img height="50"
+                                                                                                        style="border-radius: 50%"
+                                                                                                        th:src="@{/static/image/zl.png}"
+                                                                                                        width="50"/>招领网</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs7">
+                    <div class="grid-demo">
+                        .
+                    </div>
+                </div>
+                <div class="layui-col-xs2">
+                    <div class="grid-demo">
+                        <div id="img" style="float: right;z-index: -1;background-color: #f6f4f4;">
+                            <a href="javascript:" id="dl" onclick="login_Image()">
+                                <div id="log_div"
+                                     style="width: 40px;height: 40px;border: 1px #dfdfdf solid;text-align: center;background-color:#dfdfdf;margin-top: 14px;margin-right: 3px;">
+                                    <span style="display: inline-block;vertical-align: middle;margin-top: 10px">登录</span>
+                                </div>
+                            </a>
+                            <!--                            <a href="javascript:" id="dl" onclick="login_Image()"></a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="layui-nav layui-bg-blue" lay-bar="disabled"
+                style="border-radius: 4px; background-color: f6f4f4;">
+                <li class="layui-nav-item "><a href="/" style="font-size: 18px;">首页</a></li>
+                <li class="layui-nav-item "><a href="/lost" style="font-size: 18px">浏览寻物贴</a></li>
+                <li class="layui-nav-item "><a href="/find" style="font-size: 18px">查看招领贴</a></li>
+                <li class="layui-nav-item "><a href="/success" style="font-size: 18px;">成功案例</a></li>
+                <li class="layui-nav-item "><a style="font-size: 18px;color: #F40;" th:href="@{/ganXie}">感谢信</a></li>
+                <li class="layui-nav-item "><a href="/grateful" style="font-size: 18px;">联系我们</a></li>
+            </ul>
+            <div class="layui-row "
+                 style="margin-top: 0;border-top-right-radius: 4px;border-top-left-radius:4px; background-color: #f6f4f4;">
+                <div class="layui-col-xs12">
+                    <div class="grid-demo grid-demo-bg1">
+
+                        <div style="margin: auto">
+
+                            <div class="layui-row">
+                                <div class="layui-col-sm3">
+                                    <div class="grid-demo grid-demo-bg1" style="color: white">.</div>
+                                </div>
+                                <div class="layui-col-sm6">
+                                    <div class="grid-demo">
+                                        <div id="login_t" style="padding-top: 30px;text-align: center;">
+                                        </div>
+                                        <ul class="li_">
+                                            <li style="margin-top: 10px">
+                                                <div class="layui-bg-gray">
+                                                    <div class="layui-row ">
+                                                        <div class="layui-col-md12">
+                                                            <div class="layui-panel">
+                                                                <div class="layui-card-header">卡片面板</div>
+                                                                <div class="layui-card-body">
+                                                                    卡片式面板面板通常用于非白色背景色的主体内<br>
+                                                                    从而映衬出边框投影
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li style="margin-top: 10px">
+                                                <div class="layui-bg-gray">
+                                                    <div class="layui-row ">
+                                                        <div class="layui-col-md12">
+                                                            <div class="layui-panel">
+                                                                <div class="layui-card-header">
+                                                                    <img height="40px" src="/static/image/1.jpg"
+                                                                         style="border-radius: 50%;border: 1px #cbcbcb"
+                                                                         width="40px">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <span style="font-size: 18px">1232132</span><span
+                                                                        style="float: right">2001-90-:sd123</span>
+                                                                </div>
+                                                                <div class="layui-card-body" style="min-height: 80px">
+                                                                    <div class="layui-row">
+                                                                        <div class="layui-col-xs1">
+                                                                            <div class="grid-demo grid-demo-bg1"
+                                                                                 style="color: white">.
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="layui-col-xs9">
+                                                                            <div class="grid-demo">
+                                                                                卡片式面板面板通常用于非白色背景色的主体内从而映衬出ssssssssssssssdfdfdfdfdddddd<br/>ddddddddddddssss边框投影
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-sm3">
+                                    <div class="grid-demo" style="color: white">.</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-xs1">
+        <div class="grid-demo" style="color: white;">.</div>
+    </div>
+</div>
+
+
+<div id="tile" style="width: 100%;height: 70px;">
+    <!--    <div id="demo7" style="text-align: center;margin-top: 30px;"></div>-->
+</div>
+
+<div class="footer"
+     style="height: 40px;text-align: center;font-size: 12px;color: #b6bac3;margin-top: 10px;padding-bottom: 60px">
+    <span style="line-height: 3em; color: #666;">电话:&nbsp;400-629-9999&nbsp;&nbsp;&nbsp;&nbsp;邮箱:&nbsp;1793925141@qq.com</span><br>
+    ©2021 Lost and found | 服务协议 | 权利声明 | 版本更新 | 帮助中心 | 版权投诉 | 招领系统开发小组所有
+</div>
+
+<div class="site-text" id="window_t" style="margin: 5%; display: none" target="test123">
+    <form class="layui-form" id="book_t" lay-filter="example" method="post">
+        <div>
+            <div class="toolbar" id="toolbar-container"></div>
+            <div class="text_t" id="text-container">
+                <!--                <p >请输入内容...</p>-->
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+</body>
+
+
+<script>
+    function loading(msg) {
+        layer.msg(msg, {
+            icon: 16,
+            shade: [0.3, '#ececee'],//遮罩的颜色与透明度
+            time: 300  //取消自动关闭
+        })
+    }
+</script>
+
+<!--意见反馈-->
+<div class="site-text" id="window" style="margin: 5%; display: none" target="test123" th:inline="none">
+    <form class="layui-form" id="book" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <div class="">
+                <textarea autocomplete="off" class="layui-textarea" id="text1" lay-verify="title" name="text1"
+                          placeholder="输入你的意见与建议" style="height: 140px" type="text"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    layui.use('flow', function () {
+        var flow = layui.flow,
+            carousel = layui.carousel,
+            laypage = layui.laypage,
+            util = layui.util;
+        // $ = layui.jquery;
+
+        carousel.render({
+            elem: '#test2'
+            , interval: 3000
+            , width: '100%'
+            , anim: 'fade'
+            , height: '300px'
+        });
+
+
+        util.fixbar({
+            bar1: true
+            // , bar2: true
+            , css: {right: 50, bottom: 80}
+            , bgcolor: '#1E9FFF'
+            , click: function (type) {
+                if (type === 'bar1') {
+                    // layer.msg('icon 是可以随便换的');
+                    layer.open({
+                        type: 1,
+                        title: "意见反馈",
+                        area: ["500px", "300px"],
+                        btn: ['提交', '取消'], //可以无限个按钮
+                        Number: 9000000,   //自动关闭的时间
+                        anim: 2,
+                        maxmin: false, // 最大最小化。
+                        resize: false, // 是否允许拉伸
+                        content: $("#window"), //添加表单到弹出层
+                        yes: function (index, layero) {
+
+                            let text = $('#text1').val();
+
+                            $.ajax({
+                                type: "get",
+                                url: '/feed/add?text=' + text,
+                                async: true,
+                                dataType: "json",
+                                contentType: "application/json;charset=UTF-8",
+                                success: function (src) {
+                                    if (src.bool) {
+                                        layer.msg('感谢你的反馈');
+                                        setTimeout(function () {
+                                            $('#text1').val("");
+                                            layer.closeAll(); //关闭所有弹窗
+                                        }, 800);
+                                    } else {
+                                        layer.msg(src.msg);
+                                    }
+                                }
+                            })
+                            console.log(text);
+                        },
+                        end: function () {
+
+                            $('#text1').val("");
+                        }
+
+                    })
+
+                }
+            }
+        })
+
+        $(".add-news-text-field").click(function () {
+            console.log("000000000000000")
+            layer.open({
+                type: 1,
+                title: "感谢留言",
+                area: ["600px", "500px"],
+                btn: ['提交', '取消'], //可以无限个按钮
+                Number: 9000000,   //自动关闭的时间
+                anim: 2,
+                maxmin: true, // 最大最小化。
+                resize: true, // 是否允许拉伸
+                content: $('#window_t'), //添加表单到弹出层
+                yes: function (index) {
+                    // let text = editor.txt.text();
+                    let text = editor.txt.html();
+                    console.log({text: text});
+                    $.ajax({
+                        type: "POST",
+                        url: "/gre/insert",
+                        async: true,
+                        data: JSON.stringify({
+                            gra_substance: text,
+                        }),
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function (res) {
+                            // console.log(src);
+                            if (res.bool === true) {
+                                layer.msg(res.msg, {time: 1500}, function () {
+                                    window.location = '/ganXie';
+                                })
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        }
+                    })
+                },
+                end: function () {
+                    editor.txt.html('');
+                }
+            });
+        });
+    })
+
+    //登录按钮
+    function login_Image() {
+
+        console.log("登录");
+        window.location = '/login';
+    }
+
+    let bool = sessionStorage.getItem("bool");
+    if (bool === '1') {
+        $.post("/for/user/name", function (src) {
+            $("#image").attr('src', src.data.user_image);
+            $("#image_t").attr('src', src.data.user_image);
+            sessionStorage.setItem("img", src.data.user_image);
+            sessionStorage.setItem("name", src.data.user_name);
+        });
+        $("#img").html('<ul class="layui-nav" lay-bar="disabled" style="background-color: #f6f4f4;padding: 0;">' +
+            '<li class="layui-nav-item" lay-unselect="">\n' +
+            '    <a href="javascript:;" style="padding-right: 0;"><img src="" id="image" height="40" width="40" style="border: 1px #dfdfdf solid;margin-top: 14px;margin-right: 3px;"></a>\n' +
+            '    <dl class="layui-nav-child">\n' +
+            '        <dd><a href="/personal" >个人中心</a></dd>\n' +
+            '        <dd style="text-align: center;" id="exit"><a href="">退出</a></dd>\n' +
+            '    </dl>\n' +
+            '</li>' +
+            '</ul>'
+        );
+        $('#login_t').html('<div class="layui-bg-gray" >\n' +
+            '                   <div class="layui-row ">\n' +
+            '                       <div class="layui-col-md12">\n' +
+            '                           <div class="layui-panel">\n' +
+            '                               <div style="padding: 15px 15px;">\n' +
+            '                                   <div class="layui-row">\n' +
+            '                                       <div style="font-weight: 300;font-size: 18px">发布你的感谢</div>\n' +
+            '                                       <hr style="border:2px solid red"/>\n' +
+            '\n' +
+            '                                       <div class="layui-col-xs2">\n' +
+            '                                           <div class="grid-demo grid-demo-bg1" id="log_t">\n' +
+            '                                               <img src="" id="image_t" height="55" width="55" style="border: 1px #dfdfdf solid;margin-right: 3px;border-radius: 50%">\n' +
+            '                                           </div>\n' +
+            '                                       </div>\n' +
+            '                                       <div class="layui-col-xs10">\n' +
+            '                                           <div class="grid-demo">\n' +
+            '                                               <div class="add-news-text-field">\n' +
+            '                                                   说出你的心声\n' +
+            '                                               </div>\n' +
+            '                                           </div>\n' +
+            '                                       </div>\n' +
+            '                                   </div>\n' +
+            '                               </div>\n' +
+            '                           </div>\n' +
+            '                       </div>\n' +
+            '                   </div>\n' +
+            '               </div>');
+    }
+
+    $('#exit').click(function () {
+        sessionStorage.setItem("bool", "0");
+        $.cookie("data", 0);
+        setTimeout(function () {
+            window.location.replace('/ganXie');
+        }, 400);
+
+    })
+
+
+</script>
+
+<script>
+    const E = window.wangEditor
+    const editor = new E('#toolbar-container', '#text-container') // 传入两个元素
+    editor.customConfig.menus = [
+        'head',
+        'bold',
+        'fontSize',
+        'fontName',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'indent',
+        'lineHeight',
+        'foreColor',
+        'backColor',
+        'link',
+        'list',
+        'todo',
+        'justify',
+        'quote',
+        'emoticon',
+        'splitLine',
+        'undo',
+        'redo',
+    ]
+    editor.create()
+
+    $.get('/gre/ganXieList', function (res) {
+
+        console.log(res.data);
+        let list = res.data;
+        let html = '';
+        $.each(list, function (index, item) {
+            html += '    <li style="margin-top: 10px">\n' +
+                '        <div class="layui-bg-gray" >\n' +
+                '            <div class="layui-row ">\n' +
+                '                <div class="layui-col-md12">\n' +
+                '                    <div class="layui-panel">\n' +
+                '                        <div class="layui-card-header" >\n' +
+                '                            <img src="' + item.user_image + '" width="40px" height="40px" style="border-radius: 50%;border: 1px #cbcbcb">&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '                            <span style="font-size: 18px">' + item.username + '</span><span style="float: right">' + item.data + '</span>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-card-body" style="min-height: 80px">\n' +
+                '                            <div class="layui-row">\n' +
+                '                                <div class="layui-col-xs1">\n' +
+                '                                    <div class="grid-demo grid-demo-bg1" style="color: white">.</div>\n' +
+                '                                </div>\n' +
+                '                                <div class="layui-col-xs9">\n' +
+                '                                    <div class="grid-demo">' + item.gra_substance + '<br/></div>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '    </li>';
+        })
+        $('.li_').html(html);
+    })
+</script>
+</html>
